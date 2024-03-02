@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81619d847a0039f4aa1cc00d1d95310a, type: 3}
+  m_Name: Defualt
+  m_EditorClassIdentifier: 
+  titel: 
+  discription: 
+  currentExpAmount: 0
+  expNeededForCurrentLevel: 0
+  baseExpNeeded: 0
+  currentLevel: 0
+  powerLevel: 0
+  isEquiped: 0
+  verticleSpringStrangth: 2.5
+  verticleDampining: 8
+  raycastMaxDistance: 5.5
+  forceSpeedAccelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  acelerationSpeed: 0.45
+  baseForceSpeed: 5
+  maxForceSpeed: 25.13
+  MaxSpeed: 12

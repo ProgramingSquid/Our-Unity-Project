@@ -1,0 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "Upgrade123", menuName = "Upgrades/Weapon Abilities/Upgrade123")]
+public class Upgrade123 : WeaponUpgrade
+{
+    
+    protected override void OnFire()
+    {
+        Weapon.Shoot();
+        //Write the code you want to happen when the player shoots here
+    }
+}
