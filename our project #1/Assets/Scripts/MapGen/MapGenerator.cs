@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using NaughtyAttributes;
+
 
 public class MapGenerator : MonoBehaviour
 {
-    public Biom[] bioms;
-    public int biom;
+
+    public List<Biom> bioms = new List<Biom>();
+    public List<Biom> biomsAvalable = new List<Biom>();
+    public int currentBiomIndex;
+    Biom lastBiom;
     public AnimationCurve noiseScaleCurve;
     public AnimationCurve islandDencityCurve;
     public AnimationCurve islandChanceCurve;
@@ -37,17 +42,25 @@ public class MapGenerator : MonoBehaviour
     private void Start()
     {
         Generator = this;
+        biomsAvalable = bioms;
         chunksVisibleInDist = Mathf.RoundToInt(renderDist / chunkSize);
-        biom = Random.Range(0, bioms.Length);
         GenerateStartValues();
     }
+    
     public void GenerateStartValues()
     {
+        //Setting The avalible options
+        biomsAvalable = bioms;
+        biomsAvalable.Remove(lastBiom);
+
+        // Picking random out of avalible options
+        currentBiomIndex = Random.Range(0, biomsAvalable.Count);
+        
         startNoiseOffset.x = Random.Range(-500f, 500f);
         startNoiseOffset.y = Random.Range(-500f, 500f);
-        noiseScale = bioms[biom].noiseScaleCurve.Evaluate(Random.Range(0f, 1f));
-        islandDencity = bioms[biom].islandDencityCurve.Evaluate(Random.Range(0f, 1f));
-        islandChance = bioms[biom].islandChanceCurve.Evaluate(Random.Range(0f, 1f));
+        noiseScale = biomsAvalable[currentBiomIndex].noiseScaleCurve.Evaluate(Random.Range(0f, 1f));
+        islandDencity = biomsAvalable[currentBiomIndex].islandDencityCurve.Evaluate(Random.Range(0f, 1f));
+        islandChance = biomsAvalable[currentBiomIndex].islandChanceCurve.Evaluate(Random.Range(0f, 1f));
 
         material = gameObject.GetComponent<SpriteRenderer>().material;
         material.SetFloat("_NoiseScale", noiseScale);
@@ -55,7 +68,10 @@ public class MapGenerator : MonoBehaviour
         material.SetFloat("_IslandChance", islandChance);
         material.SetVector("_NoiseOffset", startNoiseOffset);
 
-        grassChance = islandChance - bioms[biom].islandGrassCurve.Evaluate(Random.Range(0, 1));
+        grassChance = islandChance - bioms[currentBiomIndex].islandGrassCurve.Evaluate(Random.Range(0, 1));
+
+        //Setting up for next function call
+        lastBiom = biomsAvalable[currentBiomIndex];
     }
 
     private void Update()
