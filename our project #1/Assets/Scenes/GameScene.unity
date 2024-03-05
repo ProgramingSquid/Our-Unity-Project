@@ -2317,11 +2317,11 @@ MonoBehaviour:
     bloomIntesity: 6
     bloomThreshold: 0.95
     bloomScatter: 0.5
-    bloomTint: {r: 1, g: 0.6273585, b: 0.6273585, a: 0}
+    bloomTint: {r: 1, g: 0.6273585, b: 0.6273585, a: 1}
     AberrationIntesity: 1
     vignetteIntesity: 0.5
     vignetteSmoothness: 0.3
-    vignetteColor: {r: 0.1792453, g: 0, b: 0, a: 0}
+    vignetteColor: {r: 0.1792453, g: 0, b: 0, a: 1}
     distortionIntesity: 0.347
     distortionScale: 1.03
 --- !u!1 &750391858
