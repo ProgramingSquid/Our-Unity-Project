@@ -6,7 +6,7 @@ using NaughtyAttributes;
 
 public class MapGenerator : MonoBehaviour
 {
-
+    
     public List<Biom> bioms = new List<Biom>();
     public List<Biom> biomsAvalable = new List<Biom>();
     public int currentBiomIndex;
@@ -42,15 +42,27 @@ public class MapGenerator : MonoBehaviour
     private void Start()
     {
         Generator = this;
-        biomsAvalable = bioms;
+        for (int i = 0; i < bioms.Count; i++)
+        {
+            biomsAvalable.Add(bioms[i]);
+            Debug.Log("START");
+        }
         chunksVisibleInDist = Mathf.RoundToInt(renderDist / chunkSize);
         GenerateStartValues();
     }
-    
-    public void GenerateStartValues()
+
+    [Button]
+    void GenrateButton() { GenerateStartValues(); }
+      public void GenerateStartValues()
     {
         //Setting The avalible options
-        biomsAvalable = bioms;
+        biomsAvalable.Clear();
+        for (int i = 0; i < bioms.Count; i++)
+        {
+            biomsAvalable.Add(bioms[i]);
+            Debug.Log("METHOD");
+        }
+
         biomsAvalable.Remove(lastBiom);
 
         // Picking random out of avalible options
@@ -68,7 +80,7 @@ public class MapGenerator : MonoBehaviour
         material.SetFloat("_IslandChance", islandChance);
         material.SetVector("_NoiseOffset", startNoiseOffset);
 
-        grassChance = islandChance - bioms[currentBiomIndex].islandGrassCurve.Evaluate(Random.Range(0, 1));
+        grassChance = islandChance - biomsAvalable[currentBiomIndex].islandGrassCurve.Evaluate(Random.Range(0, 1));
 
         //Setting up for next function call
         lastBiom = biomsAvalable[currentBiomIndex];
