@@ -9,7 +9,7 @@ public class ScenesManager : MonoBehaviour
     public static ScenesManager instance;
     public GameObject loadingScreen;
     public Slider loadingBar;
-    
+
 
     public enum sceneBuildIndexes
     {
