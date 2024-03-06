@@ -22,7 +22,7 @@ public class VolumeEffectTrigger : MonoBehaviour
     public void ResetAberration(float Delay) => VolumeEffectTigerer.intance.Invoke("ResetAberration", Delay);
     public void ResetVignette(float Delay) => VolumeEffectTigerer.intance.Invoke("ResetVignette", Delay);
     public void ResetLensDistortion(float Delay) => VolumeEffectTigerer.intance.Invoke("ResetLensDistortion", Delay);
-
+   
 
 
 }
