@@ -45,29 +45,31 @@ public class MapGenerator : MonoBehaviour
         for (int i = 0; i < bioms.Count; i++)
         {
             biomsAvalable.Add(bioms[i]);
-            Debug.Log("START");
+           
         }
         chunksVisibleInDist = Mathf.RoundToInt(renderDist / chunkSize);
-        GenerateStartValues();
+        GenerateStartValues(true);
     }
 
     [Button]
-    void GenrateButton() { GenerateStartValues(); }
-      public void GenerateStartValues()
+    void GenrateButton() { GenerateStartValues(true); }
+
+      public void GenerateStartValues(bool useRandomIndex = false, int biomeIndex = 0)
     {
         //Setting The avalible options
         biomsAvalable.Clear();
         for (int i = 0; i < bioms.Count; i++)
         {
             biomsAvalable.Add(bioms[i]);
-            Debug.Log("METHOD");
+            
         }
 
         biomsAvalable.Remove(lastBiom);
 
         // Picking random out of avalible options
-        currentBiomIndex = Random.Range(0, biomsAvalable.Count);
-        
+        if (useRandomIndex) { currentBiomIndex = Random.Range(0, biomsAvalable.Count); }
+        else { currentBiomIndex = biomeIndex; }
+
         startNoiseOffset.x = Random.Range(-500f, 500f);
         startNoiseOffset.y = Random.Range(-500f, 500f);
         noiseScale = biomsAvalable[currentBiomIndex].noiseScaleCurve.Evaluate(Random.Range(0f, 1f));
@@ -108,7 +110,7 @@ public class MapGenerator : MonoBehaviour
         for (int ZOffset = -chunksVisibleInDist; ZOffset <= chunksVisibleInDist; ZOffset++) {
             for (int XOffset = -chunksVisibleInDist; XOffset <= chunksVisibleInDist; XOffset++) 
             {
-                Debug.Log(ZOffset + ":" + XOffset);
+                
                 VeiwedChunkChord = new Vector3(currentChordX + XOffset, 0, currentChordZ + ZOffset);
 
                 Bounds bounds;
