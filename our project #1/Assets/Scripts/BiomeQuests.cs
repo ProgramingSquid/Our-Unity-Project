@@ -7,7 +7,8 @@ public class BiomeQuest : ScriptableObject
 {
     
 }
+[SerializeField]
 public class BiomeQuestData
 {
-    
+
 }
