@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BiomeQuestManager : MonoBehaviour
 {
+    public List<BiomeQuest> list = new List<BiomeQuest>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,3 +18,5 @@ public class BiomeQuestManager : MonoBehaviour
         
     }
 }
+
+

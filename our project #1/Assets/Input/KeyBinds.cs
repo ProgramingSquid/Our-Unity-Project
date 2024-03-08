@@ -17,6 +17,7 @@ using UnityEngine.InputSystem.Utilities;
 
 public partial class @KeyBinds: IInputActionCollection2, IDisposable
 {
+    
     public InputActionAsset asset { get; }
     public @KeyBinds()
     {

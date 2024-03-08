@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 [CreateAssetMenu(fileName = "New Weapon Upgrade", menuName = "Upgrades/Weapon Upgrade")]
 public class WeaponUpgrade : Upgrade
 {
