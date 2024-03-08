@@ -6,7 +6,7 @@ using NaughtyAttributes;
 
 public class MapGenerator : MonoBehaviour
 {
-    
+
     public List<Biom> bioms = new List<Biom>();
     public List<Biom> biomsAvalable = new List<Biom>();
     public int currentBiomIndex;
@@ -82,7 +82,7 @@ public class MapGenerator : MonoBehaviour
         material.SetFloat("_IslandChance", islandChance);
         material.SetVector("_NoiseOffset", startNoiseOffset);
 
-        grassChance = islandChance - biomsAvalable[currentBiomIndex].islandGrassCurve.Evaluate(Random.Range(0, 1));
+        grassChance = islandChance - bioms[currentBiomIndex].islandGrassCurve.Evaluate(Random.Range(0, 1));
 
         //Setting up for next function call
         lastBiom = biomsAvalable[currentBiomIndex];
