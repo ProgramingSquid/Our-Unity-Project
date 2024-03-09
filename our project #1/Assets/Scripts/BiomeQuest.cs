@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class BiomeQuests : MonoBehaviour
 {
-    
+    Transform ransform;
+    private void Start()
+    {
+        //Test
+    }
 }
