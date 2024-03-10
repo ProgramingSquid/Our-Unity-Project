@@ -7,10 +7,10 @@ using NaughtyAttributes;
 public class MapGenerator : MonoBehaviour
 {
 
-    public List<Biom> bioms = new List<Biom>();
-    public List<Biom> biomsAvalable = new List<Biom>();
+    public List<Biome> bioms = new List<Biome>();
+    public List<Biome> biomsAvalable = new List<Biome>();
     public int currentBiomIndex;
-    Biom lastBiom;
+    Biome lastBiom;
     public AnimationCurve noiseScaleCurve;
     public AnimationCurve islandDencityCurve;
     public AnimationCurve islandChanceCurve;
@@ -144,10 +144,9 @@ public class MapGenerator : MonoBehaviour
 
 }
 
-[System.Serializable]
-public class Biom
+[System.Serializable, CreateAssetMenu(fileName = "newBiome", menuName = "New Biome")]
+public class Biome : ScriptableObject
 {
-    public string name;
     public AnimationCurve noiseScaleCurve;
     public AnimationCurve islandDencityCurve;
     public AnimationCurve islandChanceCurve;
