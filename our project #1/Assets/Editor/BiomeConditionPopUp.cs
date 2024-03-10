@@ -1,25 +1,27 @@
-using System.IO;
-using UnityEditor;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using UnityEngine.UIElements;
+using System.IO;
 
-
-public class WeaponAbilityPopUp : EditorWindow
+public class BiomeConditionPopUp : EditorWindow
 {
-    static WeaponAbilityPopUp window;
-    string Title = "WeaponAbility";
+    static BiomeConditionPopUp window;
+    string Title = "BiomeQuestConditon";
     bool initializedPosition = false;
 
-    [MenuItem("Assets/Create/Weapon Ability Script", false, 1)]
+    [MenuItem("Assets/Create/Biomes/Biome Quests/Createn new Condition", false, 1)]
     public static void ShowWindow()
     {
-        window = (WeaponAbilityPopUp)GetWindow(typeof(WeaponAbilityPopUp));
+        window = (BiomeConditionPopUp)GetWindow(typeof(BiomeConditionPopUp));
         window.minSize = new Vector2(300, 20);
         window.maxSize = window.minSize;
     }
     private void OnGUI()
     {
-        
-    
+
+
 
         if (initializedPosition == false)
         {
@@ -27,7 +29,6 @@ public class WeaponAbilityPopUp : EditorWindow
             position = new Rect(mousePos.x, mousePos.y, position.width, position.height);
             initializedPosition = true;
         }
-        
         GUILayout.BeginHorizontal();
 
         Title = EditorGUILayout.TextField("Title:", Title);
@@ -40,17 +41,14 @@ public class WeaponAbilityPopUp : EditorWindow
 
         GUILayout.EndHorizontal();
     }
-    
+
     void CreateWeaponAbilityScript()
     {
-        string text = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/UpgradeData/WeaponAbilityTemplate.txt").text;
-        string content = text.Replace("Upgrade123", Title);
-        AssetDatabase.CreateFolder("Assets/UpgradeData/WEAPONS/Abilities", Title);
+        string text = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/BiomeQuests/BiomeQuestConditionTemplate.txt").text;
+        string content = text.Replace("BiomeQuestCondition123", Title);
+        AssetDatabase.CreateFolder("Assets/BiomeQuests/Conditions", Title);
         AssetDatabase.Refresh();
-        File.WriteAllText("Assets/UpgradeData/WEAPONS/Abilities/" + Title + "/" + Title + "_Script" + ".cs", content);
+        File.WriteAllText("Assets/BiomeQuests/Conditions/" + Title + "/" + Title + "_Script" + ".cs", content);
         AssetDatabase.Refresh();
     }
-
-
-
 }

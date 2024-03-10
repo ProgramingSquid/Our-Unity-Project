@@ -1,0 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "BiomeQuestCondition123", menuName = "Biomes/Biome Quests/Conditions/BiomeQuestCondition123")]
+public class BiomeQuestCondition123 : BiomeQuestCondition
+{
+    public override bool isConditionMet()
+    {
+        /* return true if condition is met */
+        return false;
+    }
+}

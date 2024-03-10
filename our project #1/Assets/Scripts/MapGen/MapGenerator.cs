@@ -144,11 +144,3 @@ public class MapGenerator : MonoBehaviour
 
 }
 
-[System.Serializable, CreateAssetMenu(fileName = "newBiome", menuName = "New Biome")]
-public class Biome : ScriptableObject
-{
-    public AnimationCurve noiseScaleCurve;
-    public AnimationCurve islandDencityCurve;
-    public AnimationCurve islandChanceCurve;
-    public AnimationCurve islandGrassCurve;
-}

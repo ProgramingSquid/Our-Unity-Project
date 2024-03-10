@@ -7,9 +7,9 @@ using UnityEngine;
 public class Upgrade123 : WeaponUpgrade
 {
     
-    protected override void OnFire()
+    public override void Fire(InputAction.CallbackContext context)
     {
-        Weapon.Shoot();
+        Weapon.TryShoot();
         //Write the code you want to happen when the player shoots here
     }
 }
