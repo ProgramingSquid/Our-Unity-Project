@@ -24,15 +24,24 @@ public class BiomeQuest : ScriptableObject
     [Foldout("Distance Bias")] public float distanceBias;
     [Foldout("Distance Bias")] public AnimationCurve distanceBiasFalloffCurve;
     #endregion
+    public bool isCompleat;
 
 
-    public UnityEvent<float> OnEquip = new UnityEvent<float>();
-    public UnityEvent<float> OnCompleation = new UnityEvent<float>();
-    public UnityEvent<float> OnSpawn = new UnityEvent<float>();
+    public UnityEvent OnEquip = new UnityEvent();
+    public UnityEvent OnCompleation = new UnityEvent();
+    public UnityEvent OnSpawn = new UnityEvent();
 
     public bool isConditionMet()
     {
         return condition.isConditionMet();
+    }
+
+    //When the selected quest is compleated
+    public void OnCompleat()
+    {
+        //UI stuff here
+        isCompleat = true;
+        OnCompleation.Invoke();
     }
 }
 public class BiomeQuestCondition : ScriptableObject

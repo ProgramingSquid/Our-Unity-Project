@@ -4,19 +4,32 @@ using UnityEngine;
 
 public class BiomeQuestManager : MonoBehaviour
 {
-    public List<BiomeQuest> list = new List<BiomeQuest>();
-
-    // Start is called before the first frame update
-    void Start()
+    public List<BiomeQuest> equipedQuests = new List<BiomeQuest>();
+    public BiomeQuest selectedQuest;
+    private void Start()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        foreach (BiomeQuest quest in equipedQuests)
+        {
+            if (quest == selectedQuest && quest.isConditionMet()) { quest.OnCompleat(); return; }
+            if (quest.isConditionMet()){ quest.OnCompleation.Invoke(); }
+        }
     }
+
+    public void Unequip(BiomeQuest quest)
+    {
+        equipedQuests.Remove(quest);
+    }
+    public void Equip(BiomeQuest quest)
+    {
+        quest.OnEquip.Invoke();
+        equipedQuests.Add(quest);
+    }
+   
 }
 
 
