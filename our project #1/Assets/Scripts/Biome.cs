@@ -9,4 +9,5 @@ public class Biome : ScriptableObject
     public AnimationCurve islandDencityCurve;
     public AnimationCurve islandChanceCurve;
     public AnimationCurve islandGrassCurve;
+    public Sprite questImage;
 }

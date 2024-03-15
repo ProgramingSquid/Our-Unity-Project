@@ -5,8 +5,9 @@ using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.Events;
 
+
 [CreateAssetMenu(fileName = "NewBiomeQuest", menuName = "Biomes/Biome Quests/Create New Biom Quest")]
-public class BiomeQuest : ScriptableObject
+public class BiomeQuestSO : ScriptableObject
 {
     [Range(0, 1f), Tooltip("A value to influence the probability this quest may apear in a game, 0 = unlickly 1 = lickly.")]
     public float rarityPiority = .1f;
@@ -27,9 +28,11 @@ public class BiomeQuest : ScriptableObject
     public bool isCompleat;
 
 
-    public UnityEvent OnEquip = new UnityEvent();
-    public UnityEvent OnCompleation = new UnityEvent();
-    public UnityEvent OnSpawn = new UnityEvent();
+    [Foldout("Events")]public UnityEvent OnEquip = new UnityEvent();
+    [Foldout("Events")]public UnityEvent OnCompleation = new UnityEvent();
+    [Foldout("Events")]public UnityEvent OnSpawn = new UnityEvent();
+
+    [Foldout("Quest UI")] public string discription = "Quest";
 
     public bool isConditionMet()
     {
@@ -39,13 +42,16 @@ public class BiomeQuest : ScriptableObject
     //When the selected quest is compleated
     public void OnCompleat()
     {
-        //UI stuff here
+        //TO DO: UI and Game loop cycle stuff here
         isCompleat = true;
         OnCompleation.Invoke();
     }
 }
 public class BiomeQuestCondition : ScriptableObject
 {
+    public float compleatness = 0;
+    public string discription = "QUEST";
+
     public virtual bool isConditionMet()
     {
         return true;

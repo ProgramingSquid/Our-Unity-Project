@@ -9,6 +9,7 @@ using UnityEngine.Events;
 
 public class MovementControl : MonoBehaviour
 {
+    [HideInInspector] public static MovementControl player;
     [Expandable] public MovmentUpgrade movment;
     [Space(30)]
     public Camera camera;
@@ -26,6 +27,7 @@ public class MovementControl : MonoBehaviour
     public float dashInvincibilityTime = .75f;
     public float dashInvincibilityTimmer = .75f;
     float drag;
+    [HideInInspector] public float angle;
 
     #region Feilds
 
@@ -69,6 +71,7 @@ public class MovementControl : MonoBehaviour
 
     private void Awake() 
     {
+        player = this;
         inputActions = new KeyBinds();
         inputActions.Enable();
         inputActions.Player.Aim.performed += ctx => rotation = ctx.ReadValue<Vector2>();
@@ -101,7 +104,7 @@ public class MovementControl : MonoBehaviour
         {
             difernce = Vector3.right * rotation.x + Vector3.forward * rotation.y;
         }
-        float angle = Mathf.Atan2(difernce.z, difernce.x);
+        angle = Mathf.Atan2(difernce.z, difernce.x);
         Debug.DrawRay(transform.position, difernce);
         DesieredRot = Quaternion.Euler(90, 0, angle * Mathf.Rad2Deg); // aplying rotation
         transform.rotation = DesieredRot;  

@@ -31,11 +31,14 @@ public class PlayerMovment : MonoBehaviour
 
     float magnitude;
     float Value;
+    [HideInInspector] public float angle;
+
     // Start is called before the first frame update
     void Start()
     {
         Vector2 hotSpot = new Vector2(mouseSprite.width / 2, mouseSprite.height / 2);
         Cursor.SetCursor(mouseSprite, hotSpot, CursorMode.Auto);
+        
     }
 
     // Update is called once per frame
@@ -46,7 +49,7 @@ public class PlayerMovment : MonoBehaviour
         mousePos = Input.mousePosition; // getting mouse position on screen
         worldPosition = camera.ScreenToWorldPoint(new Vector2(mousePos.x, mousePos.y));
         difernce = worldPosition - transform.position; 
-        float angle = Mathf.Atan2(difernce.y, difernce.x); 
+        angle = Mathf.Atan2(difernce.y, difernce.x); 
         transform.rotation = Quaternion.Euler(0, 0, angle * Mathf.Rad2Deg); // aplying rotation
        
     }
