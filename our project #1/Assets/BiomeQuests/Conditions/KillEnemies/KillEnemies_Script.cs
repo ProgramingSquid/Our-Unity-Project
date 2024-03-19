@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BiomeQuestCondition123", menuName = "Biomes/Biome Quests/Conditions/BiomeQuestCondition123")]
-public class BiomeQuestCondition123 : BiomeQuestCondition
+[CreateAssetMenu(fileName = "KillEnemies", menuName = "Biomes/Biome Quests/Conditions/KillEnemies")]
+public class KillEnemies : BiomeQuestCondition
 {
     public override float UpdateCompleatness()
     {

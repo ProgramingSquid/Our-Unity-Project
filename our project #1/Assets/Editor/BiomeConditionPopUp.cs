@@ -44,9 +44,9 @@ public class BiomeConditionPopUp : EditorWindow
 
     void CreateWeaponAbilityScript()
     {
+        AssetDatabase.CreateFolder("Assets/BiomeQuests/Conditions", Title);
         string text = AssetDatabase.LoadAssetAtPath<TextAsset>("Assets/BiomeQuests/BiomeQuestConditionTemplate.txt").text;
         string content = text.Replace("BiomeQuestCondition123", Title);
-        AssetDatabase.CreateFolder("Assets/BiomeQuests/Conditions", Title);
         AssetDatabase.Refresh();
         File.WriteAllText("Assets/BiomeQuests/Conditions/" + Title + "/" + Title + "_Script" + ".cs", content);
         AssetDatabase.Refresh();

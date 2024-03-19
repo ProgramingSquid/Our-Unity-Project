@@ -409,13 +409,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 167278120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 689899a0a9c249444adbb14da99cebfd, type: 3}
+  m_Script: {fileID: 11500000, guid: ecdceaee95538fd49827d9fd01253df1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   biomeImage: {fileID: 486753852}
-  progressBar: {fileID: 0}
-  discription: {fileID: 0}
-  biomeQuest: {fileID: 0}
+  progressBar: {fileID: 575527047}
+  discription: {fileID: 1618359065}
+  biomeQuest: {fileID: 11400000, guid: 1df46c0279d98f743a001a14a5319975, type: 2}
 --- !u!1 &213037826
 GameObject:
   m_ObjectHideFlags: 0

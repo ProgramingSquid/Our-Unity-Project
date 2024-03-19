@@ -13,11 +13,14 @@ public class CompassUI : MonoBehaviour
     public float questDistance;
     public Vector2 questDirection;
     float playerZAngle;
+
+    public static CompassUI intance;
     
 
     // Start is called before the first frame update
     private void Start()
     {
+        intance = this;
     }
 
     // Update is called once per frame

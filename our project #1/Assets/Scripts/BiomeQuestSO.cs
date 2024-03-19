@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 using NaughtyAttributes;
+using UnityEngine;
 using UnityEngine.Events;
 
 
@@ -14,17 +11,13 @@ public class BiomeQuestSO : ScriptableObject
     [Tooltip("Biome that the quest is for."), Expandable]
     public Biome biome;
     public BiomeQuestCondition condition;
-    #region dirrection Bias
+
     [Tooltip("A bias for what dirrection the quest should lead the player once compleated (use 0,0 for no bias)")]
-    [Foldout("Dirrection Bias")] public Vector2 dirrectionBias;
-    [Foldout("Dirrection Bias")] public AnimationCurve directionBiasFalloffCurve;
-    #endregion
-    #region distance Bias 
-    
+    public Vector2 dirrectionBias;
+
     [Tooltip("A bias for how far the quest should lead the player once compleated (use 0,0 for no bias)")]
     [Foldout("Distance Bias")] public float distanceBias;
-    [Foldout("Distance Bias")] public AnimationCurve distanceBiasFalloffCurve;
-    #endregion
+
     public bool isCompleat;
 
 
@@ -34,6 +27,9 @@ public class BiomeQuestSO : ScriptableObject
 
     [Foldout("Quest UI")] public string discription = "Quest";
 
+    public bool TogleCompleat = true;
+    public bool TogleCompleation = true;
+
     public bool isConditionMet()
     {
         return condition.isConditionMet();
@@ -42,9 +38,28 @@ public class BiomeQuestSO : ScriptableObject
     //When the selected quest is compleated
     public void OnCompleat()
     {
-        //TO DO: UI and Game loop cycle stuff here
+        //TO DO: Game loop cycle stuff here:
+
+        if(dirrectionBias != Vector2.zero) 
+        { 
+          CompassUI.intance.questDirection.x = dirrectionBias.x + Random.Range(-0.5f, .5f);
+          CompassUI.intance.questDirection.y = dirrectionBias.y + Random.Range(-0.5f, .5f); 
+        }
+        else
+        {
+            CompassUI.intance.questDirection.x = Random.Range(-1, 1);
+            CompassUI.intance.questDirection.y = dirrectionBias.y + Random.Range(-1, 1);
+        }
+
+        if(distanceBias != 0) 
+        { 
+          CompassUI.intance.questDistance = distanceBias + Random.Range( -(distanceBias / 4), distanceBias / 4);
+        }
+        else { CompassUI.intance.questDistance = Random.Range(25, 50); }
+        
         isCompleat = true;
-        OnCompleation.Invoke();
+        TogleCompleat = false;
+        
     }
 }
 public class BiomeQuestCondition : ScriptableObject
@@ -52,8 +67,13 @@ public class BiomeQuestCondition : ScriptableObject
     public float compleatness = 0;
     public string discription = "QUEST";
 
-    public virtual bool isConditionMet()
+    public bool isConditionMet()
     {
-        return true;
+        return compleatness >= 1;
+    }
+
+    public virtual float UpdateCompleatness()
+    {
+        return 1;
     }
 }

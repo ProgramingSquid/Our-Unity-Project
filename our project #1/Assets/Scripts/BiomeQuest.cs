@@ -10,6 +10,7 @@ public class BiomeQuest : MonoBehaviour
     public Slider progressBar;
     public TMP_Text discription;
     public BiomeQuestSO biomeQuest;
+    
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class BiomeQuest : MonoBehaviour
     {
         biomeImage.sprite = biomeQuest.biome.questImage;
         discription.text = biomeQuest.discription;
+        progressBar.value = biomeQuest.condition.compleatness;
 
     }
 }

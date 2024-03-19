@@ -9,6 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c249eecdc9d538d48aae8668a7bbbd71, type: 3}
-  m_Name: BiomeQuestConditon
+  m_Script: {fileID: 11500000, guid: 36f97b5e21e5ef949ae650cfb4e58b5e, type: 3}
+  m_Name: KillEnemies
   m_EditorClassIdentifier: 
+  compleatness: 1
+  discription: QUEST

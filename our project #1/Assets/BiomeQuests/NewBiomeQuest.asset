@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NewBiomeQuest
   m_EditorClassIdentifier: 
   rarityPiority: 0.1
-  biome: {fileID: 0}
-  condition: {fileID: 0}
+  biome: {fileID: 11400000, guid: 3ef82d87459579e4c93ea1984485fc02, type: 2}
+  condition: {fileID: 11400000, guid: 0b4336a032748d9439fb4e12f76e973c, type: 2}
   dirrectionBias: {x: 0, y: 0}
   directionBiasFalloffCurve:
     serializedVersion: 2
