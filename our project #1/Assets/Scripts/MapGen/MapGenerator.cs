@@ -64,7 +64,7 @@ public class MapGenerator : MonoBehaviour
             
         }
 
-        biomsAvalable.Remove(lastBiom);
+        if (bioms.Count > 1) { biomsAvalable.Remove(lastBiom); }
 
         // Picking random out of avalible options
         if (useRandomIndex) { currentBiomIndex = Random.Range(0, biomsAvalable.Count); }

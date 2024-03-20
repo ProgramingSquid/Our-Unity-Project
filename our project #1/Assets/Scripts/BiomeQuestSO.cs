@@ -38,24 +38,23 @@ public class BiomeQuestSO : ScriptableObject
     //When the selected quest is compleated
     public void OnCompleat()
     {
-        //TO DO: Game loop cycle stuff here:
 
         if(dirrectionBias != Vector2.zero) 
         { 
-          CompassUI.intance.questDirection.x = dirrectionBias.x + Random.Range(-0.5f, .5f);
-          CompassUI.intance.questDirection.y = dirrectionBias.y + Random.Range(-0.5f, .5f); 
+          CompassUI.intance.questDirectionGoal.x = dirrectionBias.x + Random.Range(-0.5f, .5f);
+          CompassUI.intance.questDirectionGoal.y = dirrectionBias.y + Random.Range(-0.5f, .5f); 
         }
         else
         {
-            CompassUI.intance.questDirection.x = Random.Range(-1, 1);
-            CompassUI.intance.questDirection.y = dirrectionBias.y + Random.Range(-1, 1);
+            CompassUI.intance.questDirectionGoal.x = Random.Range(-1, 1);
+            CompassUI.intance.questDirectionGoal.y = dirrectionBias.y + Random.Range(-1, 1);
         }
 
         if(distanceBias != 0) 
         { 
-          CompassUI.intance.questDistance = distanceBias + Random.Range( -(distanceBias / 4), distanceBias / 4);
+          CompassUI.intance.questDistanceGoal = distanceBias + Random.Range( -(distanceBias / 4), distanceBias / 4);
         }
-        else { CompassUI.intance.questDistance = Random.Range(25, 50); }
+        else { CompassUI.intance.questDistanceGoal = Random.Range(300, 450); }
         
         isCompleat = true;
         TogleCompleat = false;

@@ -15,21 +15,9 @@ MonoBehaviour:
   rarityPiority: 0.1
   biome: {fileID: 11400000, guid: 3ef82d87459579e4c93ea1984485fc02, type: 2}
   condition: {fileID: 11400000, guid: 0b4336a032748d9439fb4e12f76e973c, type: 2}
-  dirrectionBias: {x: 0, y: 0}
-  directionBiasFalloffCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  distanceBias: 0
-  distanceBiasFalloffCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  isCompleat: 0
+  dirrectionBias: {x: 1, y: 0}
+  distanceBias: 1
+  isCompleat: 1
   OnEquip:
     m_PersistentCalls:
       m_Calls: []
@@ -40,3 +28,5 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   discription: Quest
+  TogleCompleat: 0
+  TogleCompleation: 0
