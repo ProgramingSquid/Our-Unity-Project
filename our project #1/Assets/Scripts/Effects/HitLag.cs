@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HitLag : MonoBehaviour
 {
+    public static HitLag GetHitLag;
     bool isWaiting = false;
     public void HitLagEffect(float duration)
     {
@@ -23,5 +24,10 @@ public class HitLag : MonoBehaviour
         yield return new WaitForSecondsRealtime(duration);
         Time.timeScale = 1;
         isWaiting = false;
+    }
+
+    private void Awake()
+    {
+        GetHitLag = this;
     }
 }

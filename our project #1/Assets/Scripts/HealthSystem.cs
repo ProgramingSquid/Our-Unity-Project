@@ -53,7 +53,7 @@ public class HealthSystem : MonoBehaviour
         }
         if(renderer != null) { StartCoroutine(HitFlash(flashColor, flashDuration)); }
         
-        FindObjectOfType<HitLag>().HitLagEffect(hitLagDuration);
+        HitLag.GetHitLag.HitLagEffect(hitLagDuration);
 
         if (currentHealth <= 0 )
         {
