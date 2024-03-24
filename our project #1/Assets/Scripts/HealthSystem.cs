@@ -64,7 +64,7 @@ public class HealthSystem : MonoBehaviour
 
     
     
-    IEnumerator HitFlash(Color flashColor, float duration)
+    public IEnumerator HitFlash(Color flashColor, float duration)
     {
         renderer.material.SetColor("_FlashColor", flashColor);
         float elapsed =  0;

@@ -51,7 +51,6 @@ public class BiomeProgressionManager : MonoBehaviour
     {
         MapGenerator.Generator.GenerateStartValues(true);
         BiomeQuestManager.instance.ClearEquiped();
-        
-        
+
     }
 }
