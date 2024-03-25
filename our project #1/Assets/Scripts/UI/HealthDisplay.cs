@@ -1,30 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
-using UnityEditor.TerrainTools;
-using System;
+using NaughtyAttributes;
+using DentedPixel;
 
 public class HealthDisplay : MonoBehaviour
 {
-    public List<DisplayLayer> healthBarLayers = new List<DisplayLayer>();
+    
+    [Foldout("Layers")] public Image healthBar;
+    [Foldout("Layers")] public Image changeHealthBar;
+    [Foldout("Layers")] public Image healHealthBar;
+    
     public HealthSystem healthSystem;
-    [ColorUsage(true, true)] public Color tookDamageColor = Color.red;
-    [ColorUsage(true, true)] public Color healedColor = Color.green;
-    [ColorUsage(true, true)] public Color healColor = Color.yellow;
+    public PlayerHealManager healManager;
+    [Space(10)]
+    
+    [ColorUsage(true, true), BoxGroup("Layer Visuals")] public Color tookDamageColor = Color.red;
+    [BoxGroup("Layer Visuals")] public LeanTweenType tookDamageTween;
+
+    [ColorUsage(true, true), BoxGroup("Layer Visuals")] public Color healedColor = Color.green;
+    [BoxGroup("Layer Visuals")] public LeanTweenType healedTween;
+
+    [ColorUsage(true, true), BoxGroup("Layer Visuals")] public Color healColor = Color.yellow;
+    [BoxGroup("Layer Visuals")] public LeanTweenType healTween;
+
     public float chipAwaySpeed = 1f;
 
-    float lerpTimmer;
-    float lastHealthfraction;
+
 
 
     private void Awake()
     {
-        foreach (DisplayLayer layer in healthBarLayers)
-        {
-            layer.image.fillMethod = Image.FillMethod.Horizontal;
-        }
+        healthBar.fillMethod = Image.FillMethod.Horizontal;
+        changeHealthBar.fillMethod = Image.FillMethod.Horizontal;
+        healHealthBar.fillMethod = Image.FillMethod.Horizontal;
     }
 
     // Update is called once per frame
@@ -34,39 +44,53 @@ public class HealthDisplay : MonoBehaviour
     }
     void UpdateBarUI()
     {
-        float fill_Health = healthBarLayers[0].image.fillAmount; // bar for health
-        float fill_Change = healthBarLayers[1].image.fillAmount; // bar for chip away effect
-        float fill_Heal = healthBarLayers[2].image.fillAmount; // bar for acumilated healing
+        float fill_Health = healthBar.fillAmount; // bar for health
+        float fill_Change = changeHealthBar.fillAmount; // bar for chip away effect
+        float fill_Heal = healHealthBar.fillAmount; // bar for acumilated healing
 
         float healthFraction = healthSystem.currentHealth / healthSystem.maxHealth;
+        float healFraction = (healthSystem.currentHealth + healManager.healHealth) / healthSystem.maxHealth;
 
-        if(healthFraction < lastHealthfraction) { lerpTimmer = 0; }
-
-        //If took damge...
-        if (fill_Change > healthFraction)
+        
+        if(fill_Change > healthFraction)
         {
-            healthBarLayers[0].image.fillAmount = healthFraction;
-            healthBarLayers[1].image.color = tookDamageColor;
-            lerpTimmer += Time.deltaTime;
-            float percentLerpCompleat = lerpTimmer / chipAwaySpeed;
-            healthBarLayers[1].image.fillAmount = Mathf.Lerp(fill_Change, healthFraction, percentLerpCompleat);
-        }
-        lastHealthfraction = healthFraction;
-    }
+            healthBar.fillAmount = healthFraction;
+            changeHealthBar.color = tookDamageColor;
 
-    //Sets maximum layers:
-    private void OnValidate()
-    {
-        if(healthBarLayers.Count > 3)
-        {
-            healthBarLayers.RemoveRange(2, healthBarLayers.Count - 3);
+            LeanTween.value(changeHealthBar.gameObject, fill_Change, healthFraction, chipAwaySpeed)
+                .setEase(tookDamageTween)
+                .setOnUpdate((value) =>
+                {
+                    changeHealthBar.fillAmount = value;
+                });
         }
+
+        if(fill_Health < healthFraction)
+        {
+            changeHealthBar.fillAmount = healthFraction;
+            changeHealthBar.color = healedColor;
+
+            LeanTween.value(changeHealthBar.gameObject, fill_Health, changeHealthBar.fillAmount, chipAwaySpeed)
+                .setEase(healedTween)
+                .setOnUpdate((value) =>
+                {
+                    changeHealthBar.fillAmount = value;
+                });
+        }
+
+        if (healFraction > healthFraction)
+        {
+
+            LeanTween.value(healHealthBar.gameObject, fill_Heal, healFraction, chipAwaySpeed)
+                .setEase(healTween)
+                .setOnUpdate((value) =>
+                {
+                    healHealthBar.fillAmount = value;
+                });
+        }
+        else { healHealthBar.fillAmount = healthFraction; }
+
     }
 
 }
 
-[System.Serializable]
-public class DisplayLayer
-{
-    public Image image;
-}

@@ -8,8 +8,9 @@ public class BiomeProgressionManager : MonoBehaviour
     public CompassUI compassUI;
     public bool Compleation;
     public static BiomeProgressionManager instance;
-    MovementControl movement;
     public bool justCompleated = false;
+    public HealthDisplay playerHealth;
+    MovementControl movement;
     Vector2 playerStartPos;
     float traveledDist;
 
@@ -51,6 +52,7 @@ public class BiomeProgressionManager : MonoBehaviour
     {
         MapGenerator.Generator.GenerateStartValues(true);
         BiomeQuestManager.instance.ClearEquiped();
+        playerHealth.healManager.Heal();
 
     }
 }
