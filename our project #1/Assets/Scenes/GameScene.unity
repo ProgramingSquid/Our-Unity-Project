@@ -681,7 +681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healHealth: 0
-  healthSystem: {fileID: 0}
+  healthSystem: {fileID: 739540733}
 --- !u!114 &238255281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -694,15 +694,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e306fa38e485ae944886dd61dd215962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarLayers:
-  - image: {fileID: 343324105}
-  - image: {fileID: 1500411470}
-  - image: {fileID: 349376205}
+  healthBar: {fileID: 343324105}
+  changeHealthBar: {fileID: 1500411470}
+  healHealthBar: {fileID: 349376205}
   healthSystem: {fileID: 739540733}
+  healManager: {fileID: 238255280}
   tookDamageColor: {r: 1, g: 0, b: 0, a: 1}
+  tookDamageTween: 19
   healedColor: {r: 0, g: 1, b: 0, a: 1}
+  healedTween: 30
   healColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  chipAwaySpeed: 1
+  healTween: 30
+  chipAwaySpeed: 0.35
 --- !u!1 &322234976
 GameObject:
   m_ObjectHideFlags: 0
@@ -3280,8 +3283,8 @@ RectTransform:
   - {fileID: 166025410}
   - {fileID: 824637152}
   - {fileID: 2133642272}
-  - {fileID: 427366683}
   - {fileID: 238255279}
+  - {fileID: 427366683}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3984,6 +3987,7 @@ MonoBehaviour:
   compassUI: {fileID: 1574063529}
   Compleation: 0
   justCompleated: 0
+  playerHealth: {fileID: 0}
 --- !u!1 &937224323
 GameObject:
   m_ObjectHideFlags: 0

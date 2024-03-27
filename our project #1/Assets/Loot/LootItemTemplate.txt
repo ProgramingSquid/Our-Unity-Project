@@ -1,0 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+[CreateAssetMenu(fileName = "LOOTNAMESO", menuName = "Loot Items/LOOTNAME")]
+public class LOOTNAME : ScriptableObject, IPickUpable
+{
+    public void PickUp()
+    {
+        //Write What happens when pick uped here;
+        throw new System.NotImplementedException();
+    }
+
+}
