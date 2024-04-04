@@ -4,9 +4,10 @@ using UnityEngine;
 
 public interface IPickUpable
 {
-    public float pickUpSpeed { get; set; }
-    public GameObject prefab { get; set; }
-    public float splineSize { get; set; }
+     
+     int Rarity { get; set; }
+
+    bool IsAutomaticalyCollected { get; set; }
 
     public void PickUp();
         

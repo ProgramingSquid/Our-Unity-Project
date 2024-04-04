@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NaughtyAttributes;
+using System;
 [CreateAssetMenu(fileName = "LootSO", menuName = "Loot Items/Loot")]
 public class Loot : ScriptableObject, IPickUpable
 {
-    public float pickUpSpeed { get; set; }
-    public GameObject prefab { get; set; }
-    public float splineSize { get; set; }
+
+    [SerializeField] int rarity;
+    public int Rarity { get => rarity; set => rarity = value; }
+
+    [SerializeField] bool isAutomaticalyCollected;
+    public bool IsAutomaticalyCollected { get => isAutomaticalyCollected; set => isAutomaticalyCollected = value; }
 
     public void PickUp()
     {
-        throw new System.NotImplementedException();
+        
     }
 }

@@ -7,7 +7,6 @@ public class LootItemPopUp : EditorWindow
 {
     static LootItemPopUp window;
     string Title = "LootItem";
-    [Tooltip("If false this loot will not be collected atomaticaly")]bool isAutomatic = true;
     bool initializedPosition = false;
     [MenuItem("Assets/Create/Loot Item Script", false, 1)]
     public static void ShowWindow()
@@ -32,8 +31,7 @@ public class LootItemPopUp : EditorWindow
 
             EditorGUILayout.LabelField("Title:", GUILayout.Width(35));
             Title = EditorGUILayout.TextField(Title, GUILayout.MaxWidth(150));
-            EditorGUILayout.LabelField("Is Automatic:", GUILayout.Width(75));
-            isAutomatic = EditorGUILayout.Toggle(isAutomatic, GUILayout.MaxWidth(150));
+
 
 
             if (GUILayout.Button(">", GUILayout.Width(20)))
