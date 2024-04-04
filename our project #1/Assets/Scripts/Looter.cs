@@ -30,10 +30,19 @@ public class Looter : MonoBehaviour
     {
 
         UpdatePickUpableLoot();
+
+        foreach (lootObj loot in pickUpableLoot)
+        {
+            if (loot.pickUp.IsAutomaticalyCollected)
+            {
+                PickUpLoot(loot);
+            }
+        }
+
         if (input)
         {
             //TO DO: Add the option for some loot to be picked up atomaticaly
-            PickUpLoot();
+            PickUpLoot(pickUpableLoot[0]);
             input = false;
         }
     }
@@ -56,12 +65,12 @@ public class Looter : MonoBehaviour
 
     }
 
-    void PickUpLoot()
+    void PickUpLoot(lootObj loot)
     {
         //TO DO: Make it for not all loot gets added to inventory
-        inventory.Add(pickUpableLoot[0].pickUp);
-        pickUpableLoot[0].pickUp.PickUp();
-        pickUpableLoot[0].lootComponent.animate = false;
+        if (loot.pickUp.IsAddedToInventory) { inventory.Add(loot.pickUp); }
+        if (loot.lootComponent.NotGettingPickedUp == true) { loot.pickUp.PickUp(); }
+        loot.lootComponent.NotGettingPickedUp = false;
         StartCoroutine(PickUpAnimation(pickUpableLoot[0].lootGO, AnimationSpeed));
         
 
@@ -69,6 +78,7 @@ public class Looter : MonoBehaviour
 
     IEnumerator PickUpAnimation(GameObject gameObject, float speed)
     {
+        
         Vector3 Apos = gameObject.transform.position;
         Vector3 Bpos = UnityEngine.Random.insideUnitSphere * pickUpRadius * 1.25f;
         Debug.Log(Bpos);
@@ -92,7 +102,7 @@ public class Looter : MonoBehaviour
         }
         if (lerp >= 1)
         {
-            Destroy(pickUpableLoot[0].lootGO);
+            Destroy(gameObject);
         }
     }
 

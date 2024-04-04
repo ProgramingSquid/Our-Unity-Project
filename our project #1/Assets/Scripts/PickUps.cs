@@ -8,6 +8,7 @@ public interface IPickUpable
      int Rarity { get; set; }
 
     bool IsAutomaticalyCollected { get; set; }
+    bool IsAddedToInventory { get; set; }
 
     public void PickUp();
         

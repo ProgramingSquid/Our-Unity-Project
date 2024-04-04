@@ -15,7 +15,7 @@ public class LootComponent : MonoBehaviour
     public float lifeTime;
     float originalY;
     bool isVisible = true;
-    public bool animate = true;
+    public bool NotGettingPickedUp = true;
 
 
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class LootComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(animate == false)
+        if(NotGettingPickedUp == false)
         {
             transform.position = new Vector3(transform.position.x, originalY + (Mathf.Sin(Time.time * animationSpeed) * animationMagnitude),
                 transform.position.z);
