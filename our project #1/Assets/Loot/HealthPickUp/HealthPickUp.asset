@@ -15,3 +15,4 @@ MonoBehaviour:
   rarity: 1
   isAutomaticalyCollected: 1
   isAddedToInventory: 0
+  healAmount: {x: 0.75, y: 2}
