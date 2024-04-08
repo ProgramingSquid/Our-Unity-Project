@@ -1069,8 +1069,10 @@ MonoBehaviour:
   smoothSpeed: 0.35
   MinSmoothSpeed: 0.1
   zoomCameraObj: {fileID: 76628771}
-  zoomOutDist: 10
+  zoomOutDist: 7.5
   zoomInDist: 0
+  lookAheadBias: 0.3
+  lookAheadClampingDist: 12
   offset: {x: 0, y: 0, z: 0}
 --- !u!1 &343324103
 GameObject:
@@ -1445,7 +1447,7 @@ GameObject:
   - component: {fileID: 505859737}
   - component: {fileID: 505859736}
   m_Layer: 10
-  m_Name: Quad
+  m_Name: Player Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1461,7 +1463,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.0000000074505815, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 17}
-  m_LocalScale: {x: 40, y: 22.598864, z: 22.598864}
+  m_LocalScale: {x: 40, y: 22.598858, z: 22.598858}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 519420032}
@@ -1639,7 +1641,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 5567
+    m_Bits: 7615
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -4470,6 +4472,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 10, z: 0, w: 10}
   m_Softness: {x: 0, y: 70}
+--- !u!1 &966034805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 966034806}
+  - component: {fileID: 966034807}
+  m_Layer: 0
+  m_Name: Ocean
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &966034806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966034805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1449697865}
+  - {fileID: 968350366}
+  - {fileID: 2008186426}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &966034807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 966034805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4263f703d7f920a4781374a035c79b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followTransform: {fileID: 1723996495}
 --- !u!1 &968350365
 GameObject:
   m_ObjectHideFlags: 0
@@ -4483,7 +4533,7 @@ GameObject:
   - component: {fileID: 968350368}
   - component: {fileID: 968350367}
   m_Layer: 9
-  m_Name: Ocean
+  m_Name: Transparent quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4498,11 +4548,11 @@ Transform:
   m_GameObject: {fileID: 968350365}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 19.925007}
-  m_LocalScale: {x: 44.39314, y: 23.121424, z: 1}
+  m_LocalPosition: {x: -0, y: -0, z: 19.45}
+  m_LocalScale: {x: 44.39314, y: 23.121426, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1723996495}
+  m_Father: {fileID: 966034806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &968350367
 BoxCollider:
@@ -6183,7 +6233,7 @@ GameObject:
   - component: {fileID: 1449697869}
   - component: {fileID: 1449697866}
   m_Layer: 4
-  m_Name: Quad (1)
+  m_Name: Shadow Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6198,11 +6248,11 @@ Transform:
   m_GameObject: {fileID: 1449697864}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 19.210003}
+  m_LocalPosition: {x: 0, y: -0, z: 18.46}
   m_LocalScale: {x: 50, y: 28, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1723996495}
+  m_Father: {fileID: 966034806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &1449697866
 MeshCollider:
@@ -6248,7 +6298,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f8c7bc8d10e29c478f94039de88a733, type: 2}
+  - {fileID: 2100000, guid: 45cfa37354480d54499ba9e4dca20e1a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7278,10 +7328,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1449697865}
-  - {fileID: 968350366}
-  - {fileID: 2008186426}
+  m_Children: []
   m_Father: {fileID: 1461517411}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1723996496
@@ -7359,7 +7406,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 18.9
+  near clip plane: 18.2
   far clip plane: 38.76
   field of view: 68
   orthographic: 0
@@ -7367,16 +7414,16 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2624
+    m_Bits: 576
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 8400000, guid: 7422e7c3f98e2524fb9bcabb3fc9baa3, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 2793544cea88828419757ef1b69f4bed, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!1 &1748278027
@@ -8108,7 +8155,7 @@ GameObject:
   - component: {fileID: 2008186428}
   - component: {fileID: 2008186427}
   m_Layer: 4
-  m_Name: Quad
+  m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8123,11 +8170,11 @@ Transform:
   m_GameObject: {fileID: 2008186425}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 19.970003}
+  m_LocalPosition: {x: 0, y: -0, z: 19.45}
   m_LocalScale: {x: 115.405, y: 64.6268, z: 2.3081}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1723996495}
+  m_Father: {fileID: 966034806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!64 &2008186427
 MeshCollider:
@@ -8618,7 +8665,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2036620996488128198, guid: a4427d370ea314e46889c5a7707d57aa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2036620996488128198, guid: a4427d370ea314e46889c5a7707d57aa, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8668,6 +8715,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6725080799163344097, guid: a4427d370ea314e46889c5a7707d57aa, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6725080799163344097, guid: a4427d370ea314e46889c5a7707d57aa, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9daaba29dd193704885e6f7be48f522e, type: 2}
     - target: {fileID: 8886744084130794610, guid: a4427d370ea314e46889c5a7707d57aa, type: 3}
       propertyPath: MapGenerator
       value: 
@@ -8682,6 +8737,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 342509089}
+  - {fileID: 966034806}
   - {fileID: 4331934010456705534}
   - {fileID: 739540730}
   - {fileID: 750391860}
