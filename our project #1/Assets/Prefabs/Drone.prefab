@@ -400,7 +400,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3440454382318124823}
   - component: {fileID: 3440454382318124904}
-  - component: {fileID: 6596518214668239654}
   - component: {fileID: 3440454382318124819}
   - component: {fileID: 3440454382318124818}
   - component: {fileID: -7729842638163733794}
@@ -408,6 +407,7 @@ GameObject:
   - component: {fileID: 1122737866230346824}
   - component: {fileID: 4779519443828115174}
   - component: {fileID: -5379854388115220373}
+  - component: {fileID: 8977425586389692968}
   m_Layer: 7
   m_Name: Drone
   m_TagString: Enemy
@@ -491,19 +491,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6596518214668239654
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3440454382318124906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd774042d940a7143b77e70791347bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
 --- !u!114 &3440454382318124819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -516,9 +503,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7154fa313b317f245be3beebb33cd7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  targetDisFormTarget: 30
-  lookAngle: 30
+  speed:
+    tag: 
+    value: 0
+  targetDisFormTarget:
+    tag: 
+    value: 0
+  lookAngle:
+    tag: 
+    value: 0
+  exitNode: 0
 --- !u!114 &3440454382318124818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,6 +739,68 @@ MonoBehaviour:
   itemsPerDrop: {x: 1, y: 1}
   dropPos: {fileID: 5196415143498283448}
   dropAreaRadius: 2
+--- !u!114 &8977425586389692968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3440454382318124906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 456b64ce79583c44f808477a60729b4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: currentNodes
+      Entry: 7
+      Data: 0|System.Collections.Generic.List`1[[IEnemyBehaviorNode, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: transitions
+      Entry: 7
+      Data: 1|System.Collections.Generic.List`1[[BehaviorNodeTransition, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: rootTransitions
+      Entry: 7
+      Data: 2|System.Collections.Generic.List`1[[IEnemyBehaviorNode, Assembly-CSharp]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  type: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
+  transitions: []
 --- !u!1 &5078782558339207480
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaughtyAttributes.Editor", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{CDDFF613-45AF-1217-AA8A-527429C0FED9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sirenix.OdinInspector.Modules.UnityMathematics", "Sirenix.OdinInspector.Modules.UnityMathematics.csproj", "{5DC81605-FFAF-CB8D-4889-73FEF5A28CA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{CDDFF613-45AF-1217-AA8A-527429C0FED9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDDFF613-45AF-1217-AA8A-527429C0FED9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDDFF613-45AF-1217-AA8A-527429C0FED9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DC81605-FFAF-CB8D-4889-73FEF5A28CA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DC81605-FFAF-CB8D-4889-73FEF5A28CA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DC81605-FFAF-CB8D-4889-73FEF5A28CA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DC81605-FFAF-CB8D-4889-73FEF5A28CA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

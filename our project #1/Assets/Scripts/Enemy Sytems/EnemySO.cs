@@ -1,4 +1,6 @@
-using NaughtyAttributes;
+using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
@@ -12,8 +14,11 @@ public class EnemySO : ScriptableObject
     //The base class that all enemy classes inheret from
     /*(All enemies must have...)*/
 
-    public string name;
-    public float maxHealth;
+    [LabelText("Name")]
+    public string enemyName;
+    
+    public EnemyStat<float> maxHealth;
+
     [Space(5),
     Tooltip(
         "A value to controll the lickly hood of" +
@@ -23,13 +28,13 @@ public class EnemySO : ScriptableObject
     )]
     public float bias;
 
-    [Expandable, ShowIf("hasSubTypes")]
+    [InlineEditor, ShowIf("hasSubTypes")]
     public List<EnemySO> SubTypes;
-    [HideInInspector] public bool hasSubTypes = true;
+    [DisplayAsString] public bool hasSubTypes = true;
 
-    [Expandable]
+    [InlineEditor]
     [ShowIf("hasDifficultyVeriants")] public List<EnemySO> difficultyVeriants;
-    [HideInInspector] public bool hasDifficultyVeriants = true;
+    [DisplayAsString] public bool hasDifficultyVeriants = true;
     
     private void OnValidate()
     {
@@ -59,6 +64,21 @@ public class EnemySO : ScriptableObject
 
     }
 
+}
+
+[Serializable]
+public class EnemyStat<T>
+{
+    public string tag;
+    public T defualtValue;
+
+    public bool isScallingStat;
+    public bool shouldScale;
+    public T value;
+    public T maxValue;
+    public T minValue;
+    public float scallingSpeed;
+    public LeanTweenType scallingMode;
 }
 
 

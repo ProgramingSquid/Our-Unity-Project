@@ -12,12 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15c1a41219bf53f49a26edc111840ad2, type: 3}
   m_Name: DroneEnemyType
   m_EditorClassIdentifier: 
-  typeIndex: 0
-  maxHealth: 10
-  health: 22
-  healthMultiplyer: 0.02
-  baseDifficultyLevel: 1
-  currentDifficultyLevel: 23.554144
-  difficultyAmount: 23.554144
-  difficultyIncreaseSpeed: 0.5
-  spawnYPos: -14.5
+  enemyName: Basic Drone
+  maxHealth:
+    tag: Health
+    defualtValue: 10
+    isScallingStat: 0
+    shouldScale: 0
+    value: 0
+    maxValue: 0
+    minValue: 0
+    scallingSpeed: 0
+    scallingMode: 0
+  bias: 0
+  SubTypes: []
+  hasSubTypes: 1
+  difficultyVeriants: []
+  hasDifficultyVeriants: 1
