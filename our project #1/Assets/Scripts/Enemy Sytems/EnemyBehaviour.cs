@@ -6,7 +6,7 @@ using System;
 using Sirenix.Serialization;
 using Sirenix.OdinInspector;
 
-public class EnemyBehaviour : SerializedMonoBehaviour
+public class EnemyBehaviour : MonoBehaviour
 {
     /*A unity component that gives each enemy gameobject
      its functionality from thire state machine, other components like the health sytem,
@@ -16,13 +16,17 @@ public class EnemyBehaviour : SerializedMonoBehaviour
     [InlineEditor]
     public EnemySO type;
 
-    [OdinSerialize]
+    [DisplayAsString]
     public List<IEnemyBehaviorNode> currentNodes;
-    
-    public List<BehaviorNodeTransition> transitions;
 
-    [OdinSerialize]
-    public List<IEnemyBehaviorNode> rootTransitions;
+    
+
+    public List<BehaviorNodeTransition> transitions = new List<BehaviorNodeTransition>();
+
+    
+    public List<IEnemyBehaviorNode> rootTransitions = new List<IEnemyBehaviorNode>();
+
+   [LabelText("starting nodes")] public List<BehaviorNode<UnityEngine.Object>> inspectorRootTransitions = new List<BehaviorNode<UnityEngine.Object>>();
 
     private void Start()
     {
@@ -38,6 +42,52 @@ public class EnemyBehaviour : SerializedMonoBehaviour
             transition.UpdateTransition();
         }
     }
+
+    private void OnValidate()
+    {
+        for (int i = 0; i < inspectorRootTransitions.Count; i++)
+        {
+            BehaviorNode<UnityEngine.Object> behaviorNode = inspectorRootTransitions[i];
+
+            
+            if (inspectorRootTransitions[i].nodeObject is IEnemyBehaviorNode)
+            {
+                rootTransitions.Add((IEnemyBehaviorNode)inspectorRootTransitions[i].nodeObject);
+            }
+            else if (inspectorRootTransitions[i].nodeObject != null)
+            {
+                Debug.LogError("In Valid Input, Cannot Be: " + inspectorRootTransitions[i].nodeObject.GetType());
+                inspectorRootTransitions.Remove(behaviorNode);
+            }
+        }
+
+        for (int i = 0; i < transitions.Count; i++)
+        {
+            if (transitions[i].From is IEnemyBehaviorNode && transitions[i].To is IEnemyBehaviorNode)
+            {
+                transitions[i].interfaceFrom = (IEnemyBehaviorNode)transitions[i].From;
+                transitions[i].interfaceTo = (IEnemyBehaviorNode)transitions[i].To;
+                Debug.LogError("In Valid Input From or To, Cannot Be: " + transitions[i].From.GetType() + " And/Or " + transitions[i].To.GetType());
+            }
+            else
+            {
+                transitions[i].From = null;
+                transitions[i].To = null;
+                
+            }
+        }
+
+        foreach (var item in transitions)
+        {
+            item.objectBehaviour = this;
+        }
+    }
+}
+
+[Serializable]
+public class BehaviorNode<T>
+{
+    public T nodeObject;
 }
 
 public interface IEnemyBehaviorNode
@@ -71,17 +121,19 @@ public class EnemyPamater<T>
 [Serializable]
 public class BehaviorNodeTransition
 {
-    public IEnemyBehaviorNode From;
-    public IEnemyBehaviorNode To;
+    public BehaviorNode<UnityEngine.Object> From;
+    public BehaviorNode<UnityEngine.Object> To;
+    public IEnemyBehaviorNode interfaceFrom;
+    public IEnemyBehaviorNode interfaceTo;
     public EnemyBehaviour objectBehaviour;
 
     public void UpdateTransition()
     {
-        if(From.exit == true)
+        if(interfaceFrom.exit == true)
         {
-            objectBehaviour.currentNodes.Remove(From);
-            objectBehaviour.currentNodes.Add(To);
-            From.exit = false;
+            objectBehaviour.currentNodes.Remove(interfaceFrom);
+            objectBehaviour.currentNodes.Add(interfaceTo);
+            interfaceFrom.exit = false;
         }
     }
 }

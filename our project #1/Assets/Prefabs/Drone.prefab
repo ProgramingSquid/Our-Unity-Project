@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 3440454382318124823}
   - component: {fileID: 3440454382318124904}
   - component: {fileID: 3440454382318124819}
+  - component: {fileID: 1861337165911593098}
   - component: {fileID: 3440454382318124818}
   - component: {fileID: -7729842638163733794}
   - component: {fileID: 2954724748663584975}
@@ -513,6 +514,24 @@ MonoBehaviour:
     tag: 
     value: 0
   exitNode: 0
+--- !u!114 &1861337165911593098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3440454382318124906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb3c08f3aee84d40a3e1736d56a82e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 0}
+  target: {fileID: 0}
+  offsetFromTransform: {x: 0, y: 0, z: 0}
+  timeBetweenShots: 0.5
+  spreadAngle: 0
+  SwivleAngle: 25
 --- !u!114 &3440454382318124818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,56 +770,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 456b64ce79583c44f808477a60729b4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: currentNodes
-      Entry: 7
-      Data: 0|System.Collections.Generic.List`1[[IEnemyBehaviorNode, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: transitions
-      Entry: 7
-      Data: 1|System.Collections.Generic.List`1[[BehaviorNodeTransition, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: rootTransitions
-      Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[IEnemyBehaviorNode, Assembly-CSharp]],
-        mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
   type: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
   transitions: []
+  inspectorRootTransitions:
+  - nodeObject: {fileID: 3440454382318124819}
+  - nodeObject: {fileID: 0}
 --- !u!1 &5078782558339207480
 GameObject:
   m_ObjectHideFlags: 0
