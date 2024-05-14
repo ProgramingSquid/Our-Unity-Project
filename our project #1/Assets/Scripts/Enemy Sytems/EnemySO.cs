@@ -73,12 +73,13 @@ public class EnemyStat<T>
     public T defualtValue;
 
     public bool isScallingStat;
+    
     public bool shouldScale;
-    public T value;
-    public T maxValue;
-    public T minValue;
-    public float scallingSpeed;
-    public LeanTweenType scallingMode;
+    [ShowIf("isScallingStat")]  public T value;
+    [ShowIf("isScallingStat")] public T maxValue;
+    [ShowIf("isScallingStat")] T minValue;
+    [ShowIf("isScallingStat")] float scallingSpeed;
+    [ShowIf("isScallingStat")] LeanTweenType scallingMode;
 }
 
 

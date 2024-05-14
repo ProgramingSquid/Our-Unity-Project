@@ -17,7 +17,7 @@ public class EnemyBehaviour : MonoBehaviour
     public EnemySO type;
 
     [DisplayAsString]
-    public List<IEnemyBehaviorNode> currentNodes;
+    public List<IEnemyBehaviorNode> currentNodes = new List<IEnemyBehaviorNode>();
 
     
 
@@ -33,6 +33,7 @@ public class EnemyBehaviour : MonoBehaviour
         foreach (IEnemyBehaviorNode node in rootTransitions)
         {
             currentNodes.Add(node);
+            node.OnEnterBehavior();
         }
     }
     private void Update()
@@ -41,6 +42,12 @@ public class EnemyBehaviour : MonoBehaviour
         {
             transition.UpdateTransition();
         }
+
+        foreach (IEnemyBehaviorNode node in currentNodes)
+        {
+            node.BehaviorUpdate();
+        }
+
     }
 
     private void OnValidate()
@@ -52,7 +59,7 @@ public class EnemyBehaviour : MonoBehaviour
             
             if (inspectorRootTransitions[i].nodeObject is IEnemyBehaviorNode)
             {
-                rootTransitions.Add((IEnemyBehaviorNode)inspectorRootTransitions[i].nodeObject);
+                rootTransitions.Add(inspectorRootTransitions[i].nodeObject as IEnemyBehaviorNode);
             }
             else if (inspectorRootTransitions[i].nodeObject != null)
             {
@@ -73,7 +80,6 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 transitions[i].From = null;
                 transitions[i].To = null;
-                
             }
         }
 
@@ -133,6 +139,7 @@ public class BehaviorNodeTransition
         {
             objectBehaviour.currentNodes.Remove(interfaceFrom);
             objectBehaviour.currentNodes.Add(interfaceTo);
+            interfaceTo.OnEnterBehavior();
             interfaceFrom.exit = false;
         }
     }

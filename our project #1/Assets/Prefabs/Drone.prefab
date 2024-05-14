@@ -387,9 +387,16 @@ MonoBehaviour:
   projectile: {fileID: 6105664965057187943, guid: feb5cf99a38170544bada73c6f410f82, type: 3}
   target: {fileID: 0}
   offsetFromTransform: {x: 0, y: 0.5, z: 0}
-  timeBetweenShots: 2
-  spreadAngle: 0
-  SwivleAngle: 25
+  timeBetweenShots:
+    tag: 
+    value: 0
+  spreadAngle:
+    tag: 
+    value: 0
+  SwivleAngle:
+    tag: 
+    value: 0
+  exitNode: 0
 --- !u!1 &3440454382318124906
 GameObject:
   m_ObjectHideFlags: 0
@@ -529,9 +536,16 @@ MonoBehaviour:
   projectile: {fileID: 0}
   target: {fileID: 0}
   offsetFromTransform: {x: 0, y: 0, z: 0}
-  timeBetweenShots: 0.5
-  spreadAngle: 0
-  SwivleAngle: 25
+  timeBetweenShots:
+    tag: 
+    value: 0
+  spreadAngle:
+    tag: 
+    value: 0
+  SwivleAngle:
+    tag: 
+    value: 0
+  exitNode: 0
 --- !u!114 &3440454382318124818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,7 +788,7 @@ MonoBehaviour:
   transitions: []
   inspectorRootTransitions:
   - nodeObject: {fileID: 3440454382318124819}
-  - nodeObject: {fileID: 0}
+  - nodeObject: {fileID: 1861337165911593098}
 --- !u!1 &5078782558339207480
 GameObject:
   m_ObjectHideFlags: 0

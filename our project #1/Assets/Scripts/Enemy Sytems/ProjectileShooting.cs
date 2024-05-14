@@ -1,30 +1,61 @@
+using NaughtyAttributes;
+using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileShooting : MonoBehaviour
+public class ProjectileShooting : MonoBehaviour, IEnemyBehaviorNode
 {
 
     public GameObject projectile;
-    public Transform target;
+    [DisplayAsString] Transform target;
+    [Tag] public string targetTag;
     public Vector3 offsetFromTransform;
     Vector3 difernce;
     float timer;
-    public float timeBetweenShots = 0.5f;
-    public float spreadAngle = 0;
-    public float SwivleAngle = 25;
-    
+    public EnemyPamater<float> timeBetweenShots;
+    public EnemyPamater<float> spreadAngle;
+    public EnemyPamater<float> SwivleAngle;
 
-
-    // Start is called before the first frame update
-    void Start()
+    public BehaviorExitReturn behaviorExitReturn
     {
-        timer = timeBetweenShots;
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        get => nodeExitReturn;
+        set => nodeExitReturn = value;
+    }
+    [SerializeField] BehaviorExitReturn nodeExitReturn;
+    public BehaviorExitReturn previousbehaviorExitReturns
+    {
+        get => previousbehaviorExitReturns;
+        set => previousbehaviorExitReturns = value;
+    }
+    
+    [SerializeField] BehaviorExitReturn previousExitReturns;
+    public bool exit 
+    {
+        get => exitNode;
+        set => exitNode = value;
+    }
+    [SerializeField] bool exitNode;
+
+
+    private void Shoot()
+    {
+        timer = timeBetweenShots.value;
+        float spread = Random.Range(-spreadAngle.value / 2, spreadAngle.value / 2);
+        float SpreadY = transform.rotation.eulerAngles.y + spread;
+        Vector3 dir = difernce;
+        GameObject gameObject = ObjectPoolManager.spawnObject(projectile, transform.position, Quaternion.Euler(90, SpreadY, 0));
+        gameObject.GetComponent<Projectile>().shootforceDir = dir;
+        gameObject.transform.position = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnEnterBehavior()
+    {
+        timer = timeBetweenShots.value;
+        target = GameObject.FindGameObjectWithTag(targetTag).GetComponent<Transform>();
+    }
+
+    public void BehaviorUpdate()
     {
 
         difernce = (target.position + offsetFromTransform) - transform.position;
@@ -39,16 +70,5 @@ public class ProjectileShooting : MonoBehaviour
             Shoot();
 
         }
-    }
-
-    private void Shoot()
-    {
-        timer = timeBetweenShots;
-        float spread = Random.Range(-spreadAngle / 2, spreadAngle / 2);
-        float SpreadY = transform.rotation.eulerAngles.y + spread;
-        Vector3 dir = difernce;
-        GameObject gameObject = ObjectPoolManager.spawnObject(projectile, transform.position, Quaternion.Euler(90, SpreadY, 0));
-        gameObject.GetComponent<Projectile>().shootforceDir = dir;
-        gameObject.transform.position = transform.position;
     }
 }
