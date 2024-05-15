@@ -385,17 +385,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 6105664965057187943, guid: feb5cf99a38170544bada73c6f410f82, type: 3}
-  target: {fileID: 0}
-  offsetFromTransform: {x: 0, y: 0.5, z: 0}
+  targetTag: Player
+  offsetFromTransform: {x: 0, y: 0, z: 0}
   timeBetweenShots:
     tag: 
-    value: 0
+    value: 0.75
   spreadAngle:
     tag: 
-    value: 0
+    value: 5
   SwivleAngle:
     tag: 
-    value: 0
+    value: 25
   exitNode: 0
 --- !u!1 &3440454382318124906
 GameObject:
@@ -408,7 +408,6 @@ GameObject:
   - component: {fileID: 3440454382318124823}
   - component: {fileID: 3440454382318124904}
   - component: {fileID: 3440454382318124819}
-  - component: {fileID: 1861337165911593098}
   - component: {fileID: 3440454382318124818}
   - component: {fileID: -7729842638163733794}
   - component: {fileID: 2954724748663584975}
@@ -511,41 +510,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7154fa313b317f245be3beebb33cd7ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  targetTag: Player
   speed:
-    tag: 
-    value: 0
+    tag: speed
+    value: 10
   targetDisFormTarget:
     tag: 
-    value: 0
+    value: 10
   lookAngle:
     tag: 
     value: 0
-  exitNode: 0
---- !u!114 &1861337165911593098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3440454382318124906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bb3c08f3aee84d40a3e1736d56a82e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 0}
-  target: {fileID: 0}
-  offsetFromTransform: {x: 0, y: 0, z: 0}
-  timeBetweenShots:
-    tag: 
-    value: 0
-  spreadAngle:
-    tag: 
-    value: 0
-  SwivleAngle:
-    tag: 
-    value: 0
-  exitNode: 0
+  rotationOffset: {x: 90, y: -90, z: 0}
+  exitNode: 1
+  drawGizmos: 0
 --- !u!114 &3440454382318124818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -788,7 +766,7 @@ MonoBehaviour:
   transitions: []
   inspectorRootTransitions:
   - nodeObject: {fileID: 3440454382318124819}
-  - nodeObject: {fileID: 1861337165911593098}
+  - nodeObject: {fileID: 7011461258887806023}
 --- !u!1 &5078782558339207480
 GameObject:
   m_ObjectHideFlags: 0
