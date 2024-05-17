@@ -144,3 +144,16 @@ public class BehaviorNodeTransition
         }
     }
 }
+
+public struct Enemy
+{
+    public EnemyBehaviour enemyBehaviour;
+    public EnemySO enemySO;
+    public HealthSystem healthSystem;
+    public GameObject gameObject;
+
+    public void SetupVars()
+    {
+
+    }
+}

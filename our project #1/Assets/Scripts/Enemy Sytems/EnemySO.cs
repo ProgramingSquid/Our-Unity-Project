@@ -18,6 +18,7 @@ public class EnemySO : ScriptableObject
     public string enemyName;
     
     public EnemyStat<float> maxHealth;
+    [AssetsOnly] public GameObject prefab;
 
     [Space(5),
     Tooltip(

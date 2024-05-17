@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour
     {
         if (SceneManager.GetSceneByBuildIndex(2).isLoaded)
         {
-            EnemyWaveGenorator waveManager = (EnemyWaveGenorator)FindObjectOfType(typeof(EnemyWaveGenorator));
+            EnemyWaveManager waveManager = (EnemyWaveManager)FindObjectOfType(typeof(EnemyWaveManager));
             waveManager.StopAllCoroutines();
             EnemyBehaviour[] enemies = (EnemyBehaviour[])FindObjectsOfType(typeof(EnemyBehaviour));
             for (int i = 0; i < enemies.Length; i++)

@@ -63,13 +63,6 @@ public class EnemyFollow : MonoBehaviour, IEnemyBehaviorNode
         float angle = Mathf.Atan2(-diference.x, -diference.z) * Mathf.Rad2Deg;
 
         transform.rotation = Quaternion.Euler(rotationOffset.x, angle + rotationOffset.y, rotationOffset.z);
-
-        /*Vector3 difernce = target.position - transform.position;
-        float angle = Mathf.Atan2(difernce.z, difernce.x) * Mathf.Rad2Deg;
-        if (angle >= lookAngle.value / 2 || angle <= -lookAngle.value / 2)
-        {
-            transform.rotation = Quaternion.Euler(90, angle, 0);
-        }*/
     }
 
     private void OnDrawGizmos()
