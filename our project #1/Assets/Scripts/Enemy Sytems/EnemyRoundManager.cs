@@ -1,7 +1,17 @@
-using System.Collections;
+using NaughtyAttributes;
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI.Table;
+
+
+public enum RandomnesssType
+{
+    none,
+    MinAndMax,
+    RandomOnCurve
+}
 
 
 public class EnemyRoundManager : MonoBehaviour
@@ -16,26 +26,50 @@ public class EnemyRoundManager : MonoBehaviour
 
 
     #region weights
+    [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
     public float playerStartDificultyWeight;
+    [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
     public float playerSpeedDificultyWeight;
+    [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
     public float UpgradeStartDificultyWeight;
+    [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
     public float UpgradeSpeedDificultyWeight;
+    [GUIColor("#C2CBCE"), Sirenix.OdinInspector.BoxGroup("Weights")]
     [Range(0, 1)]
     public float startDificultyTypeWeight;
+    [GUIColor("#C2CBCE"), Sirenix.OdinInspector.BoxGroup("Weights")]
     [Range(0, 1)]
     public float speedDificultyTypeWeight;
     #endregion
 
-    public LeanTweenType difficultyIncreaseCurve;
-    public float startDificulty { get; private set; }
+
+    [Sirenix.OdinInspector.BoxGroup("Grace Time in Between Rounds", false)]
+    [LabelText("Between Round Grace Time")]
+    public RandomnessValue<float> roundGraceTime;
+
+
+
+    [Sirenix.OdinInspector.BoxGroup("Time Before First Round", false)]
+    [LabelText("Start Of Game Grace Time")]
+    public RandomnessValue<float> gameStartGraceTime;
+
+    [FoldoutGroup("Round Langth")]
+    public RandomnessValue<float> MinRoundTime;
+    [FoldoutGroup("Round Langth")]
+    public RandomnessValue<float> MaxRoundTime;
+
+    [FoldoutGroup("Wave Amount")]
+    public RandomnessValue<float> roundMinAmountOfWaves;
+    [FoldoutGroup("Wave Amount")]
+    public RandomnessValue<float> roundMaxAmountOfWaves;
+
     public float currentDificulty { get; private set; }
-    public float currentRoundDificulty { get; private set; }
-    public float currentMaxRoundDificulty { get; private set; }
-    public float currentMinRoundDificulty { get; private set; }
+    public LeanTweenType difficultyIncreaseCurve;
+    public Round currentRound;
+    [DisplayAsString] public bool inRound = false;
+
 
     [HideInInspector] public static EnemyRoundManager instance;
-
-
 
     public void Awake()
     {
@@ -47,26 +81,42 @@ public class EnemyRoundManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        
         Setup();
     }
     public void Setup()
     {
-        DetermenGameStartingDifficulty();
-        
+        DetermenGameDifficulty();
     }
 
     // Update is called once per frame
     private void Update()
     {
         UpdateDifficulty();
+
+        if(inRound)
+        {
+            //To Do: Update round info
+
+            //To Do: Update wave ending conditions
+
+            //To Do: Update exsiting wave info
+
+            //To Do: Creat new wave if needed
+        }
+        else
+        {
+            //To Do: Update round creating conditions
+
+            //To Do: Start/Creat new round if needed
+        }
+
     }
     public void UpdateDifficulty()
     {
-        //Add togle for increasing dificulty...
+        //To Do: Add togle for increasing dificulty...
     }
 
-    public void DetermenGameStartingDifficulty()
+    public void DetermenGameDifficulty()
     {
 
     }
@@ -77,27 +127,93 @@ public class EnemyRoundManager : MonoBehaviour
     }
 
 }
-
+[System.Serializable]
 public class Round
 {
     public float levelNumber;
     public float entryDifficulty;
     public float elapsedTime;
+    public bool updateElapsed; 
     public List<Wave> waves = new List<Wave>();
+    public Wave newestWave;
 }
 
-public class Wave
+[System.Serializable]
+public class RandomnessValue<T>
 {
-    List<Enemy> spawnEnemies = new List<Enemy>();
-    List<Enemy> aliveEnemies = new List<Enemy>();
-    public float elapsedTime;
-    public bool updateElapsed;
-    public float waveNumber;
+    [Sirenix.OdinInspector.BoxGroup]
+    [ShowInInspector] RandomnesssType randomnessType;
 
-    public void SpawnEnemies()
+    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
+    [ShowInInspector, HorizontalGroup] T min;
+    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
+    [ShowInInspector, HorizontalGroup] T max;
+
+    [CurveRange(0, 0, 1, 1, EColor.Orange), Sirenix.OdinInspector.BoxGroup]
+    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.RandomOnCurve)]
+    [ShowInInspector] AnimationCurve curve;
+    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.RandomOnCurve)]
+    [Sirenix.OdinInspector.BoxGroup]
+    [ShowInInspector] T multiplyier;
+
+    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.none)]
+    [ShowInInspector] T value;
+
+    public T GetValue()
     {
+        switch (randomnessType)
+        {
+           
+            default:
+                return value;
 
+            case RandomnesssType.none:
+                return value;
+            
+            case RandomnesssType.MinAndMax:
+                if (typeof(T) == typeof(float))
+                {
+                    float _min = (float)(object)min;
+                    float _max = (float)(object)max;
+
+                    T randomValue = (T)(object)Random.Range(_min, _max);
+                    return randomValue;
+                }
+                else if(typeof(T) == typeof(int))
+                {
+                    int _min = (int)(object)min;
+                    int _max = (int)(object)max;
+                    T randomValue = (T)(object)Random.Range(_min, _max);
+                    return randomValue;
+                }
+                else 
+                {
+                    Debug.LogError("Cannot use randomness on types that are not float or int");
+                    return default;
+                }
+
+
+            case RandomnesssType.RandomOnCurve:
+                if (typeof(T) == typeof(float))
+                {
+                    float random = Random.Range(0f, 1f);
+                    float value = (float)curve.Evaluate(random) * (float)(object)multiplyier;
+                    return (T)(object)value;
+                }
+                else if (typeof(T) == typeof(int))
+                {
+                    int random = Random.Range(0, 1);
+                    int value = (int)curve.Evaluate(random) * (int)(object)multiplyier;
+                    return (T)(object)value;
+                }
+                else
+                {
+                    Debug.LogError("Cannot use randomness on types that are not float or int");
+                    return default;
+                }
+
+        }
+            
     }
-
 }
 

@@ -14,7 +14,7 @@ public class EnemyBehaviour : MonoBehaviour
      */
 
     [InlineEditor]
-    public EnemySO type;
+    public EnemyDataSO type;
 
     [DisplayAsString]
     public List<IEnemyBehaviorNode> currentNodes = new List<IEnemyBehaviorNode>();
@@ -148,7 +148,7 @@ public class BehaviorNodeTransition
 public struct Enemy
 {
     public EnemyBehaviour enemyBehaviour;
-    public EnemySO enemySO;
+    public EnemyDataSO enemySO;
     public HealthSystem healthSystem;
     public GameObject gameObject;
 
