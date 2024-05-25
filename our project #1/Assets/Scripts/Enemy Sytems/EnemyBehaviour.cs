@@ -14,19 +14,17 @@ public class EnemyBehaviour : MonoBehaviour
      */
 
     [InlineEditor]
-    public EnemyDataSO type;
+    public EnemyTypeSO type;
 
     [DisplayAsString]
     public List<IEnemyBehaviorNode> currentNodes = new List<IEnemyBehaviorNode>();
-
-    
-
     public List<BehaviorNodeTransition> transitions = new List<BehaviorNodeTransition>();
 
-    
+
     public List<IEnemyBehaviorNode> rootTransitions = new List<IEnemyBehaviorNode>();
 
-   [LabelText("starting nodes")] public List<BehaviorNode<UnityEngine.Object>> inspectorRootTransitions = new List<BehaviorNode<UnityEngine.Object>>();
+    [LabelText("starting nodes")] public List<BehaviorNode<UnityEngine.Object>> inspectorRootTransitions = new List<BehaviorNode<UnityEngine.Object>>();
+
 
     private void Start()
     {
@@ -52,11 +50,18 @@ public class EnemyBehaviour : MonoBehaviour
 
     private void OnValidate()
     {
+        SetTransitions();
+        ValidateBehavior();
+
+
+    }
+    public void ValidateBehavior()
+    {
         for (int i = 0; i < inspectorRootTransitions.Count; i++)
         {
             BehaviorNode<UnityEngine.Object> behaviorNode = inspectorRootTransitions[i];
 
-            
+
             if (inspectorRootTransitions[i].nodeObject is IEnemyBehaviorNode)
             {
                 rootTransitions.Add(inspectorRootTransitions[i].nodeObject as IEnemyBehaviorNode);
@@ -82,7 +87,9 @@ public class EnemyBehaviour : MonoBehaviour
                 transitions[i].To = null;
             }
         }
-
+    }
+    public void SetTransitions()
+    {
         foreach (var item in transitions)
         {
             item.objectBehaviour = this;
@@ -148,11 +155,11 @@ public class BehaviorNodeTransition
 public struct Enemy
 {
     public EnemyBehaviour enemyBehaviour;
-    public EnemyDataSO enemySO;
+    public EnemyTypeSO enemySO;
     public HealthSystem healthSystem;
-    public GameObject gameObject;
+    [AssetsOnly] public GameObject gameObject;
 
-    public void SetupVars()
+    public void SetupInfo()
     {
 
     }

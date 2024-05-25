@@ -60,7 +60,7 @@ public struct EnemySpawningPriorityEffectingParamater
 
     public AplyingType aplyingType;
     public RandomnessValue<float> multiplier;
-    public List<EnemyDataSO> inclusionFlags;
+    public List<EnemyTypeSO> inclusionFlags;
 
 
 }

@@ -3,9 +3,7 @@ using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-//[RequireComponent(typeof(Enemy))]
 public class EnemyFollow : MonoBehaviour, IEnemyBehaviorNode
 {
 

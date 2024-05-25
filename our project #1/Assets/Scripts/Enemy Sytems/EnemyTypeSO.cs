@@ -3,12 +3,14 @@ using Sirenix.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using Unity.Collections;
 using UnityEngine;
 using static UnityEditor.Progress;
+using static UnityEngine.Rendering.DebugUI;
 
-[CreateAssetMenu(fileName ="EnemyType", menuName ="EnemyType")]
-public class EnemyDataSO : ScriptableObject
+[CreateAssetMenu(fileName = "EnemyType", menuName = "EnemyType")]
+public class EnemyTypeSO : ScriptableObject
 {
 
     //The base class that all enemy classes inheret from
@@ -16,27 +18,28 @@ public class EnemyDataSO : ScriptableObject
 
     [LabelText("Name")]
     public string enemyName;
-    
+
     public EnemyStat<float> maxHealth;
     [AssetsOnly] public GameObject prefab;
     [Space(5)]
 
 
     [InlineEditor, ShowIf("hasSubTypes")]
-    public List<EnemyDataSO> SubTypes;
+    public List<EnemyTypeSO> SubTypes;
     [DisplayAsString] public bool hasSubTypes = true;
 
     [InlineEditor]
-    [ShowIf("hasDifficultyVeriants")] public List<EnemyDataSO> difficultyVeriants;
+    [ShowIf("hasDifficultyVeriants")] public List<EnemyTypeSO> difficultyVeriants;
     [DisplayAsString] public bool hasDifficultyVeriants = true;
+    public List<EnemyStat<float>> ExtraStatistics;
 
+    #region Spawning priority
     [Tooltip(
         "The base value to control the lickly hood of" +
         "the enemy spawning. A negitive value makes it more rare," +
         "A value above zero makes it more common" +
         "Zero has no effect"
     )]
-
     [Title("Enemy Spawning Priority")]
     public float baseSpawningPriority;
 
@@ -49,45 +52,47 @@ public class EnemyDataSO : ScriptableObject
     [BoxGroup("activeEnemies", false)]
     public float activeDistance;
 
-  
+
     [BoxGroup("killedEnemies", false)]
     public EnemySpawningPriorityEffectingParamater killedEnemies;
     [BoxGroup("killedEnemies", false)]
     public float recentlyKilledTime;
 
-  
+
     [BoxGroup("lowHeathEnemies", false)]
     public EnemySpawningPriorityEffectingParamater lowHeathEnemies;
     [BoxGroup("lowHeathEnemies", false)]
-    [LabelText("healthCutOff")]public float healthCutOff_Low;
+    [LabelText("healthCutOff")] public float healthCutOff_Low;
 
-  
+
     [BoxGroup("highHeathEnemies", false)]
     public EnemySpawningPriorityEffectingParamater highHeathEnemies;
     [BoxGroup("highHeathEnemies", false)]
     [LabelText("healthCutOff")] public float healthCutOff_High;
 
-  
+
     [BoxGroup("spawnGroupSameEnemies", false)]
     public EnemySpawningPriorityEffectingParamater spawnGroupSameEnemies;
 
     [BoxGroup("spawnGroupTotalEnemies", false)]
     public EnemySpawningPriorityEffectingParamater spawnGroupTotalEnemies;
+    #endregion
 
+   
 
 
     private void OnValidate()
     {
-        Validate();
+        ValidateSubTypes();
     }
 
-    void Validate()
+    void ValidateSubTypes()
     {
-        foreach (EnemyDataSO item in SubTypes)
+        foreach (EnemyTypeSO item in SubTypes)
         {
             item.hasSubTypes = false;
         }
-        foreach (EnemyDataSO item in difficultyVeriants)
+        foreach (EnemyTypeSO item in difficultyVeriants)
         {
             item.hasSubTypes = false;
             item.hasDifficultyVeriants = false;
@@ -101,12 +106,30 @@ public class EnemyDataSO : ScriptableObject
         {
             SubTypes = null;
         }
-
     }
 
+    public void UpdateParameters()
+    {
+        
+    }
+
+    List<PropertyInfo> GetPropertiesOfType<T>(object obj)
+    {
+        var properties = new List<PropertyInfo>();
+        PropertyInfo[] allProperties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+        foreach (var property in allProperties)
+        {
+            if (property.PropertyType == typeof(T))
+            {
+                properties.Add(property);
+            }
+        }
+        return properties;
+    }
 }
 
-[Serializable]
+    [Serializable]
 public class EnemyStat<T>
 {
     public string tag;
