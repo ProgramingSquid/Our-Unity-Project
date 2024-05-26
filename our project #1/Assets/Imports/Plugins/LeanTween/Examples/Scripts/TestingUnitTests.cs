@@ -166,7 +166,7 @@ namespace DentedPixel.LTExamples
                 });
             });
 
-            // Tween with time of zero is needs to be set to it's final value
+            // Tween with time of zero is needs to be set to it's final setValue
             GameObject zeroCube = cubeNamed("zeroCube");
             LeanTween.moveX(zeroCube, 10f, 0f).setOnComplete(() => {
                 LeanTest.expect(zeroCube.transform.position.x == 10f, "ZERO TIME FINSHES CORRECTLY", "final x:" + zeroCube.transform.position.x);
@@ -199,7 +199,7 @@ namespace DentedPixel.LTExamples
                 LeanTest.expect(cubeRotateB.transform.position.ToString() == (new Vector3(200f, 10f, 8f)).ToString(), "ROTATE AROUND 360", "expected rotate pos:" + (new Vector3(200f, 10f, 8f)) + " returned:" + cubeRotateB.transform.position);
             });
 
-            // Alpha, onUpdate with passing value, onComplete value
+            // Alpha, onUpdate with passing setValue, onComplete setValue
             LeanTween.alpha(cubeAlpha1, 0.5f, 0.1f).setOnUpdate((float val) => {
                 LeanTest.expect(val != 0f, "ON UPDATE VAL");
             }).setOnCompleteParam("Hi!").setOnComplete((object completeObj) => {

@@ -44,7 +44,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     public AnimationCurveParameter densityCurve = new(new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.15f, 1.0f), new Keyframe(1.0f, 0.1f)), false);
 
     /// <summary>
-    /// Controls the larger noise passing through the cloud coverage. A higher value will yield less cloud coverage and smaller clouds.
+    /// Controls the larger noise passing through the cloud coverage. A higher setValue will yield less cloud coverage and smaller clouds.
     /// </summary>
     [Tooltip("Controls the larger noise passing through the cloud coverage. A higher value will yield less cloud coverage and smaller clouds.")]
     public ClampedFloatParameter shapeFactor = new(0.9f, 0.0f, 1.0f);
@@ -56,7 +56,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     public MinFloatParameter shapeScale = new(5.0f, 0.1f);
 
     /// <summary>
-    /// Controls the smaller noise on the edge of the clouds. A higher value will erode clouds more significantly.
+    /// Controls the smaller noise on the edge of the clouds. A higher setValue will erode clouds more significantly.
     /// </summary>
     [Tooltip("Controls the smaller noise on the edge of the clouds. A higher value will erode clouds more significantly.")]
     public ClampedFloatParameter erosionFactor = new(0.8f, 0.0f, 1.0f);
@@ -86,7 +86,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     public BoolParameter microErosion = new(false, BoolParameter.DisplayType.Checkbox, overrideState: false);
 
     /// <summary>
-    /// Controls the smallest noise on the edge of the clouds. A higher value will erode clouds more.
+    /// Controls the smallest noise on the edge of the clouds. A higher setValue will erode clouds more.
     /// </summary>
     [Tooltip("Controls the smallest noise on the edge of the clouds. A higher value will erode clouds more.")]
     public ClampedFloatParameter microErosionFactor = new(0.5f, 0.0f, 1.0f);
@@ -178,13 +178,13 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     */
 
     /// <summary>
-    /// Controls the influence of the light probes on the cloud volume. A lower value will suppress the ambient light and produce darker clouds overall.
+    /// Controls the influence of the light probes on the cloud volume. A lower setValue will suppress the ambient light and produce darker clouds overall.
     /// </summary>
     [Header("Lighting"), Tooltip("Controls the influence of the light probes on the cloud volume. A lower value will suppress the ambient light and produce darker clouds overall.")]
     public ClampedFloatParameter ambientLightProbeDimmer = new(1.0f, 0.0f, 2.0f);
 
     /// <summary>
-    /// Controls the influence of the sun light on the cloud volume. A lower value will suppress the sun light and produce darker clouds overall.
+    /// Controls the influence of the sun light on the cloud volume. A lower setValue will suppress the sun light and produce darker clouds overall.
     /// </summary>
     [Tooltip("Controls the influence of the sun light on the cloud volume. A lower value will suppress the sun light and produce darker clouds overall.")]
     public ClampedFloatParameter sunLightDimmer = new(1.0f, 0.0f, 2.0f);
@@ -202,7 +202,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     public ColorParameter scatteringTint = new(new Color(0.0f, 0.0f, 0.0f, 1.0f));
 
     /// <summary>
-    /// Controls the amount of local scattering in the clouds. A higher value may produce a more powdery or diffused aspect.
+    /// Controls the amount of local scattering in the clouds. A higher setValue may produce a more powdery or diffused aspect.
     /// </summary>
     [AdditionalProperty, Tooltip("Controls the amount of local scattering in the clouds. A higher value may produce a more powdery or diffused aspect.")]
     public ClampedFloatParameter powderEffectIntensity = new(0.25f, 0.0f, 1.0f);
@@ -214,19 +214,19 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     public ClampedFloatParameter multiScattering = new(0.5f, 0.0f, 1.0f);
 
     /// <summary>
-    /// Temporal accumulation increases the visual quality of clouds by decreasing the noise. A higher value will give you better quality but can create ghosting.
+    /// Temporal accumulation increases the visual quality of clouds by decreasing the noise. A higher setValue will give you better quality but can create ghosting.
     /// </summary>
     [Header("Quality"), Tooltip("Temporal accumulation increases the visual quality of clouds by decreasing the noise. A higher value will give you better quality but can create ghosting.")]
     public ClampedFloatParameter temporalAccumulationFactor = new(0.95f, 0.0f, 1.0f);
 
     /// <summary>
-    /// Controls the number of steps when evaluating the clouds' transmittance. A higher value may lead to a lower noise level and longer view distance, but at a higher cost.
+    /// Controls the number of steps when evaluating the clouds' transmittance. A higher setValue may lead to a lower noise level and longer view distance, but at a higher cost.
     /// </summary>
     [Tooltip("Controls the number of steps when evaluating the clouds' transmittance. A higher value may lead to a lower noise level and longer view distance, but at a higher cost.")]
     public ClampedIntParameter numPrimarySteps = new(32, 24, 256);
 
     /// <summary>
-    /// Controls the number of steps when evaluating the clouds' lighting. A higher value will lead to smoother lighting and improved self-shadowing, but at a higher cost.
+    /// Controls the number of steps when evaluating the clouds' lighting. A higher setValue will lead to smoother lighting and improved self-shadowing, but at a higher cost.
     /// </summary>
     [Tooltip("Controls the number of steps when evaluating the clouds' lighting. A higher value will lead to smoother lighting and improved self-shadowing, but at a higher cost.")]
     public ClampedIntParameter numLightSteps = new(1, 1, 16);
@@ -409,7 +409,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     }
 
     /// <summary>
-    /// A <see cref="VolumeParameter"/> that holds a <see cref="CloudPresets"/> value.
+    /// A <see cref="VolumeParameter"/> that holds a <see cref="CloudPresets"/> setValue.
     /// </summary>
     [Serializable]
     public sealed class CloudPresetsParameter : VolumeParameter<CloudPresets>
@@ -417,7 +417,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
         /// <summary>
         /// Creates a new <see cref="CloudPresetsParameter"/> instance.
         /// </summary>
-        /// <param name="value">The initial value to store in the parameter.</param>
+        /// <param name="value">The initial setValue to store in the parameter.</param>
         /// <param name="overrideState">The initial override state for the parameter.</param>
         public CloudPresetsParameter(CloudPresets value, bool overrideState = false) : base(value, overrideState) { }
     }
@@ -434,7 +434,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     }
 
     /// <summary>
-    /// A <see cref="VolumeParameter"/> that holds a <see cref="CloudFadeInMode"/> value.
+    /// A <see cref="VolumeParameter"/> that holds a <see cref="CloudFadeInMode"/> setValue.
     /// </summary>
     [Serializable]
     public sealed class CloudFadeInParameter : VolumeParameter<CloudFadeInMode>
@@ -442,7 +442,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
         /// <summary>
         /// Creates a new <see cref="CloudPresetsParameter"/> instance.
         /// </summary>
-        /// <param name="value">The initial value to store in the parameter.</param>
+        /// <param name="value">The initial setValue to store in the parameter.</param>
         /// <param name="overrideState">The initial override state for the parameter.</param>
         public CloudFadeInParameter(CloudFadeInMode value, bool overrideState = false) : base(value, overrideState) { }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /**
-* Use these smooth methods to move one value towards another<br /><br />
+* Use these smooth methods to move one setValue towards another<br /><br />
 * <strong>Example: </strong><br />fromY = LeanSmooth.spring(fromY, followArrow.localPosition.y, ref velocityY, 1.1f);<br />
 * fromVec3 = LeanSmooth.damp(fromVec3, dude5Title.localPosition, ref velocityVec3, 1.1f);<br />
 * fromColor = LeanSmooth.damp(fromColor, dude5Title.GetComponent<Renderer>().material.color, ref velocityColor, 1.1f);<br />
@@ -16,14 +16,14 @@ public class LeanSmooth {
 
 
     /**
-    * <summary>Moves one value towards another (eases in and out to destination with no overshoot)</summary>
+    * <summary>Moves one setValue towards another (eases in and out to destination with no overshoot)</summary>
     * 
     * @method LeanSmooth.damp (float)
-    * @param {float} current:float the current value
-    * @param {float} target:float the value we are trying to reach
-    * @param {float} currentVelocity:float the current velocity of the value
+    * @param {float} current:float the current setValue
+    * @param {float} target:float the setValue we are trying to reach
+    * @param {float} currentVelocity:float the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * followVar = LeanSmooth.damp(followVar, destinationVar, ref followVelocity, 1.1f);\n
@@ -58,14 +58,14 @@ public class LeanSmooth {
     }
 
     /**
-    * <summary>Moves one value towards another (eases in and out to destination with no overshoot)</summary>
+    * <summary>Moves one setValue towards another (eases in and out to destination with no overshoot)</summary>
     * 
     * @method LeanSmooth.damp (Vector3)
-    * @param {float} current:Vector3 the current value
-    * @param {float} target:Vector3 the value we are trying to reach
-    * @param {float} currentVelocity:Vector3 the current velocity of the value
+    * @param {float} current:Vector3 the current setValue
+    * @param {float} target:Vector3 the setValue we are trying to reach
+    * @param {float} currentVelocity:Vector3 the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * transform.position = LeanSmooth.damp(transform.position, destTrans.position, ref followVelocity, 1.1f);\n
@@ -81,14 +81,14 @@ public class LeanSmooth {
     }
 
     /**
-    * <summary>Moves one color value towards another color (eases in and out to destination with no overshoot)</summary>
+    * <summary>Moves one color setValue towards another color (eases in and out to destination with no overshoot)</summary>
     * 
     * @method LeanSmooth.damp (Color)
-    * @param {float} current:Color the current value
-    * @param {float} target:Color the value we are trying to reach
-    * @param {float} currentVelocity:Color the current velocity of the value
+    * @param {float} current:Color the current setValue
+    * @param {float} target:Color the setValue we are trying to reach
+    * @param {float} currentVelocity:Color the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
     * fromColor = LeanSmooth.damp(fromColor, transform.GetComponent<Renderer>().material.color, ref velocityColor, 1.1f);\n
@@ -105,14 +105,14 @@ public class LeanSmooth {
     }
 
     /**
-    * <summary>Moves one value towards another (eases in and out to destination with possible overshoot bounciness)</summary>
+    * <summary>Moves one setValue towards another (eases in and out to destination with possible overshoot bounciness)</summary>
     * 
     * @method LeanSmooth.spring (float)
-    * @param {float} current:float the current value
-    * @param {float} target:float the value we are trying to reach
-    * @param {float} currentVelocity:float the current velocity of the value
+    * @param {float} current:float the current setValue
+    * @param {float} target:float the setValue we are trying to reach
+    * @param {float} currentVelocity:float the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @param {float} [friction]:float rate at which the spring is slowed down once it reaches it's destination
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position
@@ -140,14 +140,14 @@ public class LeanSmooth {
     }
 
     /**
-    * <summary>Moves one value towards another (eases in and out to destination with possible overshoot bounciness)</summary>
+    * <summary>Moves one setValue towards another (eases in and out to destination with possible overshoot bounciness)</summary>
     * 
     * @method LeanSmooth.spring (Vector3)
-    * @param {Vector3} current:float the current value
-    * @param {Vector3} target:float the value we are trying to reach
-    * @param {Vector3} currentVelocity:float the current velocity of the value
+    * @param {Vector3} current:float the current setValue
+    * @param {Vector3} target:float the setValue we are trying to reach
+    * @param {Vector3} currentVelocity:float the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @param {float} [friction]:float rate at which the spring is slowed down once it reaches it's destination
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position
@@ -168,11 +168,11 @@ public class LeanSmooth {
     * <summary>Moves one color towards another (eases in and out to destination with possible overshoot bounciness)</summary>
     * 
     * @method LeanSmooth.spring (Color)
-    * @param {Color} current:float the current value
-    * @param {Color} target:float the value we are trying to reach
-    * @param {Color} currentVelocity:float the current velocity of the value
+    * @param {Color} current:float the current setValue
+    * @param {Color} target:float the setValue we are trying to reach
+    * @param {Color} currentVelocity:float the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @param {float} [friction]:float rate at which the spring is slowed down once it reaches it's destination
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position
@@ -191,11 +191,11 @@ public class LeanSmooth {
     }
 
     /**
-    * <summary>Moves one value towards another (at a constant speed)</summary>
+    * <summary>Moves one setValue towards another (at a constant speed)</summary>
     * 
     * @method LeanSmooth.linear (float)
-    * @param {float} current:float the current value
-    * @param {float} target:float the value we are trying to reach
+    * @param {float} current:float the current setValue
+    * @param {float} target:float the setValue we are trying to reach
     * @param {float} moveSpeed:float the speed at which to move towards the target
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
@@ -223,11 +223,11 @@ public class LeanSmooth {
     }
 
     /**
-    * <summary>Moves one value towards another (at a constant speed)</summary>
+    * <summary>Moves one setValue towards another (at a constant speed)</summary>
     * 
     * @method LeanSmooth.linear (Vector3)
-    * @param {Vector3} current:float the current value
-    * @param {Vector3} target:float the value we are trying to reach
+    * @param {Vector3} current:float the current setValue
+    * @param {Vector3} target:float the setValue we are trying to reach
     * @param {float} moveSpeed:float the speed at which to move towards the target
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
@@ -247,8 +247,8 @@ public class LeanSmooth {
     * <summary>Moves one color towards another (at a constant speed)</summary>
     * 
     * @method LeanSmooth.linear (Color)
-    * @param {Color} current:float the current value
-    * @param {Color} target:float the value we are trying to reach
+    * @param {Color} current:float the current setValue
+    * @param {Color} target:float the setValue we are trying to reach
     * @param {float} moveSpeed:float the speed at which to move towards the target
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @example
@@ -266,14 +266,14 @@ public class LeanSmooth {
     }
 
     /**
-    * <summary>Moves one value towards another (with an ease that bounces back some when it reaches it's destination)</summary>
+    * <summary>Moves one setValue towards another (with an ease that bounces back some when it reaches it's destination)</summary>
     * 
     * @method LeanSmooth.bounceOut (float)
-    * @param {float} current:float the current value
-    * @param {float} target:float the value we are trying to reach
-    * @param {float} currentVelocity:float the current velocity of the value
+    * @param {float} current:float the current setValue
+    * @param {float} target:float the setValue we are trying to reach
+    * @param {float} currentVelocity:float the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @param {float} [friction]:float rate at which the spring is slowed down once it reaches it's destination
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position
@@ -310,14 +310,14 @@ public class LeanSmooth {
     }
 
     /**
-    * <summary>Moves one value towards another (with an ease that bounces back some when it reaches it's destination)</summary>
+    * <summary>Moves one setValue towards another (with an ease that bounces back some when it reaches it's destination)</summary>
     * 
     * @method LeanSmooth.bounceOut (Vector3)
-    * @param {Vector3} current:float the current value
-    * @param {Vector3} target:float the value we are trying to reach
-    * @param {Vector3} currentVelocity:float the current velocity of the value
+    * @param {Vector3} current:float the current setValue
+    * @param {Vector3} target:float the setValue we are trying to reach
+    * @param {Vector3} currentVelocity:float the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @param {float} [friction]:float rate at which the spring is slowed down once it reaches it's destination
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position
@@ -339,11 +339,11 @@ public class LeanSmooth {
     * <summary>Moves one color towards another (with an ease that bounces back some when it reaches it's destination)</summary>
     * 
     * @method LeanSmooth.bounceOut (Color)
-    * @param {Color} current:float the current value
-    * @param {Color} target:float the value we are trying to reach
-    * @param {Color} currentVelocity:float the current velocity of the value
+    * @param {Color} current:float the current setValue
+    * @param {Color} target:float the setValue we are trying to reach
+    * @param {Color} currentVelocity:float the current velocity of the setValue
     * @param {float} smoothTime:float roughly the time it takes to reach the destination
-    * @param {float} maxSpeed:float the top speed you want the value to move at (defaults to unlimited -1f)
+    * @param {float} maxSpeed:float the top speed you want the setValue to move at (defaults to unlimited -1f)
     * @param {float} deltaTime:float the difference in time since the method was called (defaults to Time.deltaTime)
     * @param {float} [friction]:float rate at which the spring is slowed down once it reaches it's destination
     * @param {float} [accelRate]:float the rate it accelerates from it's initial position

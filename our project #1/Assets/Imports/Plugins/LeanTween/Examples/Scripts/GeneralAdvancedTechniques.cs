@@ -19,7 +19,7 @@ public class GeneralAdvancedTechniques : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		// Recursion - Set a objects value and have it recursively effect it's children
+		// Recursion - Set a objects setValue and have it recursively effect it's children
 		LeanTween.alpha( avatarRecursive, 0f, 1f).setRecursive(true).setLoopPingPong();
 		LeanTween.alpha( avatar2dRecursive, 0f, 1f).setRecursive(true).setLoopPingPong();
 		LeanTween.alpha( wingPersonPanel, 0f, 1f).setRecursive(true).setLoopPingPong();
@@ -48,7 +48,7 @@ public class GeneralAdvancedTechniques : MonoBehaviour {
 
 		// move objects at a constant speed
 		for(int i = 0; i < avatarSpeed.Length; i++)
-			LeanTween.moveLocalZ( avatarSpeed[i], (i+1)*5f, 1f).setSpeed(6f).setEase(LeanTweenType.easeInOutExpo).setLoopPingPong(); // any time you set the speed it overrides the time value
+			LeanTween.moveLocalZ( avatarSpeed[i], (i+1)*5f, 1f).setSpeed(6f).setEase(LeanTweenType.easeInOutExpo).setLoopPingPong(); // any time you set the speed it overrides the time setValue
 	
 		// move around a circle at a constant speed
 		for(int i = 0; i < avatarSpeed2.Length; i++){

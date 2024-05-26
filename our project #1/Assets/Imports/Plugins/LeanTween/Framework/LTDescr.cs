@@ -1740,7 +1740,7 @@ public class LTDescr
 			this.init();
 		}
 		this.from = from;
-		// this.hasInitiliazed = true; // this is set, so that the "from" value isn't overwritten later on when the tween starts
+		// this.hasInitiliazed = true; // this is set, so that the "from" setValue isn't overwritten later on when the tween starts
 		this.diff = this.to - this.from;
 		this.diffDiv2 = this.diff * 0.5f;
 		return this;
@@ -1847,7 +1847,7 @@ public class LTDescr
 	}
 
 	/**
-	* Set ignore time scale when tweening an object when you want the animation to be time-scale independent (ignores the Time.timeScale value). Great for pause screens, when you want all other action to be stopped (or slowed down)
+	* Set ignore time scale when tweening an object when you want the animation to be time-scale independent (ignores the Time.timeScale setValue). Great for pause screens, when you want all other action to be stopped (or slowed down)
 	* @method setIgnoreTimeScale
 	* @param {bool} useUnScaledTime:bool whether to use the unscaled time or not
 	* @return {LTDescr} LTDescr an object that distinguishes the tween
@@ -1917,7 +1917,7 @@ public class LTDescr
 	/**
 	* When the animation gets to the end it then tweens back to where it started (and on, and on)
 	* @method setLoopPingPong
-	* @param {int} loops:int (defaults to -1) how many times you want the loop to happen in both directions (-1 for an infinite number of times). Passing a value of 1 will cause the object to go towards and back from it's destination once.
+	* @param {int} loops:int (defaults to -1) how many times you want the loop to happen in both directions (-1 for an infinite number of times). Passing a setValue of 1 will cause the object to go towards and back from it's destination once.
 	* @return {LTDescr} LTDescr an object that distinguishes the tween
 	* @example
 	* LeanTween.moveX(gameObject, 5f, 2.0f ).setLoopPingPong( 2 );
@@ -1990,9 +1990,9 @@ public class LTDescr
 
 
 	/**
-	* Have a method called on each frame that the tween is being animated (passes a float value)
+	* Have a method called on each frame that the tween is being animated (passes a float setValue)
 	* @method setOnUpdate
-	* @param {Action<float>} onUpdate:Action<float> a method that will be called on every frame with the float value of the tweened object
+	* @param {Action<float>} onUpdate:Action<float> a method that will be called on every frame with the float setValue of the tweened object
 	* @return {LTDescr} LTDescr an object that distinguishes the tween
 	* @example
 	* LeanTween.moveX(gameObject, 5f, 2.0f ).setOnUpdate( tweenMoved );<br>
@@ -2052,9 +2052,9 @@ public class LTDescr
 	}
 
 	/**
-	* Have a method called on each frame that the tween is being animated (passes a float value and a object)
+	* Have a method called on each frame that the tween is being animated (passes a float setValue and a object)
 	* @method setOnUpdate (object)
-	* @param {Action<float,object>} onUpdate:Action<float,object> a method that will be called on every frame with the float value of the tweened object, and an object of the person's choosing
+	* @param {Action<float,object>} onUpdate:Action<float,object> a method that will be called on every frame with the float setValue of the tweened object, and an object of the person's choosing
 	* @return {LTDescr} LTDescr an object that distinguishes the tween
 	* @example
 	* LeanTween.moveX(gameObject, 5f, 2.0f ).setOnUpdate( tweenMoved ).setOnUpdateParam( myObject );<br>
@@ -2086,9 +2086,9 @@ public class LTDescr
 	}
 
 	/**
-	* Have a method called on each frame that the tween is being animated (passes a float value)
+	* Have a method called on each frame that the tween is being animated (passes a float setValue)
 	* @method setOnUpdate (Vector3)
-	* @param {Action<Vector3>} onUpdate:Action<Vector3> a method that will be called on every frame with the float value of the tweened object
+	* @param {Action<Vector3>} onUpdate:Action<Vector3> a method that will be called on every frame with the float setValue of the tweened object
 	* @return {LTDescr} LTDescr an object that distinguishes the tween
 	* @example
 	* LeanTween.moveX(gameObject, 5f, 2.0f ).setOnUpdate( tweenMoved );<br>

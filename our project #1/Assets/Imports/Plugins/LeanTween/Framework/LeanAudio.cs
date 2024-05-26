@@ -66,7 +66,7 @@ public class LeanAudio : object {
 	* Create dynamic audio from a set of Animation Curves and other options.
 	* 
 	* @method createAudio
-	* @param {AnimationCurve} volumeCurve:AnimationCurve describing the shape of the audios volume (from 0-1). The length of the audio is dicated by the end value here.
+	* @param {AnimationCurve} volumeCurve:AnimationCurve describing the shape of the audios volume (from 0-1). The length of the audio is dicated by the end setValue here.
 	* @param {AnimationCurve} frequencyCurve:AnimationCurve describing the width of the oscillations between the sound waves in seconds. Large numbers mean a lower note, while higher numbers mean a tighter frequency and therefor a higher note. Values are usually between 0.01 and 0.000001 (or smaller)
 	* @param {LeanAudioOptions} options:LeanAudioOptions You can pass any other values in here like vibrato or the frequency you would like the sound to be encoded at. See <a href="LeanAudioOptions.html">LeanAudioOptions</a> for more details.
 	* @return {AudioClip} AudioClip of the procedurally generated audio
@@ -191,7 +191,7 @@ public class LeanAudio : object {
 			}
 			
 			//if(i<25)
-			//	Debug.Log("passedTime:"+passedTime+" value:"+value+" ratioElapsed:"+ratioElapsed+" subWaveTime:"+subWaveTime+" subWaveDiff:"+subWaveDiff);
+			//	Debug.Log("passedTime:"+passedTime+" setValue:"+setValue+" ratioElapsed:"+ratioElapsed+" subWaveTime:"+subWaveTime+" subWaveDiff:"+subWaveDiff);
 			
 			value *= waveHeight;
 
@@ -202,7 +202,7 @@ public class LeanAudio : object {
 					float diff = (1f-options.modulation[k][1]);
 					peakMulti = options.modulation[k][1] + diff*peakMulti;
 					// if(k<10){
-						// Debug.Log("k:"+k+" peakMulti:"+peakMulti+" value:"+value+" after:"+(value*peakMulti));
+						// Debug.Log("k:"+k+" peakMulti:"+peakMulti+" setValue:"+setValue+" after:"+(setValue*peakMulti));
 					// }
 					value *= peakMulti;
 				}	
@@ -360,7 +360,7 @@ public class LeanAudioOptions : object {
 	* Set details about the shape of the curve by adding vibrato modulations through it (alters the peak values giving it a wah-wah effect). You can add as many as you want to sculpt out more detail in the sound wave.
 	* 
 	* @method setVibrato
-	* @param {Vector3[]} vibratoArray:Vector3[] The first value is the period in seconds that you wish to have the vibrato wave fluctuate at. The second value is the minimum height you wish the vibrato wave to dip down to (default is zero). The third is reserved for future effects.
+	* @param {Vector3[]} vibratoArray:Vector3[] The first setValue is the period in seconds that you wish to have the vibrato wave fluctuate at. The second setValue is the minimum height you wish the vibrato wave to dip down to (default is zero). The third is reserved for future effects.
 	* @return {LeanAudioOptions} LeanAudioOptions describing optional values
 	* @example
 	* AnimationCurve volumeCurve = new AnimationCurve( new Keyframe(0f, 1f, 0f, -1f), new Keyframe(1f, 0f, -1f, 0f));<br>

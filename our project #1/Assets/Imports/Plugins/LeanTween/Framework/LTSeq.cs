@@ -14,7 +14,7 @@ using UnityEngine;
 * seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); <span style="color:gray">// do a tween</span><br>
 * seq.append( (object obj) => { <span style="color:gray">// fire event after tween</span><br>
 * &nbsp;var dict = obj as Dictionary<string,string>;<br>
-* &nbsp;Debug.Log("We are done now obj value:"+dict["hi"]);<br>
+* &nbsp;Debug.Log("We are done now obj setValue:"+dict["hi"]);<br>
 * }, new Dictionary<string,string>(){ {"hi","sup"} } );<br>
 * @class LTSeq
 * @constructor
@@ -140,7 +140,7 @@ public class LTSeq {
 	* seq.append( LeanTween.move(cube1, Vector3.one * 10f, 1f) ); // do a tween<br>
 	* seq.append((object obj) => { // fire event after tween
 	* &nbsp;var dict = obj as Dictionary<string,string>;
-	* &nbsp;Debug.Log("We are done now obj value:"+dict["hi"]);
+	* &nbsp;Debug.Log("We are done now obj setValue:"+dict["hi"]);
 	* &nbsp;}, new Dictionary<string,string>(){ {"hi","sup"} } );
 	*/
 	public LTSeq append( System.Action<object> callback, object obj ){

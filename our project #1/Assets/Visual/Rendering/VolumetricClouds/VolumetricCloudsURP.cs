@@ -44,9 +44,9 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
     /// <summary>
     /// Gets or sets the material of volumetric clouds shader.
     /// </summary>
-    /// <value>
+    /// <setValue>
     /// The material of volumetric clouds shader.
-    /// </value>
+    /// </setValue>
     public Material CloudsMaterial
     {
         get { return material; }
@@ -54,11 +54,11 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether to render volumetric clouds in Rendering Debugger view.
+    /// Gets or sets a setValue indicating whether to render volumetric clouds in Rendering Debugger view.
     /// </summary>
-    /// <value>
+    /// <setValue>
     /// <c>true</c> if rendering volumetric clouds in Rendering Debugger view; otherwise, <c>false</c>.
-    /// </value>
+    /// </setValue>
     /// <remarks>
     /// This is disabled by default to avoid affecting the individual lighting previews.
     /// </remarks>
@@ -71,9 +71,9 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
     /// <summary>
     /// Gets or sets the resolution scale for volumetric clouds rendering.
     /// </summary>
-    /// <value>
+    /// <setValue>
     /// The resolution scale for volumetric clouds rendering, ranging from 0.4 to 1.0.
-    /// </value>
+    /// </setValue>
     public float ResolutionScale
     {
         get { return resolutionScale; }
@@ -83,9 +83,9 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
     /// <summary>
     /// Gets or sets the preferred texture render mode for volumetric clouds.
     /// </summary>
-    /// <value>
+    /// <setValue>
     /// The preferred texture render mode for volumetric clouds, either CopyTexture or BlitTexture.
-    /// </value>
+    /// </setValue>
     /// <remarks>
     /// The CopyTexture mode should be more performant.
     /// </remarks>
@@ -98,9 +98,9 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
     /// <summary>
     /// Gets or sets the ambient probe update frequency for volumetric clouds.
     /// </summary>
-    /// <value>
+    /// <setValue>
     /// The ambient probe update frequency for volumetric clouds, either Static or Dynamic.
-    /// </value>
+    /// </setValue>
     public CloudsAmbientMode AmbientUpdateMode
     {
         get { return ambientProbe; }
@@ -110,9 +110,9 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
     /// <summary>
     /// Gets or sets the method used for upscaling volumetric clouds.
     /// </summary>
-    /// <value>
+    /// <setValue>
     /// The method to use for upscaling volumetric clouds.
-    /// </value>
+    /// </setValue>
     public CloudsUpscaleMode UpscaleMode
     {
         get { return upscaleMode; }
@@ -120,11 +120,11 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether to reset wind offsets for volumetric clouds when entering playmode.
+    /// Gets or sets a setValue indicating whether to reset wind offsets for volumetric clouds when entering playmode.
     /// </summary>
-    /// <value>
+    /// <setValue>
     /// <c>true</c> if resetting wind offsets when entering playmode; otherwise, <c>false</c>.
-    /// </value>
+    /// </setValue>
     public bool ResetWindOnStart
     {
         get { return resetOnStart; }

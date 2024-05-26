@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
@@ -31,7 +32,9 @@ public class EnemyTypeSO : ScriptableObject
     [InlineEditor]
     [ShowIf("hasDifficultyVeriants")] public List<EnemyTypeSO> difficultyVeriants;
     [DisplayAsString] public bool hasDifficultyVeriants = true;
-    public List<EnemyStat<float>> ExtraStatistics;
+
+    public List<EnemyStat<float>> EnemyFloatStats = new List<EnemyStat<float>>();
+    public List<EnemyStat<int>> EnemyIntStats = new List<EnemyStat<int>>();
 
     #region Spawning priority
     [Tooltip(
@@ -107,42 +110,26 @@ public class EnemyTypeSO : ScriptableObject
             SubTypes = null;
         }
     }
-
-    public void UpdateParameters()
-    {
-        
-    }
-
-    List<PropertyInfo> GetPropertiesOfType<T>(object obj)
-    {
-        var properties = new List<PropertyInfo>();
-        PropertyInfo[] allProperties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-        foreach (var property in allProperties)
-        {
-            if (property.PropertyType == typeof(T))
-            {
-                properties.Add(property);
-            }
-        }
-        return properties;
-    }
 }
 
-    [Serializable]
+[Serializable]
 public class EnemyStat<T>
 {
     public string tag;
-    public T defualtValue;
-
     public bool isScallingStat;
-    
-    public bool shouldScale;
-    [ShowIf("isScallingStat")]  public T value;
-    [ShowIf("isScallingStat")] public T maxValue;
-    [ShowIf("isScallingStat")] T minValue;
-    [ShowIf("isScallingStat")] float scallingSpeed;
-    [ShowIf("isScallingStat")] LeanTweenType scallingMode;
+    public RandomnessValue<T> value;
+}
+
+public class EnemyScallingStat<T>
+{
+    EnemyStat<T> enemyStat;
+    public bool enableScale;
+    public T scallingMax;
+    public T scallingMin;
+    public float scallingMultiplyier;
+    public LeanTweenType scallingCurveType;
+
+    //Will be used wiht difficulty Ranges once implemented (lable as prams on whiteboard)
 }
 
 

@@ -19,8 +19,8 @@ public class EnemyRoundManager : MonoBehaviour
     // Use old dificulty weights (player dificulty choice (should be more powerful then upgrade weights), upgrades, ect)
     // determen a loop showing how to increas difficulty.
     // in the loop define a round
-    //At the start of every round get a randimized difficulty value from the difficulty at the end(Max) and begining(Min) of the round
-    //Use dificulty value and the enemies left from previous rounds to determine what combination of enemies to spawn or not to spawn
+    //At the start of every round get a randimized difficulty setValue from the difficulty at the end(Max) and begining(Min) of the round
+    //Use dificulty setValue and the enemies left from previous rounds to determine what combination of enemies to spawn or not to spawn
     //(balencing the number of enemies on player. May also want to take in how fast/easaly the player took down the previuos enemies)
     // 
 
@@ -157,18 +157,23 @@ public class RandomnessValue<T>
     [ShowInInspector] T multiplyier;
 
     [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.none)]
-    [ShowInInspector] T value;
+    [ShowInInspector, LabelText("value")] T setValue;
 
-    public T GetValue()
+    public T value;
+
+
+
+    public T RandonizeValue()
     {
         switch (randomnessType)
         {
            
             default:
-                return value;
+                value = setValue;
+                return setValue;
 
             case RandomnesssType.none:
-                return value;
+                return setValue;
             
             case RandomnesssType.MinAndMax:
                 if (typeof(T) == typeof(float))
@@ -177,6 +182,7 @@ public class RandomnessValue<T>
                     float _max = (float)(object)max;
 
                     T randomValue = (T)(object)Random.Range(_min, _max);
+                    value = randomValue;
                     return randomValue;
                 }
                 else if(typeof(T) == typeof(int))
@@ -184,6 +190,7 @@ public class RandomnessValue<T>
                     int _min = (int)(object)min;
                     int _max = (int)(object)max;
                     T randomValue = (T)(object)Random.Range(_min, _max);
+                    value = randomValue;
                     return randomValue;
                 }
                 else 
@@ -197,14 +204,16 @@ public class RandomnessValue<T>
                 if (typeof(T) == typeof(float))
                 {
                     float random = Random.Range(0f, 1f);
-                    float value = (float)curve.Evaluate(random) * (float)(object)multiplyier;
-                    return (T)(object)value;
+                    float curveValue = (float)curve.Evaluate(random) * (float)(object)multiplyier;
+                    value = (T)(object)curveValue;
+                    return (T)(object)curveValue;
                 }
                 else if (typeof(T) == typeof(int))
                 {
                     int random = Random.Range(0, 1);
-                    int value = (int)curve.Evaluate(random) * (int)(object)multiplyier;
-                    return (T)(object)value;
+                    int curveValue = (int)curve.Evaluate(random) * (int)(object)multiplyier;
+                    value = (T)(object)curveValue;
+                    return (T)(object)curveValue;
                 }
                 else
                 {

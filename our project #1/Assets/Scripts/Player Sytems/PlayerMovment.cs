@@ -101,8 +101,8 @@ public class PlayerMovment : MonoBehaviour
     /// Inverse of Evaluate()
     /// </summary>
     /// <param name="curve">normalized AnimationCurve (time goes from 0 to 1)</param>
-    /// <param name="value">value to search</param>
-    /// <returns>time at which we have the closest value not exceeding it</returns>
+    /// <param name="value">setValue to search</param>
+    /// <returns>time at which we have the closest setValue not exceeding it</returns>
     public float EvaluateTime(AnimationCurve curve, float value, int decimals = 6)
     {
         // Retrieve the closest decimal and then go down
@@ -111,7 +111,7 @@ public class PlayerMovment : MonoBehaviour
         float evaluate = curve.Evaluate(time);
         while (decimals > 0)
         {
-            // Loop until we pass our value
+            // Loop until we pass our setValue
             while (evaluate < value)
             {
                 time += step;

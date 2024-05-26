@@ -142,14 +142,14 @@ public static class LeanTweenExt
     //LeanTween.size (RectTransform)
     public static LTDescr LeanSize(this RectTransform rectTransform, Vector2 to, float time) { return LeanTween.size(rectTransform, to, time); }
     //LeanTween.tweensRunning
-    //LeanTween.value (Color)
+    //LeanTween.setValue (Color)
     public static LTDescr LeanValue(this GameObject gameObject, Color from, Color to, float time) { return LeanTween.value(gameObject, from, to, time); }
-    //LeanTween.value (Color)
-    //LeanTween.value (float)
+    //LeanTween.setValue (Color)
+    //LeanTween.setValue (float)
     public static LTDescr LeanValue(this GameObject gameObject, float from, float to, float time) { return LeanTween.value(gameObject, from, to, time); }
     public static LTDescr LeanValue(this GameObject gameObject, Vector2 from, Vector2 to, float time) { return LeanTween.value(gameObject, from, to, time); }
     public static LTDescr LeanValue(this GameObject gameObject, Vector3 from, Vector3 to, float time) { return LeanTween.value(gameObject, from, to, time); }
-    //LeanTween.value (float)
+    //LeanTween.setValue (float)
     public static LTDescr LeanValue(this GameObject gameObject, Action<float> callOnUpdate, float from, float to, float time) { return LeanTween.value(gameObject, callOnUpdate, from, to, time); }
     public static LTDescr LeanValue(this GameObject gameObject, Action<float, float> callOnUpdate, float from, float to, float time) { return LeanTween.value(gameObject, callOnUpdate, from, to, time); }
     public static LTDescr LeanValue(this GameObject gameObject, Action<float, object> callOnUpdate, float from, float to, float time) { return LeanTween.value(gameObject, callOnUpdate, from, to, time); }

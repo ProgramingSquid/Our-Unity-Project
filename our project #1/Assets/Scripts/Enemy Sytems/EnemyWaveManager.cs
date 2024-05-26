@@ -33,6 +33,8 @@ public class Wave
     public float newestWaveElapsedTime;
     public bool updateNewestWaveElapsed;
     public float waveNumber;
+    public float priority; //The setValue showing how good of an option it is
+    
 
     public void SpawnEnemies()
     {
@@ -42,9 +44,7 @@ public class Wave
 
 public class EnemyWaveOption
 {
-    public List<Enemy> enemies = new List<Enemy>();
-    public float power; //The value showing how good of an option it is
-
+     
 }
 [Serializable]
 public struct EnemySpawningPriorityEffectingParamater

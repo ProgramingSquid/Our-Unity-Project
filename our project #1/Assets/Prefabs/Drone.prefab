@@ -389,13 +389,13 @@ MonoBehaviour:
   offsetFromTransform: {x: 0, y: 0, z: 0}
   timeBetweenShots:
     tag: 
-    value: 0.75
+    value: 0
   spreadAngle:
     tag: 
-    value: 5
+    value: 0
   SwivleAngle:
     tag: 
-    value: 25
+    value: 0
   exitNode: 0
 --- !u!1 &3440454382318124906
 GameObject:
@@ -512,18 +512,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   targetTag: Player
-  speed:
-    tag: speed
-    value: 10
   targetDisFormTarget:
     tag: 
-    value: 10
+    value: 0
   lookAngle:
     tag: 
     value: 0
+  speed:
+    tag: speed
+    value: 0
   rotationOffset: {x: 90, y: -90, z: 0}
   exitNode: 1
-  drawGizmos: 0
+  drawDebugGizmos: 0
 --- !u!114 &3440454382318124818
 MonoBehaviour:
   m_ObjectHideFlags: 0

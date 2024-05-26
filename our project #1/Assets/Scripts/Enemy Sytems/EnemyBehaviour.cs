@@ -5,6 +5,10 @@ using NaughtyAttributes;
 using System;
 using Sirenix.Serialization;
 using Sirenix.OdinInspector;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.ConstrainedExecution;
+using System.Xml.Linq;
 
 public class EnemyBehaviour : MonoBehaviour
 {
@@ -52,9 +56,65 @@ public class EnemyBehaviour : MonoBehaviour
     {
         SetTransitions();
         ValidateBehavior();
-
-
+        SetStatistics();
     }
+
+    public void SetStatistics()
+    {
+        var floatPrameters = new List<EnemyPamater<float>>();
+        var intPrameters = new List<EnemyPamater<int>>();
+
+        foreach (var node in GetAllNodes())
+        {
+            var nodeFloatParameters = GetProperties<EnemyPamater<float>>(node);
+            var nodeIntParameters = GetProperties<EnemyPamater<int>>(node);
+
+            floatPrameters.AddRange(nodeFloatParameters);
+            intPrameters.AddRange(nodeIntParameters);
+        }
+
+        foreach (var pram in floatPrameters)
+        {
+            var MatchingEnemyStats = type.EnemyFloatStats.Where(i => i.tag == pram.tag);
+            if(MatchingEnemyStats.Count() > 1 ) 
+            { 
+                Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString()); 
+                return; 
+            }
+            if(MatchingEnemyStats.Count() == 0) 
+            {
+                Debug.LogWarning("No float stat tag matches with:" + pram.tag);
+                return;
+            }
+
+            if(MatchingEnemyStats.Count() == 1)
+            {
+                pram.randomnessValue = MatchingEnemyStats.ElementAt(0).value;
+            }
+
+        }
+
+        foreach (var pram in intPrameters)
+        {
+            var MatchingEnemyStats = type.EnemyIntStats.Where(i => i.tag == pram.tag);
+            if (MatchingEnemyStats.Count() > 1)
+            {
+                Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString());
+                return;
+            }
+            if (MatchingEnemyStats.Count() == 0)
+            {
+                Debug.LogWarning("No float stat tag matches with:" + pram.tag);
+                return;
+            }
+
+            if (MatchingEnemyStats.Count() == 1)
+            {
+                pram.randomnessValue = MatchingEnemyStats.ElementAt(0).value;
+            }
+        }
+    }
+
     public void ValidateBehavior()
     {
         for (int i = 0; i < inspectorRootTransitions.Count; i++)
@@ -88,6 +148,36 @@ public class EnemyBehaviour : MonoBehaviour
             }
         }
     }
+    public List<IEnemyBehaviorNode> GetAllNodes()
+    {
+        List<IEnemyBehaviorNode> nodes = new List<IEnemyBehaviorNode>();
+        foreach (var transition in transitions)
+        {
+            nodes.Add(transition.interfaceFrom);
+            nodes.Add(transition.interfaceTo);
+        }
+        foreach (var node in rootTransitions)
+        {
+            nodes.Add(node);
+        }
+
+        return nodes;
+    }
+    public List<T> GetProperties<T>(object obj)
+    {
+        List<PropertyInfo> properties = obj.GetType()
+        .GetProperties()
+        .Where(prop => prop.PropertyType.GetGenericTypeDefinition() == typeof(T))
+        .ToList();
+
+        var values = new List<T>();
+        foreach (var prop in properties)
+        {
+            values.Add((T)prop.GetValue(obj));
+        }
+
+        return values;
+    }
     public void SetTransitions()
     {
         foreach (var item in transitions)
@@ -111,6 +201,8 @@ public interface IEnemyBehaviorNode
     public void OnEnterBehavior();
     public void BehaviorUpdate();
 
+    public void OnEnemySpawn();
+
 }
 
 [Serializable]
@@ -128,7 +220,7 @@ public class BehaviorExitReturn
 public class EnemyPamater<T>
 {
     public string tag;
-    public T value;
+    public RandomnessValue<T> randomnessValue;
 }
 
 [Serializable]
@@ -161,6 +253,6 @@ public struct Enemy
 
     public void SetupInfo()
     {
-
+        //To Do
     }
 }

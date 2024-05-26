@@ -9,9 +9,9 @@ public class EnemyFollow : MonoBehaviour, IEnemyBehaviorNode
 
     [DisplayAsString] public Transform target;
     [Tag] public string targetTag;
-    public EnemyPamater<float> speed;
     public EnemyPamater<float> targetDisFormTarget;
     public EnemyPamater<float> lookAngle;
+    public EnemyPamater<float> speed;
     public Vector3 rotationOffset;
 
     public BehaviorExitReturn behaviorExitReturn 
@@ -48,13 +48,13 @@ public class EnemyFollow : MonoBehaviour, IEnemyBehaviorNode
     {
         Vector3 targetPos = new Vector3(target.position.x, transform.position.y, target.position.z);
 
-        if ((transform.position - targetPos).sqrMagnitude > Mathf.Pow(targetDisFormTarget.value, 2))
+        if ((transform.position - targetPos).sqrMagnitude > Mathf.Pow(targetDisFormTarget.randomnessValue.value, 2))
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed.value * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed.randomnessValue.value * Time.deltaTime);
         }
-        else if ((transform.position - targetPos).sqrMagnitude < Mathf.Pow(targetDisFormTarget.value, 2))
+        else if ((transform.position - targetPos).sqrMagnitude < Mathf.Pow(targetDisFormTarget.randomnessValue.value, 2))
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, -speed.value * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, -speed.randomnessValue.value * Time.deltaTime);
         }
         Vector3 diference =  transform.position - target.position;
 
@@ -86,6 +86,13 @@ public class EnemyFollow : MonoBehaviour, IEnemyBehaviorNode
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = new Color(1, .9f, .9f, .8f);
-        Gizmos.DrawWireSphere(target.position, targetDisFormTarget.value);
+        Gizmos.DrawWireSphere(target.position, targetDisFormTarget.randomnessValue.value);
+    }
+
+    public void OnEnemySpawn()
+    {
+        speed.randomnessValue.RandonizeValue();
+        lookAngle.randomnessValue.RandonizeValue();
+        targetDisFormTarget.randomnessValue.RandonizeValue();
     }
 }

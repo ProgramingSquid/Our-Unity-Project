@@ -40,8 +40,8 @@ public class ProjectileShooting : MonoBehaviour, IEnemyBehaviorNode
 
     private void Shoot()
     {
-        timer = timeBetweenShots.value;
-        float spread = Random.Range(-spreadAngle.value / 2, spreadAngle.value / 2);
+        timer = timeBetweenShots.randomnessValue.value;
+        float spread = Random.Range(-spreadAngle.randomnessValue.value / 2, spreadAngle.randomnessValue.value / 2);
         float SpreadY = transform.rotation.eulerAngles.y + spread;
         Vector3 dir = difernce;
         GameObject gameObject = ObjectPoolManager.spawnObject(projectile, transform.position, Quaternion.Euler(90, SpreadY, 0));
@@ -51,7 +51,7 @@ public class ProjectileShooting : MonoBehaviour, IEnemyBehaviorNode
 
     public void OnEnterBehavior()
     {
-        timer = timeBetweenShots.value;
+        timer = timeBetweenShots.randomnessValue.value;
         target = GameObject.FindGameObjectWithTag(targetTag).GetComponent<Transform>();
     }
 
@@ -70,5 +70,12 @@ public class ProjectileShooting : MonoBehaviour, IEnemyBehaviorNode
             Shoot();
 
         }
+    }
+
+    public void OnEnemySpawn()
+    {
+        timeBetweenShots.randomnessValue.RandonizeValue();
+        spreadAngle.randomnessValue.RandonizeValue();
+        SwivleAngle.randomnessValue.RandonizeValue();
     }
 }

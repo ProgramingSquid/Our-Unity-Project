@@ -1088,11 +1088,11 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Fade a gameobject's material to a certain alpha value.</summary>
+    * <summary>Fade a gameobject's material to a certain alpha setValue.</summary>
     * 
     * @method LeanTween.alpha
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to fade
-    * @param {float} to:float the final alpha value (0-1)
+    * @param {float} to:float the final alpha setValue (0-1)
     * @param {float} time:float The time with which to fade the object
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
@@ -1113,7 +1113,7 @@ public class LeanTween : MonoBehaviour {
     * 
     * @method LeanTween.alpha
     * @param {LTRect} ltRect:LTRect LTRect that you wish to fade
-    * @param {float} to:float the final alpha value (0-1)
+    * @param {float} to:float the final alpha setValue (0-1)
     * @param {float} time:float The time with which to fade the object
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
@@ -1131,7 +1131,7 @@ public class LeanTween : MonoBehaviour {
     * 
     * @method LeanTween.alphaText
     * @param {RectTransform} rectTransform:RectTransform RectTransform associated with the Text Component you wish to fade
-    * @param {float} to:float the final alpha value (0-1)
+    * @param {float} to:float the final alpha setValue (0-1)
     * @param {float} time:float The time with which to fade the object
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
@@ -1149,7 +1149,7 @@ public class LeanTween : MonoBehaviour {
     * 
     * @method LeanTween.alphaCanvas
     * @param {RectTransform} rectTransform:RectTransform RectTransform that the CanvasGroup is attached to
-    * @param {float} to:float the final alpha value (0-1)
+    * @param {float} to:float the final alpha setValue (0-1)
     * @param {float} time:float The time with which to fade the object
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
@@ -1171,7 +1171,7 @@ public class LeanTween : MonoBehaviour {
     * 
     * @method LeanTween.alphaVertex
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to alpha
-    * @param {float} to:float The alpha value you wish to tween to
+    * @param {float} to:float The alpha setValue you wish to tween to
     * @param {float} time:float The time with which to delay before calling the function
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     */
@@ -1180,11 +1180,11 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Change a gameobject's material to a certain color value</summary>
+    * <summary>Change a gameobject's material to a certain color setValue</summary>
     * 
     * @method LeanTween.color
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to change the color
-    * @param {Color} to:Color the final color value ex: Color.Red, new Color(1.0f,1.0f,0.0f,0.8f)
+    * @param {Color} to:Color the final color setValue ex: Color.Red, new Color(1.0f,1.0f,0.0f,0.8f)
     * @param {float} time:float The time with which to fade the object
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
@@ -1205,7 +1205,7 @@ public class LeanTween : MonoBehaviour {
     * 
     * @method LeanTween.colorText
     * @param {RectTransform} rectTransform:RectTransform RectTransform attached to the Text Component whose color you want to change
-    * @param {Color} to:Color the final alpha value ex: Color.Red, new Color(1.0f,1.0f,0.0f,0.8f)
+    * @param {Color} to:Color the final alpha setValue ex: Color.Red, new Color(1.0f,1.0f,0.0f,0.8f)
     * @param {float} time:float The time with which to fade the object
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
@@ -1314,7 +1314,7 @@ public class LeanTween : MonoBehaviour {
     * 
     * @method LeanTween.moveSpline
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to move
-    * @param {Vector3[]} path:Vector3[] A set of points that define the curve(s) ex: ControlStart,Pt1,Pt2,Pt3,.. ..ControlEnd<br />Note: The first and last item just define the angle of the end points, they are not actually used in the spline path itself. If you do not care about the angle you can jus set the first two items and last two items as the same value.
+    * @param {Vector3[]} path:Vector3[] A set of points that define the curve(s) ex: ControlStart,Pt1,Pt2,Pt3,.. ..ControlEnd<br />Note: The first and last item just define the angle of the end points, they are not actually used in the spline path itself. If you do not care about the angle you can jus set the first two items and last two items as the same setValue.
     * @param {float} time:float The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
@@ -1520,7 +1520,7 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Rotate a GUI element (using an LTRect object), to a value that is in degrees</summary>
+    * <summary>Rotate a GUI element (using an LTRect object), to a setValue that is in degrees</summary>
     * 
     * @method LeanTween.rotate
     * @param {LTRect} ltRect:LTRect LTRect that you wish to rotate
@@ -1703,22 +1703,22 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Tween any particular value (float)</summary>
+    * <summary>Tween any particular setValue (float)</summary>
     * 
-    * @method LeanTween.value (float)
+    * @method LeanTween.setValue (float)
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to attach the tween to
-    * @param {float} from:float The original value to start the tween from
+    * @param {float} from:float The original setValue to start the tween from
     * @param {Vector3} to:float The final float with which to tween to
     * @param {float} time:float The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
     * <i>Example Javascript: </i><br />
-    * LeanTween.value( gameObject, 1f, 5f, 5f).setOnUpdate( function( val:float ){ <br />
+    * LeanTween.setValue( gameObject, 1f, 5f, 5f).setOnUpdate( function( val:float ){ <br />
     * &#160;Debug.Log("tweened val:"+val);<br />
     * } );<br />
     * <br />
     * <i>Example C#: </i> <br />
-    * LeanTween.value( gameObject, 1f, 5f, 5f).setOnUpdate( (float val)=>{ <br />
+    * LeanTween.setValue( gameObject, 1f, 5f, 5f).setOnUpdate( (float val)=>{ <br />
     * &#160;Debug.Log("tweened val:"+val);<br />
     * } );<br />
     */
@@ -1730,22 +1730,22 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Tween any particular value (Vector2)</summary>
+    * <summary>Tween any particular setValue (Vector2)</summary>
     * 
-    * @method LeanTween.value (Vector2)
+    * @method LeanTween.setValue (Vector2)
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to attach the tween to
-    * @param {Vector2} from:Vector2 The original value to start the tween from
+    * @param {Vector2} from:Vector2 The original setValue to start the tween from
     * @param {Vector3} to:Vector2 The final Vector2 with which to tween to
     * @param {float} time:float The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
     * <i>Example Javascript: </i><br />
-    * LeanTween.value( gameObject, new Vector2(1f,0f), new Vector3(5f,0f), 5f).setOnUpdate( function( val:Vector2 ){ <br />
+    * LeanTween.setValue( gameObject, new Vector2(1f,0f), new Vector3(5f,0f), 5f).setOnUpdate( function( val:Vector2 ){ <br />
     * &#160;Debug.Log("tweened val:"+val);<br />
     * } );<br />
     * <br />
     * <i>Example C#: </i> <br />
-    * LeanTween.value( gameObject, new Vector3(1f,0f), new Vector3(5f,0f), 5f).setOnUpdate( (Vector2 val)=>{ <br />
+    * LeanTween.setValue( gameObject, new Vector3(1f,0f), new Vector3(5f,0f), 5f).setOnUpdate( (Vector2 val)=>{ <br />
     * &#160;Debug.Log("tweened val:"+val);<br />
     * } );<br />
     */
@@ -1754,22 +1754,22 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Tween any particular value (Vector3)</summary>
+    * <summary>Tween any particular setValue (Vector3)</summary>
     * 
-    * @method LeanTween.value (Vector3)
+    * @method LeanTween.setValue (Vector3)
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to attach the tween to
-    * @param {Vector3} from:Vector3 The original value to start the tween from
+    * @param {Vector3} from:Vector3 The original setValue to start the tween from
     * @param {Vector3} to:Vector3 The final Vector3 with which to tween to
     * @param {float} time:float The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
     * <i>Example Javascript: </i><br />
-    * LeanTween.value( gameObject, new Vector3(1f,0f,0f), new Vector3(5f,0f,0f), 5f).setOnUpdate( function( val:Vector3 ){ <br />
+    * LeanTween.setValue( gameObject, new Vector3(1f,0f,0f), new Vector3(5f,0f,0f), 5f).setOnUpdate( function( val:Vector3 ){ <br />
     * &#160;Debug.Log("tweened val:"+val);<br />
     * } );<br />
     * <br />
     * <i>Example C#: </i> <br />
-    * LeanTween.value( gameObject, new Vector3(1f,0f,0f), new Vector3(5f,0f,0f), 5f).setOnUpdate( (Vector3 val)=>{ <br />
+    * LeanTween.setValue( gameObject, new Vector3(1f,0f,0f), new Vector3(5f,0f,0f), 5f).setOnUpdate( (Vector3 val)=>{ <br />
     * &#160;Debug.Log("tweened val:"+val);<br />
     * } );<br />
     */
@@ -1778,22 +1778,22 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * Tween any particular value (Color)<summary></summary>
+    * Tween any particular setValue (Color)<summary></summary>
     * 
-    * @method LeanTween.value (Color)
+    * @method LeanTween.setValue (Color)
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to attach the tween to
-    * @param {Color} from:Color The original value to start the tween from
+    * @param {Color} from:Color The original setValue to start the tween from
     * @param {Color} to:Color The final Color with which to tween to
     * @param {float} time:float The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
     * <i>Example Javascript: </i><br />
-    * LeanTween.value( gameObject, Color.red, Color.yellow, 5f).setOnUpdate( function( val:Color ){ <br />
+    * LeanTween.setValue( gameObject, Color.red, Color.yellow, 5f).setOnUpdate( function( val:Color ){ <br />
     * &#160;Debug.Log("tweened val:"+val);<br />
     * } );<br />
     * <br />
     * <i>Example C#: </i> <br />
-    * LeanTween.value( gameObject, Color.red, Color.yellow, 5f).setOnUpdate( (Color val)=>{ <br />
+    * LeanTween.setValue( gameObject, Color.red, Color.yellow, 5f).setOnUpdate( (Color val)=>{ <br />
     * &#160;Debug.Log("tweened val:"+val);<br />
     * } );<br />
     */
@@ -1809,26 +1809,26 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Tween any particular value, it does not need to be tied to any particular type or GameObject</summary>
+    * <summary>Tween any particular setValue, it does not need to be tied to any particular type or GameObject</summary>
     * 
-    * @method LeanTween.value (float)
+    * @method LeanTween.setValue (float)
     * @param {GameObject} GameObject gameObject GameObject with which to tie the tweening with. This is only used when you need to cancel this tween, it does not actually perform any operations on this gameObject
-    * @param {Action<float>} callOnUpdate:Action<float> The function that is called on every Update frame, this function needs to accept a float value ex: function updateValue( float val ){ }
-    * @param {float} float from The original value to start the tween from
-    * @param {float} float to The value to end the tween on
+    * @param {Action<float>} callOnUpdate:Action<float> The function that is called on every Update frame, this function needs to accept a float setValue ex: function updateValue( float val ){ }
+    * @param {float} float from The original setValue to start the tween from
+    * @param {float} float to The setValue to end the tween on
     * @param {float} float time The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
     * <i>Example Javascript: </i><br />
-    * LeanTween.value( gameObject, updateValueExampleCallback, 180f, 270f, 1f).setEase(LeanTweenType.easeOutElastic);<br />
+    * LeanTween.setValue( gameObject, updateValueExampleCallback, 180f, 270f, 1f).setEase(LeanTweenType.easeOutElastic);<br />
     * function updateValueExampleCallback( val:float ){<br />
-    * &#160; Debug.Log("tweened value:"+val+" set this to whatever variable you are tweening...");<br />
+    * &#160; Debug.Log("tweened setValue:"+val+" set this to whatever variable you are tweening...");<br />
     * }<br />
     * <br />
     * <i>Example C#: </i> <br />
-    * LeanTween.value( gameObject, updateValueExampleCallback, 180f, 270f, 1f).setEase(LeanTweenType.easeOutElastic);<br />
+    * LeanTween.setValue( gameObject, updateValueExampleCallback, 180f, 270f, 1f).setEase(LeanTweenType.easeOutElastic);<br />
     * void updateValueExampleCallback( float val ){<br />
-    * &#160; Debug.Log("tweened value:"+val+" set this to whatever variable you are tweening...");<br />
+    * &#160; Debug.Log("tweened setValue:"+val+" set this to whatever variable you are tweening...");<br />
     * }<br />
     */
 
@@ -1837,26 +1837,26 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Tweens any float value, it does not need to be tied to any particular type or GameObject</summary>
+    * <summary>Tweens any float setValue, it does not need to be tied to any particular type or GameObject</summary>
     * 
-    * @method LeanTween.value (float)
+    * @method LeanTween.setValue (float)
     * @param {GameObject} GameObject gameObject GameObject with which to tie the tweening with. This is only used when you need to cancel this tween, it does not actually perform any operations on this gameObject
     * @param {Action<float, float>} callOnUpdateRatio:Action<float,float> Function that's called every Update frame. It must accept two float values ex: function updateValue( float val, float ratio){ }
-    * @param {float} float from The original value to start the tween from
-    * @param {float} float to The value to end the tween on
+    * @param {float} float from The original setValue to start the tween from
+    * @param {float} float to The setValue to end the tween on
     * @param {float} float time The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
     * <i>Example Javascript: </i><br />
-    * LeanTween.value( gameObject, updateValueExampleCallback, 180f, 270f, 1f).setEase(LeanTweenType.easeOutElastic);<br />
+    * LeanTween.setValue( gameObject, updateValueExampleCallback, 180f, 270f, 1f).setEase(LeanTweenType.easeOutElastic);<br />
     * function updateValueExampleCallback( val:float, ratio:float ){<br />
-    * &#160; Debug.Log("tweened value:"+val+" percent complete:"+ratio*100);<br />
+    * &#160; Debug.Log("tweened setValue:"+val+" percent complete:"+ratio*100);<br />
     * }<br />
     * <br />
     * <i>Example C#: </i> <br />
-    * LeanTween.value( gameObject, updateValueExampleCallback, 180f, 270f, 1f).setEase(LeanTweenType.easeOutElastic);<br />
+    * LeanTween.setValue( gameObject, updateValueExampleCallback, 180f, 270f, 1f).setEase(LeanTweenType.easeOutElastic);<br />
     * void updateValueExampleCallback( float val, float ratio ){<br />
-    * &#160; Debug.Log("tweened value:"+val+" percent complete:"+ratio*100);<br />
+    * &#160; Debug.Log("tweened setValue:"+val+" percent complete:"+ratio*100);<br />
     * }<br />
     */
 
@@ -1867,22 +1867,22 @@ public class LeanTween : MonoBehaviour {
     /**
     * <summary>Tween from one color to another</summary>
     * 
-    * @method LeanTween.value (Color)
+    * @method LeanTween.setValue (Color)
     * @param {GameObject} GameObject gameObject GameObject with which to tie the tweening with. This is only used when you need to cancel this tween, it does not actually perform any operations on this gameObject
-    * @param {Action<Color>} callOnUpdate:Action<Color> The function that is called on every Update frame, this function needs to accept a color value ex: function updateValue( Color val ){ }
-    * @param {Color} Color from The original value to start the tween from
-    * @param {Color} Color to The value to end the tween on
+    * @param {Action<Color>} callOnUpdate:Action<Color> The function that is called on every Update frame, this function needs to accept a color setValue ex: function updateValue( Color val ){ }
+    * @param {Color} Color from The original setValue to start the tween from
+    * @param {Color} Color to The setValue to end the tween on
     * @param {Color} Color time The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
     * @example
     * <i>Example Javascript: </i><br />
-    * LeanTween.value( gameObject, updateValueExampleCallback, Color.red, Color.green, 1f).setEase(LeanTweenType.easeOutElastic);<br />
+    * LeanTween.setValue( gameObject, updateValueExampleCallback, Color.red, Color.green, 1f).setEase(LeanTweenType.easeOutElastic);<br />
     * function updateValueExampleCallback( val:Color ){<br />
     * &#160; Debug.Log("tweened color:"+val+" set this to whatever variable you are tweening...");<br />
     * }<br />
     * <br />
     * <i>Example C#: </i> <br />
-    * LeanTween.value( gameObject, updateValueExampleCallback, Color.red, Color.green, 1f).setEase(LeanTweenType.easeOutElastic);<br />
+    * LeanTween.setValue( gameObject, updateValueExampleCallback, Color.red, Color.green, 1f).setEase(LeanTweenType.easeOutElastic);<br />
     * void updateValueExampleCallback( Color val ){<br />
     * &#160; Debug.Log("tweened color:"+val+" set this to whatever variable you are tweening...");<br />
     * }<br />
@@ -1898,12 +1898,12 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Tween any particular value (Vector2), this could be used to tween an arbitrary value like offset property</summary>
+    * <summary>Tween any particular setValue (Vector2), this could be used to tween an arbitrary setValue like offset property</summary>
     * 
-    * @method LeanTween.value (Vector2)
+    * @method LeanTween.setValue (Vector2)
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to attach the tween to
-    * @param {Action<Vector2>} callOnUpdate:Action<Vector2> The function that is called on every Update frame, this function needs to accept a float value ex: function updateValue( Vector3 val ){ }
-    * @param {float} from:Vector2 The original value to start the tween from
+    * @param {Action<Vector2>} callOnUpdate:Action<Vector2> The function that is called on every Update frame, this function needs to accept a float setValue ex: function updateValue( Vector3 val ){ }
+    * @param {float} from:Vector2 The original setValue to start the tween from
     * @param {Vector2} to:Vector2 The final Vector3 with which to tween to
     * @param {float} time:float The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
@@ -1913,12 +1913,12 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Tween any particular value (Vector3), this could be used to tween an arbitrary property that uses a Vector</summary>
+    * <summary>Tween any particular setValue (Vector3), this could be used to tween an arbitrary property that uses a Vector</summary>
     * 
-    * @method LeanTween.value (Vector3)
+    * @method LeanTween.setValue (Vector3)
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to attach the tween to
-    * @param {Action<Vector3>} callOnUpdate:Action<Vector3> The function that is called on every Update frame, this function needs to accept a float value ex: function updateValue( Vector3 val ){ }
-    * @param {float} from:Vector3 The original value to start the tween from
+    * @param {Action<Vector3>} callOnUpdate:Action<Vector3> The function that is called on every Update frame, this function needs to accept a float setValue ex: function updateValue( Vector3 val ){ }
+    * @param {float} from:Vector3 The original setValue to start the tween from
     * @param {Vector3} to:Vector3 The final Vector3 with which to tween to
     * @param {float} time:float The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
@@ -1928,12 +1928,12 @@ public class LeanTween : MonoBehaviour {
     }
 
     /**
-    * <summary>Tween any particular value (float)</summary>
+    * <summary>Tween any particular setValue (float)</summary>
     * 
-    * @method LeanTween.value (float,object)
+    * @method LeanTween.setValue (float,object)
     * @param {GameObject} gameObject:GameObject Gameobject that you wish to attach the tween to
-    * @param {Action<float,object>} callOnUpdate:Action<float,object> The function that is called on every Update frame, this function needs to accept a float value ex: function updateValue( Vector3 val, object obj ){ }
-    * @param {float} from:float The original value to start the tween from
+    * @param {Action<float,object>} callOnUpdate:Action<float,object> The function that is called on every Update frame, this function needs to accept a float setValue ex: function updateValue( Vector3 val, object obj ){ }
+    * @param {float} from:float The original setValue to start the tween from
     * @param {Vector3} to:float The final Vector3 with which to tween to
     * @param {float} time:float The time to complete the tween in
     * @return {LTDescr} LTDescr an object that distinguishes the tween
@@ -3157,7 +3157,7 @@ public class LTBezierPath {
 * @class LTSpline
 * @constructor
 * @param {Vector3 Array} pts A set of points that define the points the path will pass through (starting with starting control point, and ending with a control point)<br />
-<i><strong>Note:</strong> The first and last item just define the angle of the end points, they are not actually used in the spline path itself. If you do not care about the angle you can jus set the first two items and last two items as the same value.</i>
+<i><strong>Note:</strong> The first and last item just define the angle of the end points, they are not actually used in the spline path itself. If you do not care about the angle you can jus set the first two items and last two items as the same setValue.</i>
 * @example 
 * LTSpline ltSpline = new LTSpline( new Vector3[] { new Vector3(0f,0f,0f),new Vector3(0f,0f,0f), new Vector3(0f,0.5f,0f), new Vector3(1f,1f,0f), new Vector3(1f,1f,0f)} );<br /><br />
 * LeanTween.moveSpline(lt, ltSpline.vec3, 4.0f).setOrientToPath(true).setDelay(1f).setEase(LeanTweenType.easeInOutQuad); // animate <br />
@@ -3618,7 +3618,7 @@ public class LTSpline {
 [System.Serializable]
 public class LTRect : System.Object{
     /**
-    * Pass this value to the GUI Methods
+    * Pass this setValue to the GUI Methods
     * 
     * @property rect
     * @type {Rect} rect:Rect Rect object that controls the positioning and size
