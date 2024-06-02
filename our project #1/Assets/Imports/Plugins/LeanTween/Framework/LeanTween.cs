@@ -3114,7 +3114,7 @@ public class LTBezierPath {
         {
             float pm = (float)i / 120f;
             Vector3 currPt2 = point(pm);
-            //Gizmos.color = new Color(UnityEngine.Random.Range(0f,1f),UnityEngine.Random.Range(0f,1f),UnityEngine.Random.Range(0f,1f),1);
+            //Gizmos.color = new Color(UnityEngine.RandomPercentage.Range(0f,1f),UnityEngine.RandomPercentage.Range(0f,1f),UnityEngine.RandomPercentage.Range(0f,1f),1);
             Gizmos.color = (previousBezier == currentBezier) ? Color.magenta : Color.grey;
             Gizmos.DrawLine(currPt2, prevPt);
             prevPt = currPt2;
@@ -3441,7 +3441,7 @@ public class LTSpline {
         for (int i = 0; i < ptsAdjLength; i++) {
             Vector3 currPt2 = ptsAdj[i];
             // Debug.Log("currPt2:"+currPt2);
-            //Gizmos.color = new Color(UnityEngine.Random.Range(0f,1f),UnityEngine.Random.Range(0f,1f),UnityEngine.Random.Range(0f,1f),1);
+            //Gizmos.color = new Color(UnityEngine.RandomPercentage.Range(0f,1f),UnityEngine.RandomPercentage.Range(0f,1f),UnityEngine.RandomPercentage.Range(0f,1f),1);
             Gizmos.DrawLine(prevPt, currPt2);
             prevPt = currPt2;
         }

@@ -33,8 +33,7 @@ public class EnemyTypeSO : ScriptableObject
     [ShowIf("hasDifficultyVeriants")] public List<EnemyTypeSO> difficultyVeriants;
     [DisplayAsString] public bool hasDifficultyVeriants = true;
 
-    public List<EnemyStat<float>> EnemyFloatStats = new List<EnemyStat<float>>();
-    public List<EnemyStat<int>> EnemyIntStats = new List<EnemyStat<int>>();
+    public List<EnemyStat<float>> EnemyStats = new List<EnemyStat<float>>();
 
     #region Spawning priority
     [Tooltip(
@@ -116,20 +115,21 @@ public class EnemyTypeSO : ScriptableObject
 public class EnemyStat<T>
 {
     public string tag;
-    public bool isScallingStat;
+    public bool AllowScalling;
     public RandomnessValue<T> value;
 }
 
 public class EnemyScallingStat<T>
 {
     EnemyStat<T> enemyStat;
-    public bool enableScale;
     public T scallingMax;
     public T scallingMin;
     public float scallingMultiplyier;
     public LeanTweenType scallingCurveType;
 
-    //Will be used wiht difficulty Ranges once implemented (lable as prams on whiteboard)
+    //To do: allow for more control over how this stat is scalled depending
+    // on the difficulty calculation value using an enum for more options oother then using a function.
+
 }
 
 

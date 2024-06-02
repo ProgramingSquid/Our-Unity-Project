@@ -63,8 +63,7 @@ public class EnemyRoundManager : MonoBehaviour
     [FoldoutGroup("Wave Amount")]
     public RandomnessValue<float> roundMaxAmountOfWaves;
 
-    public float currentDificulty { get; private set; }
-    public LeanTweenType difficultyIncreaseCurve;
+
     public Round currentRound;
     [DisplayAsString] public bool inRound = false;
 

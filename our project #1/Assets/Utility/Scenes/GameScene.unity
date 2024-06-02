@@ -257,9 +257,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 591312081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 115, y: -330}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &39598756
@@ -503,9 +503,9 @@ RectTransform:
   - {fileID: 1040158096}
   m_Father: {fileID: 591312081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 115, y: -90}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &167278122
@@ -1555,9 +1555,9 @@ RectTransform:
   - {fileID: 1858677185}
   m_Father: {fileID: 591312081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 115, y: -210}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &517979623
@@ -1638,7 +1638,7 @@ Camera:
   far clip plane: 38.76
   field of view: 57
   orthographic: 0
-  orthographic size: 5
+  orthographic size: 7.2
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -4022,16 +4022,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9194b8964f10ba74ba02bea0c1bd39a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graceTime: 5
-  spawnTime: 30
-  timeInBetweenSpawning: 5
-  CountdownTime: 5
-  enemyTypes:
-  - {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
-  - {fileID: 11400000, guid: faf4ff5032e4b994787b03a79aad12f2, type: 2}
-  enemies:
-  - {fileID: 3440454382318124906, guid: 3f724b13ea923f64d808d4f46baec5d9, type: 3}
-  - {fileID: 700879430836580097, guid: f42a6f220ce59c34f93d3857049da45f, type: 3}
 --- !u!114 &911046160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4050,6 +4040,18 @@ MonoBehaviour:
   UpgradeSpeedDificultyWeight: 0
   startDificultyTypeWeight: 0
   speedDificultyTypeWeight: 0
+  roundGraceTime:
+    value: 0
+  gameStartGraceTime:
+    value: 0
+  MinRoundTime:
+    value: 0
+  MaxRoundTime:
+    value: 0
+  roundMinAmountOfWaves:
+    value: 0
+  roundMaxAmountOfWaves:
+    value: 0
   difficultyIncreaseCurve: 0
   currentRound:
     levelNumber: 0
@@ -4062,6 +4064,7 @@ MonoBehaviour:
       newestWaveElapsedTime: 0
       updateNewestWaveElapsed: 0
       waveNumber: 0
+      priority: 0
   inRound: 0
 --- !u!114 &911046161
 MonoBehaviour:
@@ -4370,9 +4373,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 591312081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 115, y: -570}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &943960717
@@ -5502,9 +5505,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 591312081}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 115, y: -450}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1269305919
@@ -6037,9 +6040,9 @@ PolygonCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 3.7500002, y: 4.875, z: 3.9750001, w: 3.075}
+    border: {x: 0, y: 0, z: 0.88, w: 0}
     pivot: {x: 0.5, y: 0.5859375}
-    oldSize: {x: 1.6500001, y: 1.875}
+    oldSize: {x: 0.88, y: 1}
     newSize: {x: 1.6500001, y: 1.875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -8645,8 +8648,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1394339990}
   m_HandleRect: {fileID: 1394339989}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.38961035
+  m_Value: 1
+  m_Size: 0.38961038
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
