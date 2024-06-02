@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 
 
@@ -174,6 +175,7 @@ public class RandomnessValue<T>
                 return setValue;
 
             case RandomnesssType.none:
+                value = setValue;
                 return setValue;
             
             case RandomnesssType.MinAndMax:
@@ -182,7 +184,7 @@ public class RandomnessValue<T>
                     float _min = (float)(object)min;
                     float _max = (float)(object)max;
 
-                    T randomValue = (T)(object)Random.Range(_min, _max);
+                    T randomValue = (T)(object)(Random.Range(_min, _max) * (float)(object)multiplyier);
                     value = randomValue;
                     return randomValue;
                 }
@@ -190,7 +192,7 @@ public class RandomnessValue<T>
                 {
                     int _min = (int)(object)min;
                     int _max = (int)(object)max;
-                    T randomValue = (T)(object)Random.Range(_min, _max);
+                    T randomValue = (T)(object)(Random.Range(_min, _max) * (int)(object)multiplyier);
                     value = randomValue;
                     return randomValue;
                 }

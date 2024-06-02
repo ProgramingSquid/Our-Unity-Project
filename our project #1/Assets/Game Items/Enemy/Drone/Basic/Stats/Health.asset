@@ -12,18 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eae20511323b3ec44a1e2c06c27e6e4a, type: 3}
   m_Name: Health
   m_EditorClassIdentifier: 
-  tag: 
-  AllowScalling: 0
+  tag: Health
+  AllowScalling: 1
   value:
-    randomnessType: 0
-    min: 0
-    max: 0
+    randomnessType: 1
+    min: 1
+    max: 1.25
     curve:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    multiplyier: 0
+    multiplyier: 10
     setValue: 0
     value: 0

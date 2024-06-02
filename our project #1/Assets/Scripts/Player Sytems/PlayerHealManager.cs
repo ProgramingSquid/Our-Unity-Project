@@ -10,7 +10,7 @@ public class PlayerHealManager : MonoBehaviour
     public void Heal()
     {
         if(healthSystem.currentHealth < 0) { return; }
-        healthSystem.currentHealth = Mathf.Clamp(healthSystem.currentHealth + healHealth, 0, healthSystem.maxHealth);
+        healthSystem.currentHealth = Mathf.Clamp(healthSystem.currentHealth + healHealth, 0, healthSystem.maxHealth.value);
         healHealth = 0;
     }
 

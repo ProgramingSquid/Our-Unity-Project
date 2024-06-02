@@ -1,15 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using NaughtyAttributes;
 using System;
-using Sirenix.Serialization;
 using Sirenix.OdinInspector;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.ConstrainedExecution;
-using System.Xml.Linq;
 
+[RequireComponent(typeof(HealthSystem))]
 public class EnemyBehaviour : MonoBehaviour
 {
     /*A unity component that gives each enemy gameobject
@@ -61,8 +58,11 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void SetStatistics()
     {
-        //To DO: Set Health
+        //Setting Health:
+        gameObject.GetComponent<HealthSystem>().maxHealth = type.maxHealth.value;
 
+
+        //Setting Other Stats:
         var floatPrameters = new List<EnemyPamater<float>>();
         var intPrameters = new List<EnemyPamater<int>>();
 

@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class HealthSystem : MonoBehaviour
 {
-    public float maxHealth = 10;
+    public RandomnessValue<float> maxHealth;
     public float currentHealth = 10;
     public float graceTime = 0;
     float graceTimmer;
@@ -22,26 +21,18 @@ public class HealthSystem : MonoBehaviour
 
     private void Start()
     {
+        SetUp();
         graceTimmer = graceTime;
-        SetupHealth();
-        currentHealth = maxHealth;
         renderer = gameObject.GetComponent<SpriteRenderer>();
     }
-
-    private void SetupHealth()
+    public void SetUp()
     {
-        if (gameObject.tag == "Enemy")
-        {
-           // maxHealth = GetComponent<EnemyBehaviour>().type.health;
-        }
-        
-    }
 
+        currentHealth = maxHealth.RandonizeValue();
+    }
     void Update()
     {
-        
         graceTimmer -= Time.deltaTime;
-        SetupHealth();
     }
     
     public void TakeDamage(float damageAmount)
