@@ -20,7 +20,7 @@ public class EnemyTypeSO : ScriptableObject
     [LabelText("Name")]
     public string enemyName;
 
-    public EnemyStat<float> maxHealth;
+    public EnemyStat maxHealth;
     [AssetsOnly] public GameObject prefab;
     [Space(5)]
 
@@ -33,7 +33,7 @@ public class EnemyTypeSO : ScriptableObject
     [ShowIf("hasDifficultyVeriants")] public List<EnemyTypeSO> difficultyVeriants;
     [DisplayAsString] public bool hasDifficultyVeriants = true;
 
-    public List<EnemyStat<float>> EnemyStats = new List<EnemyStat<float>>();
+    public List<EnemyStat> EnemyStats = new List<EnemyStat>();
 
     #region Spawning priority
     [Tooltip(
@@ -112,23 +112,24 @@ public class EnemyTypeSO : ScriptableObject
 }
 
 [Serializable]
-public class EnemyStat<T>
+public class EnemyScallingStat
 {
-    public string tag;
-    public bool AllowScalling;
-    public RandomnessValue<T> value;
-}
-
-public class EnemyScallingStat<T>
-{
-    EnemyStat<T> enemyStat;
-    public T scallingMax;
-    public T scallingMin;
+    public EnemyStat enemyStat;
+    public float scallingMax;
+    public float scallingMin;
     public float scallingMultiplyier;
-    public LeanTweenType scallingCurveType;
+    public ScallingType scallingType;
+    
+    [ShowIf("scallingType", ScallingType.function)] public LeanTweenType scallingCurveType;
 
-    //To do: allow for more control over how this stat is scalled depending
-    // on the difficulty calculation value using an enum for more options oother then using a function.
+   public enum ScallingType
+    {
+        function,
+        multiply,
+        divide,
+        add,
+        substract
+    }
 
 }
 

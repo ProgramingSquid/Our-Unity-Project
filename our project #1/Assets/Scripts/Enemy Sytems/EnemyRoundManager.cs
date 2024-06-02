@@ -1,9 +1,8 @@
 using NaughtyAttributes;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI.Table;
+
 
 
 public enum RandomnesssType
@@ -141,24 +140,27 @@ public class Round
 public class RandomnessValue<T>
 {
     [Sirenix.OdinInspector.BoxGroup]
-    [ShowInInspector] RandomnesssType randomnessType;
+    public RandomnesssType randomnessType;
 
     [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
-    [ShowInInspector, HorizontalGroup] T min;
+    [HorizontalGroup] public  T min;
+
     [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
-    [ShowInInspector, HorizontalGroup] T max;
+    [HorizontalGroup] public T max;
+
+    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
 
     [CurveRange(0, 0, 1, 1, EColor.Orange), Sirenix.OdinInspector.BoxGroup]
     [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.RandomOnCurve)]
-    [ShowInInspector] AnimationCurve curve;
-    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.RandomOnCurve)]
+    public AnimationCurve curve;
+    [Sirenix.OdinInspector.HideIf("@this.randomnessType == RandomnesssType.none")]
     [Sirenix.OdinInspector.BoxGroup]
-    [ShowInInspector] T multiplyier;
+    public T multiplyier;
 
     [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.none)]
-    [ShowInInspector, LabelText("value")] T setValue;
+    [LabelText("value")] public T setValue;
 
-    public T value;
+    [DisplayAsString]public T value;
 
 
 

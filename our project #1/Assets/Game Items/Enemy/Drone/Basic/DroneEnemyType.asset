@@ -10,38 +10,49 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15c1a41219bf53f49a26edc111840ad2, type: 3}
-  m_Name: EnemyType
+  m_Name: DroneEnemyType
   m_EditorClassIdentifier: 
-  enemyName: 
-  maxHealth:
-    tag: 
-    isScallingStat: 0
+  enemyName: Basic Drone
+  maxHealth: {fileID: 0}
   prefab: {fileID: 0}
   SubTypes: []
   hasSubTypes: 1
   difficultyVeriants: []
   hasDifficultyVeriants: 1
+  EnemyStats: []
   baseSpawningPriority: 0
   spawningPriorityInfluence: 0
   activeEnemies:
     aplyingType: 0
+    multiplier:
+      value: 0
     inclusionFlags: []
   activeDistance: 0
   killedEnemies:
     aplyingType: 0
+    multiplier:
+      value: 0
     inclusionFlags: []
   recentlyKilledTime: 0
   lowHeathEnemies:
     aplyingType: 0
+    multiplier:
+      value: 0
     inclusionFlags: []
   healthCutOff_Low: 0
   highHeathEnemies:
     aplyingType: 0
+    multiplier:
+      value: 0
     inclusionFlags: []
   healthCutOff_High: 0
   spawnGroupSameEnemies:
     aplyingType: 0
+    multiplier:
+      value: 0
     inclusionFlags: []
   spawnGroupTotalEnemies:
     aplyingType: 0
+    multiplier:
+      value: 0
     inclusionFlags: []
