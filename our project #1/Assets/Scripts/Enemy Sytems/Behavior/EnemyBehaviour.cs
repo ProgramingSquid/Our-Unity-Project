@@ -117,7 +117,7 @@ public class EnemyBehaviour : MonoBehaviour
 
             if(MatchingEnemyStats.Count() == 1)
             {
-                pram.randomnessValue = (RandomnessValue<int>)(object)MatchingEnemyStats.ElementAt(0).value;
+                pram.randomnessValue = (RandomValue<int>)(object)MatchingEnemyStats.ElementAt(0).value;
             }
         }
     }
@@ -227,7 +227,7 @@ public class BehaviorExitReturn
 public class EnemyPamater<T>
 {
     public string tag;
-    public RandomnessValue<T> randomnessValue;
+    public RandomValue<T> randomnessValue;
 }
 
 [Serializable]

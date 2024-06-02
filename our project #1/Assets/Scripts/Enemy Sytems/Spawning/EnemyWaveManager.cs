@@ -59,7 +59,7 @@ public struct EnemySpawningPriorityEffectingParamater
     }
 
     public AplyingType aplyingType;
-    public RandomnessValue<float> multiplier;
+    public RandomValue<float> multiplier;
     public List<EnemyTypeSO> inclusionFlags;
 
 

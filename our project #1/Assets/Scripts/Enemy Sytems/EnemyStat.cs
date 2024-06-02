@@ -5,7 +5,7 @@ public class EnemyStat : ScriptableObject
 {
     public string tag;
     public bool AllowScalling;
-    public RandomnessValue<float> value;
+    public RandomValue<float> value;
 }
 
 

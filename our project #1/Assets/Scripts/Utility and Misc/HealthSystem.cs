@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 public class HealthSystem : MonoBehaviour
 {
-    public RandomnessValue<float> maxHealth;
+    public RandomValue<float> maxHealth;
     public float currentHealth = 10;
     public float graceTime = 0;
     float graceTimmer;

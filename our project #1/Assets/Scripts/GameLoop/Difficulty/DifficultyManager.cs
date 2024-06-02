@@ -10,8 +10,6 @@ public class DifficultyManager : MonoBehaviour
 {
     //Is responsible for handling difficulty
     //Decides which enemies should spawn and which values should be scalled based on player's skill
-
-    public float currentDificulty { get; private set; }
     public List<DifficultyEnemyRangeFilter> difficultyEnemyRangeFilters = new List<DifficultyEnemyRangeFilter>();
 
     // Start is called before the first frame update
@@ -23,9 +21,53 @@ public class DifficultyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        var currentRanges = GetCurrentRanges();
+
         //calculate player's skill
+        GameDifficulty.Agression.Calculate();
+
         //spawn enemies based on which ranges match up with skill value.
+
+        
     }
+
+
+    List<DifficultyEnemyRangeFilter> GetCurrentRanges()
+    {
+        var ranges = new List<DifficultyEnemyRangeFilter>();
+
+        foreach (var range in difficultyEnemyRangeFilters)
+        {
+            if (range.difficultyCaculation.value >= range.minValue && range.difficultyCaculation.value <= range.maxValue)
+            {
+                ranges.Add(range);
+            }
+        }
+        return ranges;
+    }
+
+    List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> GetFilteredEnemies()
+    {
+        //TO DO:
+
+        //Get all included enemies in dictionary of enemies with range key
+        //Get all blocked enemies in dictionary of enemies with range key
+        //Get all musthave enemies in dictionary of enemies with range key
+
+        //filter duplicates from each dictionary
+
+        //Only keep enemies with higher priority when musthave enemies conflict with blocked enemies
+
+        //Remove modifyied blocked enemies form all included enemies
+        //Add musthave enemies to modfiyied included enemies
+
+        //Remove duplicates in final included enemy dictionary
+
+        //Return final included enemy dictionary as a list of enemies.
+
+        return null;
+    }
+
     private void OnValidate()
     {
         for (int i = 0; i < difficultyEnemyRangeFilters.Count; i++)
@@ -53,9 +95,8 @@ public class DifficultyManager : MonoBehaviour
 public class DifficultyEnemyRangeFilter
 {
     [ShowInInspector, LabelText("Difficulty Value")] object inspectorDifficultyCaculation;
-    [DisplayAsString]public IDifficultyCalculation difficultyCaculation;
+    [DisplayAsString] public IDifficultyCalculation difficultyCaculation;
     [Space(20)]
-    
     public float minValue;
     public float maxValue;
     [Tooltip("A value to control the liklyhood of this range's enemy settings overpowering other ranges' settings")]
@@ -111,5 +152,6 @@ public class DifficultyEnemyRangeFilter
 
 public interface IDifficultyCalculation
 {
+    public float value { get; set; }
     public float Calculate();
 }

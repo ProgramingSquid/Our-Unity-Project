@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,23 +44,23 @@ public class EnemyRoundManager : MonoBehaviour
 
     [Sirenix.OdinInspector.BoxGroup("Grace Time in Between Rounds", false)]
     [LabelText("Between Round Grace Time")]
-    public RandomnessValue<float> roundGraceTime;
+    public RandomValue<float> roundGraceTime;
 
 
 
     [Sirenix.OdinInspector.BoxGroup("Time Before First Round", false)]
     [LabelText("Start Of Game Grace Time")]
-    public RandomnessValue<float> gameStartGraceTime;
+    public RandomValue<float> gameStartGraceTime;
 
     [FoldoutGroup("Round Langth")]
-    public RandomnessValue<float> MinRoundTime;
+    public RandomValue<float> MinRoundTime;
     [FoldoutGroup("Round Langth")]
-    public RandomnessValue<float> MaxRoundTime;
+    public RandomValue<float> MaxRoundTime;
 
     [FoldoutGroup("Wave Amount")]
-    public RandomnessValue<float> roundMinAmountOfWaves;
+    public RandomValue<float> roundMinAmountOfWaves;
     [FoldoutGroup("Wave Amount")]
-    public RandomnessValue<float> roundMaxAmountOfWaves;
+    public RandomValue<float> roundMaxAmountOfWaves;
 
 
     public Round currentRound;
@@ -135,97 +134,5 @@ public class Round
     public bool updateElapsed; 
     public List<Wave> waves = new List<Wave>();
     public Wave newestWave;
-}
-
-[System.Serializable]
-public class RandomnessValue<T>
-{
-    [Sirenix.OdinInspector.BoxGroup]
-    public RandomnesssType randomnessType;
-
-    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
-    [HorizontalGroup] public  T min;
-
-    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
-    [HorizontalGroup] public T max;
-
-    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
-
-    [CurveRange(0, 0, 1, 1, EColor.Orange), Sirenix.OdinInspector.BoxGroup]
-    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.RandomOnCurve)]
-    public AnimationCurve curve;
-    [Sirenix.OdinInspector.HideIf("@this.randomnessType == RandomnesssType.none")]
-    [Sirenix.OdinInspector.BoxGroup]
-    public T multiplyier;
-
-    [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.none)]
-    [LabelText("value")] public T setValue;
-
-    [DisplayAsString]public T value;
-
-
-
-    public T RandonizeValue()
-    {
-        switch (randomnessType)
-        {
-           
-            default:
-                value = setValue;
-                return setValue;
-
-            case RandomnesssType.none:
-                value = setValue;
-                return setValue;
-            
-            case RandomnesssType.MinAndMax:
-                if (typeof(T) == typeof(float))
-                {
-                    float _min = (float)(object)min;
-                    float _max = (float)(object)max;
-
-                    T randomValue = (T)(object)(Random.Range(_min, _max) * (float)(object)multiplyier);
-                    value = randomValue;
-                    return randomValue;
-                }
-                else if(typeof(T) == typeof(int))
-                {
-                    int _min = (int)(object)min;
-                    int _max = (int)(object)max;
-                    T randomValue = (T)(object)(Random.Range(_min, _max) * (int)(object)multiplyier);
-                    value = randomValue;
-                    return randomValue;
-                }
-                else 
-                {
-                    Debug.LogError("Cannot use randomness on types that are not float or int");
-                    return default;
-                }
-
-
-            case RandomnesssType.RandomOnCurve:
-                if (typeof(T) == typeof(float))
-                {
-                    float random = Random.Range(0f, 1f);
-                    float curveValue = (float)curve.Evaluate(random) * (float)(object)multiplyier;
-                    value = (T)(object)curveValue;
-                    return (T)(object)curveValue;
-                }
-                else if (typeof(T) == typeof(int))
-                {
-                    int random = Random.Range(0, 1);
-                    int curveValue = (int)curve.Evaluate(random) * (int)(object)multiplyier;
-                    value = (T)(object)curveValue;
-                    return (T)(object)curveValue;
-                }
-                else
-                {
-                    Debug.LogError("Cannot use randomness on types that are not float or int");
-                    return default;
-                }
-
-        }
-            
-    }
 }
 
