@@ -79,18 +79,12 @@ public class EnemyRoundManager : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        Setup();
     }
-    public void Setup()
-    {
-        DetermenGameDifficulty();
-    }
+
 
     // Update is called once per frame
     private void Update()
     {
-        UpdateDifficulty();
-
         if(inRound)
         {
             //To Do: Update round info
@@ -109,15 +103,6 @@ public class EnemyRoundManager : MonoBehaviour
         }
 
     }
-    public void UpdateDifficulty()
-    {
-        //To Do: Add togle for increasing dificulty...
-    }
-
-    public void DetermenGameDifficulty()
-    {
-
-    }
 
     public void StartNewRound()
     {
@@ -134,5 +119,7 @@ public class Round
     public bool updateElapsed; 
     public List<Wave> waves = new List<Wave>();
     public Wave newestWave;
+    public float newestWaveElapsedTime;
+    public bool updateNewestWaveElapsed;
 }
 

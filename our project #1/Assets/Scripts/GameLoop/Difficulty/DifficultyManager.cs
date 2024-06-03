@@ -5,6 +5,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
+using System.Xml.Linq;
+using Unity.VisualScripting;
 
 public class DifficultyManager : MonoBehaviour
 {
@@ -21,16 +24,17 @@ public class DifficultyManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CalculateSkill();
         var currentRanges = GetCurrentRanges();
+        var allowedEnemies = GetFilteredEnemies(currentRanges);
 
-        //calculate player's skill
-        GameDifficulty.Agression.Calculate();
-
-        //spawn enemies based on which ranges match up with skill value.
-
-        
+        //spawn enemies based on which ranges match up with skill value. 
     }
 
+    private static void CalculateSkill()
+    {
+        GameDifficulty.agressivness.Calculate();
+    }
 
     List<DifficultyEnemyRangeFilter> GetCurrentRanges()
     {
@@ -46,34 +50,133 @@ public class DifficultyManager : MonoBehaviour
         return ranges;
     }
 
-    List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> GetFilteredEnemies()
+    List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> GetFilteredEnemies(List<DifficultyEnemyRangeFilter> currentRanges)
     {
-        //TO DO:
+        var allIncluded = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allBlocked = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allMustHave = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
 
-        //Get all included enemies in dictionary of enemies with range key
-        //Get all blocked enemies in dictionary of enemies with range key
-        //Get all musthave enemies in dictionary of enemies with range key
+        //Get dictionaries for each list on each range:
+        allIncluded = GetRangeEnemies(currentRanges).included;
+        allBlocked = GetRangeEnemies(currentRanges).blocked;
+        allMustHave = GetRangeEnemies(currentRanges).mustHave;
 
         //filter duplicates from each dictionary
+        var included = FilterDuplicateValues(allIncluded);
+        var blocked = FilterDuplicateValues(allBlocked);
+        var mustHave = FilterDuplicateValues(allMustHave);
 
-        //Only keep enemies with higher priority when musthave enemies conflict with blocked enemies
+        //Only keep enemies with higher priority when mustHave enemies conflict with blocked enemies
+        var filteredBlocked = CrossFilter(blocked, mustHave);
 
-        //Remove modifyied blocked enemies form all included enemies
-        //Add musthave enemies to modfiyied included enemies
+        //Combining All dictionaries into one list
+        var combinedAllowedEnemies = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        foreach (var enemy in included)
+        {
+            combinedAllowedEnemies.Add(enemy.Value);
+        }
+        foreach (var enemy in blocked)
+        {
+            combinedAllowedEnemies.Add(enemy.Value);
+        }
+        foreach (var enemy in mustHave)
+        {
+            combinedAllowedEnemies.Add(enemy.Value);
+        }
 
-        //Remove duplicates in final included enemy dictionary
+        //Remove duplicates in final enemy list
+        var allowedEnemies = combinedAllowedEnemies.GroupBy(pair => pair)
+        .Select(group => group.First())
+        .ToList();
 
-        //Return final included enemy dictionary as a list of enemies.
-
-        return null;
+        return allowedEnemies;
     }
+
+    #region FilterDuplicateValues(dictionary)
+    public Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicateValues
+        (Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dictionary)
+    {
+        var final = dictionary.GroupBy(pair => pair.Value)
+        .Select(group => group.First())
+        .ToDictionary(pair => pair.Key, pair => pair.Value);
+        return final;
+    }
+    #endregion
+
+    #region GetRangeEnemies(Ranges)
+    public
+        (
+        Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> included,
+        Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> blocked,
+        Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> mustHave
+        )
+        GetRangeEnemies(List<DifficultyEnemyRangeFilter> Ranges)
+    {
+        var allIncluded = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allBlocked = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allMustHave = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+
+        foreach (var range in Ranges)
+        {
+            foreach (var enemy in range.includedEnemies)
+            {
+                allIncluded.Add(range, enemy);
+            }
+            foreach (var enemy in range.MustHaveEnemies)
+            {
+                allBlocked.Add(range, enemy);
+            }
+            foreach (var enemy in range.BlockedEnemies)
+            {
+                allMustHave.Add(range, enemy);
+            }
+        }
+        return (included: allIncluded, blocked: allBlocked, mustHave: allMustHave);
+
+    }
+    #endregion
+
+    #region CrossFilter(Dictionary1, Dictionary2)
+    public Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> 
+        CrossFilter(Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dict1,
+        Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dict2)
+    {
+        var keysToRemove = new List<DifficultyEnemyRangeFilter>();
+
+        foreach (var kvp in dict1)
+        {
+            var key1 = kvp.Key;
+            var value1 = kvp.Value;
+
+            foreach (var kvp2 in dict2)
+            {
+                var key2 = kvp2.Key;
+                var value2 = kvp2.Value;
+
+                if (value1 == value2)
+                {
+                    if (key1.priority < key2.priority)
+                        keysToRemove.Add(key1);
+                    else
+                        keysToRemove.Add(key2);
+                }
+            }
+        }
+
+        // Remove the smaller keys
+        foreach (var key in keysToRemove)
+        {
+            dict1.Remove(key);
+        }
+        return dict1;
+    }
+    #endregion
 
     private void OnValidate()
     {
         for (int i = 0; i < difficultyEnemyRangeFilters.Count; i++)
         {
             DifficultyEnemyRangeFilter difficultyEnemyRangeFilter = difficultyEnemyRangeFilters[i];
-            difficultyEnemyRangeFilter.Validate();
             foreach (var enemy in difficultyEnemyRangeFilter.includedEnemies)
             {
                 enemy.Validate();
@@ -94,8 +197,7 @@ public class DifficultyManager : MonoBehaviour
 [Serializable]
 public class DifficultyEnemyRangeFilter
 {
-    [ShowInInspector, LabelText("Difficulty Value")] object inspectorDifficultyCaculation;
-    [DisplayAsString] public IDifficultyCalculation difficultyCaculation;
+    [SerializeReference] public IDifficultyCalculation difficultyCaculation;
     [Space(20)]
     public float minValue;
     public float maxValue;
@@ -133,19 +235,6 @@ public class DifficultyEnemyRangeFilter
                     Debug.LogError("scallingStats at index of " + i.ToString() + " must be a stat from enemy Type");
                 }
             }
-        }
-    }
-
-    public void Validate()
-    {
-        if(inspectorDifficultyCaculation is IDifficultyCalculation)
-        {
-            difficultyCaculation = (IDifficultyCalculation)inspectorDifficultyCaculation;
-        }
-        else
-        {
-            inspectorDifficultyCaculation = null;
-            Debug.LogError("Difficulty Value must be of implement IDifficultyCalculation");
         }
     }
 }

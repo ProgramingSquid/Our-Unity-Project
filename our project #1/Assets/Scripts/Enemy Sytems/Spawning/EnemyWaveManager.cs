@@ -17,7 +17,7 @@ public class EnemyWaveManager : MonoBehaviour
     void Update()
     {
         //Manage Current Wave
-        //Decide When to Start New Wave and its values
+        //Decide New Wave's values
 
     }
 
@@ -30,8 +30,6 @@ public class Wave
     List<Enemy> spawnEnemies = new List<Enemy>();
     List<Enemy> aliveEnemies = new List<Enemy>();
     public float aliveEnemyElapsedTime;
-    public float newestWaveElapsedTime;
-    public bool updateNewestWaveElapsed;
     public float waveNumber;
     public float priority; //The setValue showing how good of an option it is
     
@@ -42,10 +40,7 @@ public class Wave
     }
 }
 
-public class EnemyWaveOption
-{
-     
-}
+
 [Serializable]
 public struct EnemySpawningPriorityEffectingParamater
 {
@@ -61,6 +56,4 @@ public struct EnemySpawningPriorityEffectingParamater
     public AplyingType aplyingType;
     public RandomValue<float> multiplier;
     public List<EnemyTypeSO> inclusionFlags;
-
-
 }

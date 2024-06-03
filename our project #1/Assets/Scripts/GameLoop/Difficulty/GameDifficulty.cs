@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class GameDifficulty
 {
-    public static PlayerAgression Agression = new PlayerAgression();
+    public static PlayerAgression agressivness = new PlayerAgression();
     public class PlayerAgression : IDifficultyCalculation
     {
         public float value { get; set; }
