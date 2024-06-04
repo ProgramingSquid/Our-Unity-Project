@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
-using System.Xml.Linq;
-using Unity.VisualScripting;
 
 public class DifficultyManager : MonoBehaviour
 {
     //Is responsible for handling difficulty
     //Decides which enemies should spawn and which values should be scalled based on player's skill
     public List<DifficultyEnemyRangeFilter> difficultyEnemyRangeFilters = new List<DifficultyEnemyRangeFilter>();
+
+    [Sirenix.OdinInspector.ReadOnly]
+    [HideInEditorMode] public List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> allowedEnemies = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +27,7 @@ public class DifficultyManager : MonoBehaviour
     {
         CalculateSkill();
         var currentRanges = GetCurrentRanges();
-        var allowedEnemies = GetFilteredEnemies(currentRanges);
+        allowedEnemies = GetFilteredEnemies(currentRanges);
 
         //spawn enemies based on which ranges match up with skill value. 
     }
@@ -75,9 +76,9 @@ public class DifficultyManager : MonoBehaviour
         {
             combinedAllowedEnemies.Add(enemy.Value);
         }
-        foreach (var enemy in blocked)
+        foreach (var enemy in filteredBlocked)
         {
-            combinedAllowedEnemies.Add(enemy.Value);
+            combinedAllowedEnemies.Remove(enemy.Value);
         }
         foreach (var enemy in mustHave)
         {
@@ -85,9 +86,7 @@ public class DifficultyManager : MonoBehaviour
         }
 
         //Remove duplicates in final enemy list
-        var allowedEnemies = combinedAllowedEnemies.GroupBy(pair => pair)
-        .Select(group => group.First())
-        .ToList();
+        var allowedEnemies = FilterDuplicates(combinedAllowedEnemies);
 
         return allowedEnemies;
     }
@@ -96,12 +95,37 @@ public class DifficultyManager : MonoBehaviour
     public Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicateValues
         (Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dictionary)
     {
-        var final = dictionary.GroupBy(pair => pair.Value)
-        .Select(group => group.First())
-        .ToDictionary(pair => pair.Key, pair => pair.Value);
+        var uniqueValues = new HashSet<EnemyTypeSO>();
+        var final = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+
+        foreach (var pair in dictionary)
+        {
+            if (uniqueValues.Add(pair.Value.enemyType))
+            {
+                final.Add(pair.Key, pair.Value);
+            }
+        }
+
         return final;
     }
     #endregion
+
+    public List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicates(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> list, bool LogErorMessage = false)
+    {
+        var uniqueValues = new HashSet<EnemyTypeSO>();
+        var final = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+
+        foreach (var item in list)
+        {
+            if (uniqueValues.Add(item.enemyType))
+            {
+                final.Add(item);
+            }
+            else if (LogErorMessage) { Debug.LogError("Removed duplicate: " + item.enemyType.name); }
+        }
+
+        return final;
+    }
 
     #region GetRangeEnemies(Ranges)
     public
@@ -122,11 +146,11 @@ public class DifficultyManager : MonoBehaviour
             {
                 allIncluded.Add(range, enemy);
             }
-            foreach (var enemy in range.MustHaveEnemies)
+            foreach (var enemy in range.blockedEnemies)
             {
                 allBlocked.Add(range, enemy);
             }
-            foreach (var enemy in range.BlockedEnemies)
+            foreach (var enemy in range.mustHaveEnemies)
             {
                 allMustHave.Add(range, enemy);
             }
@@ -177,15 +201,20 @@ public class DifficultyManager : MonoBehaviour
         for (int i = 0; i < difficultyEnemyRangeFilters.Count; i++)
         {
             DifficultyEnemyRangeFilter difficultyEnemyRangeFilter = difficultyEnemyRangeFilters[i];
+
+            difficultyEnemyRangeFilter.includedEnemies = FilterDuplicates(difficultyEnemyRangeFilter.includedEnemies, true);
+            difficultyEnemyRangeFilter.blockedEnemies = FilterDuplicates(difficultyEnemyRangeFilter.blockedEnemies, true);
+            difficultyEnemyRangeFilter.mustHaveEnemies = FilterDuplicates(difficultyEnemyRangeFilter.mustHaveEnemies, true);
+
             foreach (var enemy in difficultyEnemyRangeFilter.includedEnemies)
             {
                 enemy.Validate();
             }
-            foreach (var enemy in difficultyEnemyRangeFilter.BlockedEnemies)
+            foreach (var enemy in difficultyEnemyRangeFilter.blockedEnemies)
             {
                 enemy.Validate();
             }
-            foreach (var enemy in difficultyEnemyRangeFilter.MustHaveEnemies)
+            foreach (var enemy in difficultyEnemyRangeFilter.mustHaveEnemies)
             {
                 enemy.Validate();
 
@@ -209,10 +238,10 @@ public class DifficultyEnemyRangeFilter
     public List<DifficultyRangeEnemy> includedEnemies;
     
     [Tooltip("The list of enemies that are never going to be included in the total when ranges are combined regardless of priority")]
-    public List<DifficultyRangeEnemy> BlockedEnemies;
+    public List<DifficultyRangeEnemy> blockedEnemies;
     
     [Tooltip("The list of enemies that are always going to be included in the total when ranges are combined regardless of priority (over powers other blocked enemy list from other scripts depending on priority)")]
-    public List<DifficultyRangeEnemy> MustHaveEnemies;
+    public List<DifficultyRangeEnemy> mustHaveEnemies;
 
     [Serializable]
     public class DifficultyRangeEnemy
