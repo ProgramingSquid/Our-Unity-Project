@@ -258,8 +258,18 @@ public struct Enemy
     public HealthSystem healthSystem;
     [AssetsOnly] public GameObject gameObject;
 
-    public void SetupInfo()
+    public Enemy(EnemyBehaviour behaviour, EnemyTypeSO enemyType, HealthSystem health, GameObject go)
     {
-        //To Do
+        enemyBehaviour = behaviour;
+        enemySO = enemyType;
+        healthSystem = health;
+        gameObject = go;
+    }
+    public Enemy(EnemyTypeSO enemyType)
+    {
+        enemyBehaviour = null;
+        enemySO = enemyType;
+        healthSystem = null;
+        gameObject = null;
     }
 }

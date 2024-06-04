@@ -49,7 +49,7 @@ public class EnemyTypeSO : ScriptableObject
     public float spawningPriorityInfluence;
 
     [SerializeReference]
-    public List<EnemySpawningPriority.IEffectingParamater> spawningPriority = new List<EnemySpawningPriority.IEffectingParamater>();
+    public List<EnemyWaveManager.EnemySpawningPriority.IEffectingParamater> spawningPriority = new List<EnemyWaveManager.EnemySpawningPriority.IEffectingParamater>();
     #endregion
 
     [SerializeReference]
@@ -86,6 +86,16 @@ public class EnemyTypeSO : ScriptableObject
         {
             SubTypes = null;
         }
+    }
+
+    public float CalculatePriority()
+    {
+        float total = baseSpawningPriority;
+        foreach (var priority in spawningPriority)
+        {
+            total += priority.Calculate();
+        }
+        return total;
     }
 }
 

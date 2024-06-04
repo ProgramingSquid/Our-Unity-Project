@@ -13,14 +13,6 @@ public enum RandomnesssType
 public static class EnemyRoundManager
 {
 
-    #region weights
-    [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
-    public static float playerStartDificultyWeight;
-    [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
-    public static float playerSpeedDificultyWeight;
-    #endregion
-
-
     [Sirenix.OdinInspector.BoxGroup("Grace Time in Between Rounds", false)]
     [LabelText("Between Round Grace Time")]
     public static RandomValue<float> roundGraceTime;
@@ -41,9 +33,19 @@ public static class EnemyRoundManager
     [FoldoutGroup("Wave Amount")]
     public static RandomValue<float> roundMaxAmountOfWaves;
 
-
+    [Space(20)]
     public static Round currentRound;
     [DisplayAsString] public static bool inRound = false;
+    [Space(20)]
+    [Tooltip("How high the highest wave spawning priority needs to be for a round to creat a new wave")]
+    public static RandomValue<float> minWaveCreatingPriority;
+    [Tooltip("Creats a wave who's priority is the cloasest to highest wave's priority - this value. " +
+        "With a value of zero the round always creats the wave with the highest posible priority")]
+    public static RandomValue<float> waveCreatingRandomnessOffset;
+    [HorizontalGroup]
+    public static RandomValue<int> maxEnemiesInWave;
+    [HorizontalGroup]
+    public static RandomValue<int> minEnemiesInWave;
 
 
     // Update is called once per frame
@@ -51,16 +53,40 @@ public static class EnemyRoundManager
     {
         if(inRound)
         {
+            //Update elapsed
             if (currentRound.updateElapsed)
             {
                 currentRound.elapsedTime += Time.deltaTime;
             }
 
-            //To Do: Update wave ending conditions
-
-            //To Do: Update exsiting wave info
+            foreach(Wave wave in currentRound.waves)
+            {
+                wave.UpdateInfo();
+            }
 
             //To Do: Creat new wave if needed
+
+            var enemies = new List<Enemy>();
+            foreach (var enemy in DifficultyManager.allowedEnemies)
+            {
+                enemies.Add(new Enemy(enemy.enemyType));
+            }
+
+            var BestWaves = EnemyWaveManager.WaveFinder.FindHighestPriorityWaves
+                (
+                    enemies,
+                    minEnemiesInWave.value,
+                    maxEnemiesInWave.value
+
+                );
+            var BestWave = BestWaves[0];
+
+            if (BestWave.priority >= minWaveCreatingPriority.value)
+            {
+                //To DO: Spawn Wave with cloaset to best wave - random offset
+            }
+
+
         }
         else
         {
@@ -70,11 +96,13 @@ public static class EnemyRoundManager
         }
     }
 
-    public static void StartNewRound()
+    public static Round StartNewRound()
     {
+        //TO DO
+        //randimize random values
 
+        return null;
     }
-
 }
 [System.Serializable]
 public class Round

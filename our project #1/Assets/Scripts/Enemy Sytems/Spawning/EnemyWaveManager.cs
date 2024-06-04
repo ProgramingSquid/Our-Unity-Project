@@ -1,160 +1,211 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 
-public static class EnemyWaveManager
-{
-    public static List<EnemyBehaviour> enemies = new List<EnemyBehaviour>();
-
-    // Update is called once per frame
-    public static void Update()
-    {
-        //Manage Current Wave
-        //Decide New Wave's values
-    }
-
-    
-    public static Wave CreatNewWave()
-    {
-        //TO DO
-        return null;
-    }
-}
 [Serializable]
 public class Wave
-{
-    List<Enemy> spawnEnemies = new List<Enemy>();
-    List<Enemy> aliveEnemies = new List<Enemy>();
-    List<Enemy> activeEnemies = new List<Enemy>();
-    public float aliveEnemyElapsedTime;
-    public float waveNumber;
-    public float priority; //The setValue showing how good of an option it is
-    
-
-    public void SpawnEnemies()
     {
-        
-    }
+        public List<Enemy> spawnEnemies = new List<Enemy>();
+        public List<Enemy> aliveEnemies = new List<Enemy>();
+        public List<Enemy> activeEnemies = new List<Enemy>();
+        public float waveNumber;
+        public float priority; //The setValue showing how good of an option it is
 
-    public void UpdateInfo()
-    {
-        aliveEnemies.Clear();
-        activeEnemies.Clear();
-        foreach (var enemy in spawnEnemies)
+        public void SpawnEnemies()
         {
-            if(enemy.healthSystem.currentHealth > 0)
+
+        }
+
+        public void UpdateInfo()
+        {
+
+            aliveEnemies.Clear();
+            activeEnemies.Clear();
+            foreach (var enemy in spawnEnemies)
             {
-                aliveEnemies.Add(enemy);
+                if (enemy.healthSystem.currentHealth > 0)
+                {
+                    aliveEnemies.Add(enemy);
+                }
+            }
+
+            foreach (var enemy in aliveEnemies)
+            {
+                if (enemy.enemySO.isActiveCondition.DeterimainActiveness())
+                {
+                    activeEnemies.Add(enemy);
+                }
             }
         }
 
-        foreach (var enemy in aliveEnemies)
+        public float GetTotalPriority()
         {
-            if (enemy.enemySO.isActiveCondition.DeterimainActiveness())
+            float total = 0;
+            foreach (var enemy in spawnEnemies)
             {
-                activeEnemies.Add(enemy);
+                total += enemy.enemySO.CalculatePriority() * enemy.enemySO.spawningPriorityInfluence;
+            }
+            return total;
+        }
+    }
+public static class EnemyWaveManager
+{
+
+    [Serializable]
+    public static class EnemySpawningPriority
+    {
+        public static ActiveEnemies activeEnemies = new ActiveEnemies();
+        public static KilledEnemies killedEnemies = new KilledEnemies();
+        public static LowHealthEnemies lowHealthEnemies = new LowHealthEnemies();
+        public static HighHealthEnemies highHealthEnemies = new HighHealthEnemies();
+        public static SpawnGroupEnemies spawnGroupEnemies = new SpawnGroupEnemies();
+        public static SpawnGroupAmountOfEnemies spawnGroupAmount = new SpawnGroupAmountOfEnemies();
+
+
+        public class ActiveEnemies : IEffectingParamater
+        {
+            public RandomValue<float> multiplier { get; set; }
+            public List<EnemyTypeSO> inclusionFlags { get; set; }
+            public float value { get; set; }
+
+            public float Calculate()
+            {
+                return value;
             }
         }
-    }
-}
-[Serializable]
-public static class EnemySpawningPriority
-{
-    public static ActiveEnemies activeEnemies = new ActiveEnemies();
-    public static KilledEnemies killedEnemies = new KilledEnemies();
-    public static LowHealthEnemies lowHealthEnemies= new LowHealthEnemies();
-    public static HighHealthEnemies highHealthEnemies = new HighHealthEnemies();
-    public  static SpawnGroupEnemies spawnGroupEnemies = new SpawnGroupEnemies();
-    public static SpawnGroupAmountOfEnemies spawnGroupAmount = new SpawnGroupAmountOfEnemies();
-
-
-    public class ActiveEnemies : IEffectingParamater
-    {
-        public RandomValue<float> multiplier { get; set; }
-        public List<EnemyTypeSO> inclusionFlags { get; set; }
-        public float value { get; set; }
-
-        public float Calculate()
+        public class KilledEnemies : IEffectingParamater
         {
-            return value;
+            public RandomValue<float> multiplier { get; set; }
+            public List<EnemyTypeSO> inclusionFlags { get; set; }
+            public float value { get; set; }
+
+            public float recentlyKilledTime;
+
+            public float Calculate()
+            {
+                return value;
+            }
         }
-    }
-    public class KilledEnemies : IEffectingParamater
-    {
-        public RandomValue<float> multiplier { get; set; }
-        public List<EnemyTypeSO> inclusionFlags { get; set; }
-        public float value { get; set; }
 
-        public float recentlyKilledTime;
-
-        public float Calculate()
+        public class LowHealthEnemies : IEffectingParamater
         {
-            return value;
+            public RandomValue<float> multiplier { get; set; }
+            public List<EnemyTypeSO> inclusionFlags { get; set; }
+            public float value { get; set; }
+
+            public float healthCutOff;
+
+            public float Calculate()
+            {
+                return value;
+            }
         }
-    }
 
-    public class LowHealthEnemies : IEffectingParamater
-    {
-        public RandomValue<float> multiplier { get; set; }
-        public List<EnemyTypeSO> inclusionFlags { get; set; }
-        public float value { get; set; }
-
-        public float healthCutOff;
-
-        public float Calculate()
+        public class HighHealthEnemies : IEffectingParamater
         {
-            return value;
+            public RandomValue<float> multiplier { get; set; }
+            public List<EnemyTypeSO> inclusionFlags { get; set; }
+            public float value { get; set; }
+
+            public float healthCutOff;
+
+            public float Calculate()
+            {
+                return value;
+            }
         }
-    } 
 
-    public class HighHealthEnemies : IEffectingParamater
-    {
-        public RandomValue<float> multiplier { get; set; }
-        public List<EnemyTypeSO> inclusionFlags { get; set; }
-        public float value { get; set; }
 
-        public float healthCutOff;
-
-        public float Calculate()
+        public class SpawnGroupEnemies : IEffectingParamater
         {
-            return value;
+            public RandomValue<float> multiplier { get; set; }
+            public List<EnemyTypeSO> inclusionFlags { get; set; }
+            public float value { get; set; }
+
+            public float Calculate()
+            {
+                return value;
+            }
         }
-    }
-
-
-    public class SpawnGroupEnemies : IEffectingParamater
-    {
-        public RandomValue<float> multiplier { get; set; }
-        public List<EnemyTypeSO> inclusionFlags { get; set; }
-        public float value { get; set; }
-
-        public float Calculate()
+        public class SpawnGroupAmountOfEnemies : IEffectingParamater
         {
-            return value;
+            public RandomValue<float> multiplier { get; set; }
+            public List<EnemyTypeSO> inclusionFlags { get; set; }
+            public float value { get; set; }
+
+            public float Calculate()
+            {
+                return value;
+            }
         }
-    }
-    public class SpawnGroupAmountOfEnemies : IEffectingParamater
-    {
-        public RandomValue<float> multiplier { get; set; }
-        public List<EnemyTypeSO> inclusionFlags { get; set; }
-        public float value { get; set; }
 
-        public float Calculate()
+
+
+        public interface IEffectingParamater
         {
-            return value;
+            public RandomValue<float> multiplier { get; set; }
+            public List<EnemyTypeSO> inclusionFlags { get; set; }
+
+            public float value { get; set; }
+
+            public float Calculate();
         }
     }
 
-
-
-    public interface IEffectingParamater
+    public static class WaveFinder
     {
-        public RandomValue<float> multiplier { get; set; }
-        public List<EnemyTypeSO> inclusionFlags { get; set; }
+        public static List<Wave> FindNearestPriorityWaves(List<Enemy> enemies, float targetPriority, int minGroupSize, int maxGroupSize)
+        {
+            var allPossibleWaves = GetAllPossibleWaves(enemies, minGroupSize, maxGroupSize);
+            var closestWaves = allPossibleWaves.OrderBy(wave => Math.Abs(targetPriority - wave.GetTotalPriority())).ToList();
 
-        public float value { get; set; }
+            return closestWaves;
+        }
+        public static List<Wave> FindHighestPriorityWaves(List<Enemy> enemies, int minGroupSize, int maxGroupSize)
+        {
+            var allPossibleWaves = GetAllPossibleWaves(enemies, minGroupSize, maxGroupSize);
+            var closestWaves = allPossibleWaves.OrderByDescending(wave => wave.GetTotalPriority()).ToList();
 
-        public float Calculate();
+            return closestWaves;
+        }
+
+        private static List<Wave> GetAllPossibleWaves(List<Enemy> enemies, int minGroupSize, int maxGroupSize)
+        {
+            var allWaves = new List<Wave>();
+
+            for (int i = minGroupSize; i <= maxGroupSize; i++)
+            {
+                allWaves.AddRange(GetCombinations(enemies, i).Select(combination => new Wave { spawnEnemies = combination }));
+            }
+
+            return allWaves;
+        }
+
+        private static IEnumerable<List<Enemy>> GetCombinations(List<Enemy> enemies, int groupSize)
+        {
+            if (groupSize == 0)
+            {
+                yield return new List<Enemy>();
+                yield break;
+            }
+
+            if (enemies.Count < groupSize)
+                yield break;
+
+            Enemy first = enemies[0];
+            List<Enemy> rest = enemies.Skip(1).ToList();
+
+            foreach (var combination in GetCombinations(rest, groupSize - 1))
+            {
+                combination.Add(first);
+                yield return combination;
+            }
+
+            foreach (var combination in GetCombinations(rest, groupSize))
+            {
+                yield return combination;
+            }
+        }
     }
 }
