@@ -37,7 +37,7 @@ public class Wave
         
     }
 
-    public void UpdateEnemies()
+    public void UpdateInfo()
     {
         aliveEnemies.Clear();
         activeEnemies.Clear();
