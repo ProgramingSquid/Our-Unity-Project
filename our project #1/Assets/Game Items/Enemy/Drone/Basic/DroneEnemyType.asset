@@ -22,103 +22,11 @@ MonoBehaviour:
   EnemyStats: []
   baseSpawningPriority: 0
   spawningPriorityInfluence: 0
-  activeEnemies:
-    aplyingType: 0
-    multiplier:
-      randomnessType: 0
-      min: 0
-      max: 0
-      curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      multiplyier: 0
-      setValue: 0
-      value: 0
-    inclusionFlags: []
-  activeDistance: 0
-  killedEnemies:
-    aplyingType: 0
-    multiplier:
-      randomnessType: 0
-      min: 0
-      max: 0
-      curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      multiplyier: 0
-      setValue: 0
-      value: 0
-    inclusionFlags: []
-  recentlyKilledTime: 0
-  lowHeathEnemies:
-    aplyingType: 0
-    multiplier:
-      randomnessType: 0
-      min: 0
-      max: 0
-      curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      multiplyier: 0
-      setValue: 0
-      value: 0
-    inclusionFlags: []
-  healthCutOff_Low: 0
-  highHeathEnemies:
-    aplyingType: 0
-    multiplier:
-      randomnessType: 0
-      min: 0
-      max: 0
-      curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      multiplyier: 0
-      setValue: 0
-      value: 0
-    inclusionFlags: []
-  healthCutOff_High: 0
-  spawnGroupSameEnemies:
-    aplyingType: 0
-    multiplier:
-      randomnessType: 0
-      min: 0
-      max: 0
-      curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      multiplyier: 0
-      setValue: 0
-      value: 0
-    inclusionFlags: []
-  spawnGroupTotalEnemies:
-    aplyingType: 0
-    multiplier:
-      randomnessType: 0
-      min: 0
-      max: 0
-      curve:
-        serializedVersion: 2
-        m_Curve: []
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      multiplyier: 0
-      setValue: 0
-      value: 0
-    inclusionFlags: []
+  spawningPriority: []
+  isActiveCondition:
+    rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }

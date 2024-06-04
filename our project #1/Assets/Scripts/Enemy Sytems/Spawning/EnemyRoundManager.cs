@@ -1,9 +1,6 @@
 using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
-
-
 
 public enum RandomnesssType
 {
@@ -13,81 +10,51 @@ public enum RandomnesssType
 }
 
 
-public class EnemyRoundManager : MonoBehaviour
+public static class EnemyRoundManager
 {
-    // Use old dificulty weights (player dificulty choice (should be more powerful then upgrade weights), upgrades, ect)
-    // determen a loop showing how to increas difficulty.
-    // in the loop define a round
-    //At the start of every round get a randimized difficulty setValue from the difficulty at the end(Max) and begining(Min) of the round
-    //Use dificulty setValue and the enemies left from previous rounds to determine what combination of enemies to spawn or not to spawn
-    //(balencing the number of enemies on player. May also want to take in how fast/easaly the player took down the previuos enemies)
-    // 
-
 
     #region weights
     [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
-    public float playerStartDificultyWeight;
+    public static float playerStartDificultyWeight;
     [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
-    public float playerSpeedDificultyWeight;
-    [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
-    public float UpgradeStartDificultyWeight;
-    [GUIColor("#CFD8DC"), Sirenix.OdinInspector.BoxGroup("Weights")]
-    public float UpgradeSpeedDificultyWeight;
-    [GUIColor("#C2CBCE"), Sirenix.OdinInspector.BoxGroup("Weights")]
-    [Range(0, 1)]
-    public float startDificultyTypeWeight;
-    [GUIColor("#C2CBCE"), Sirenix.OdinInspector.BoxGroup("Weights")]
-    [Range(0, 1)]
-    public float speedDificultyTypeWeight;
+    public static float playerSpeedDificultyWeight;
     #endregion
 
 
     [Sirenix.OdinInspector.BoxGroup("Grace Time in Between Rounds", false)]
     [LabelText("Between Round Grace Time")]
-    public RandomValue<float> roundGraceTime;
+    public static RandomValue<float> roundGraceTime;
 
 
 
     [Sirenix.OdinInspector.BoxGroup("Time Before First Round", false)]
     [LabelText("Start Of Game Grace Time")]
-    public RandomValue<float> gameStartGraceTime;
+    public static RandomValue<float> gameStartGraceTime;
 
     [FoldoutGroup("Round Langth")]
-    public RandomValue<float> MinRoundTime;
+    public static RandomValue<float> MinRoundTime;
     [FoldoutGroup("Round Langth")]
-    public RandomValue<float> MaxRoundTime;
+    public static RandomValue<float> MaxRoundTime;
 
     [FoldoutGroup("Wave Amount")]
-    public RandomValue<float> roundMinAmountOfWaves;
+    public static RandomValue<float> roundMinAmountOfWaves;
     [FoldoutGroup("Wave Amount")]
-    public RandomValue<float> roundMaxAmountOfWaves;
+    public static RandomValue<float> roundMaxAmountOfWaves;
 
 
-    public Round currentRound;
-    [DisplayAsString] public bool inRound = false;
-
-
-    [HideInInspector] public static EnemyRoundManager instance;
-
-    public void Awake()
-    {
-
-            instance = this;
-    }
-
-
-    // Start is called before the first frame update
-    private void Start()
-    {
-    }
+    public static Round currentRound;
+    [DisplayAsString] public static bool inRound = false;
 
 
     // Update is called once per frame
-    private void Update()
+    public static void Update()
     {
         if(inRound)
         {
-            //To Do: Update round info
+            if (currentRound.updateElapsed)
+            {
+                currentRound.elapsedTime += Time.deltaTime;
+            }
 
             //To Do: Update wave ending conditions
 
@@ -101,10 +68,9 @@ public class EnemyRoundManager : MonoBehaviour
 
             //To Do: Start/Creat new round if needed
         }
-
     }
 
-    public void StartNewRound()
+    public static void StartNewRound()
     {
 
     }
@@ -113,8 +79,7 @@ public class EnemyRoundManager : MonoBehaviour
 [System.Serializable]
 public class Round
 {
-    public float levelNumber;
-    public float entryDifficulty;
+    public float roundNumber;
     public float elapsedTime;
     public bool updateElapsed; 
     public List<Wave> waves = new List<Wave>();

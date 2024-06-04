@@ -15,13 +15,13 @@ public class MainMenu : MonoBehaviour
     {
         if (SceneManager.GetSceneByBuildIndex(2).isLoaded)
         {
-            EnemyWaveManager waveManager = (EnemyWaveManager)FindObjectOfType(typeof(EnemyWaveManager));
-            waveManager.StopAllCoroutines();
-            EnemyBehaviour[] enemies = (EnemyBehaviour[])FindObjectsOfType(typeof(EnemyBehaviour));
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                Destroy(enemies[i].gameObject);
-            }
+            //EnemyWaveManager waveManager = (EnemyWaveManager)FindObjectOfType(typeof(EnemyWaveManager));
+            //waveManager.StopAllCoroutines();
+            //EnemyBehaviour[] enemies = (EnemyBehaviour[])FindObjectsOfType(typeof(EnemyBehaviour));
+            //for (int i = 0; i < enemies.Length; i++)
+            //{
+            //    Destroy(enemies[i].gameObject);
+            //}
         }
         ScenesManager.instance.SwitchScences(sceneToLoadIndex, sceneToUnloadIndex);
     }

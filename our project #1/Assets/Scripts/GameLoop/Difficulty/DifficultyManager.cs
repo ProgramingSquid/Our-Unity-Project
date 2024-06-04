@@ -7,37 +7,34 @@ using UnityEditor;
 using UnityEngine;
 using System.Linq;
 
-public class DifficultyManager : MonoBehaviour
+public static class DifficultyManager
 {
     //Is responsible for handling difficulty
     //Decides which enemies should spawn and which values should be scalled based on player's skill
-    public List<DifficultyEnemyRangeFilter> difficultyEnemyRangeFilters = new List<DifficultyEnemyRangeFilter>();
+    public static List<DifficultyEnemyRangeFilter> difficultyEnemyRangeFilters = new List<DifficultyEnemyRangeFilter>();
 
     [Sirenix.OdinInspector.ReadOnly]
-    [HideInEditorMode] public List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> allowedEnemies = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [HideInEditorMode] public static List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> allowedEnemies = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+    
+    [Sirenix.OdinInspector.ReadOnly]
+    [HideInEditorMode] public static List<DifficultyEnemyRangeFilter> currentRanges = new List<DifficultyEnemyRangeFilter>();
 
     // Update is called once per frame
-    void Update()
+    public static void Update()
     {
         CalculateSkill();
-        var currentRanges = GetCurrentRanges();
+        currentRanges = GetCurrentRanges();
         allowedEnemies = GetFilteredEnemies(currentRanges);
 
         //spawn enemies based on which ranges match up with skill value. 
     }
 
-    private static void CalculateSkill()
+    public static void CalculateSkill()
     {
         GameDifficulty.agressivness.Calculate();
     }
 
-    List<DifficultyEnemyRangeFilter> GetCurrentRanges()
+    static List<DifficultyEnemyRangeFilter> GetCurrentRanges()
     {
         var ranges = new List<DifficultyEnemyRangeFilter>();
 
@@ -51,7 +48,7 @@ public class DifficultyManager : MonoBehaviour
         return ranges;
     }
 
-    List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> GetFilteredEnemies(List<DifficultyEnemyRangeFilter> currentRanges)
+    static List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> GetFilteredEnemies(List<DifficultyEnemyRangeFilter> currentRanges)
     {
         var allIncluded = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
         var allBlocked = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
@@ -92,7 +89,7 @@ public class DifficultyManager : MonoBehaviour
     }
 
     #region FilterDuplicateValues(dictionary)
-    public Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicateValues
+    static Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicateValues
         (Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dictionary)
     {
         var uniqueValues = new HashSet<EnemyTypeSO>();
@@ -110,7 +107,7 @@ public class DifficultyManager : MonoBehaviour
     }
     #endregion
 
-    public List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicates(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> list, bool LogErorMessage = false)
+    static List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicates(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> list, bool LogErorMessage = false)
     {
         var uniqueValues = new HashSet<EnemyTypeSO>();
         var final = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
@@ -128,7 +125,7 @@ public class DifficultyManager : MonoBehaviour
     }
 
     #region GetRangeEnemies(Ranges)
-    public
+    static
         (
         Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> included,
         Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> blocked,
@@ -161,7 +158,7 @@ public class DifficultyManager : MonoBehaviour
     #endregion
 
     #region CrossFilter(Dictionary1, Dictionary2)
-    public Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> 
+    static Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> 
         CrossFilter(Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dict1,
         Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dict2)
     {
@@ -196,7 +193,7 @@ public class DifficultyManager : MonoBehaviour
     }
     #endregion
 
-    private void OnValidate()
+    static void OnValidate()
     {
         for (int i = 0; i < difficultyEnemyRangeFilters.Count; i++)
         {

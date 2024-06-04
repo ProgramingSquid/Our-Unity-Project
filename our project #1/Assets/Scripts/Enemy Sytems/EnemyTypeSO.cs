@@ -47,41 +47,19 @@ public class EnemyTypeSO : ScriptableObject
 
     [Tooltip("How much this Enemy influences thier wave's total spawningPriority when spawned as a wave")]
     public float spawningPriorityInfluence;
-    [Space(10)]
 
-    [BoxGroup("activeEnemies", false)]
-    public EnemySpawningPriorityEffectingParamater activeEnemies;
-    [BoxGroup("activeEnemies", false)]
-    public float activeDistance;
-
-
-    [BoxGroup("killedEnemies", false)]
-    public EnemySpawningPriorityEffectingParamater killedEnemies;
-    [BoxGroup("killedEnemies", false)]
-    public float recentlyKilledTime;
-
-
-    [BoxGroup("lowHeathEnemies", false)]
-    public EnemySpawningPriorityEffectingParamater lowHeathEnemies;
-    [BoxGroup("lowHeathEnemies", false)]
-    [LabelText("healthCutOff")] public float healthCutOff_Low;
-
-
-    [BoxGroup("highHeathEnemies", false)]
-    public EnemySpawningPriorityEffectingParamater highHeathEnemies;
-    [BoxGroup("highHeathEnemies", false)]
-    [LabelText("healthCutOff")] public float healthCutOff_High;
-
-
-    [BoxGroup("spawnGroupSameEnemies", false)]
-    public EnemySpawningPriorityEffectingParamater spawnGroupSameEnemies;
-
-    [BoxGroup("spawnGroupTotalEnemies", false)]
-    public EnemySpawningPriorityEffectingParamater spawnGroupTotalEnemies;
+    [SerializeReference]
+    public List<EnemySpawningPriority.IEffectingParamater> spawningPriority = new List<EnemySpawningPriority.IEffectingParamater>();
     #endregion
 
-   
+    [SerializeReference]
+    public ActiveEnemyCondition isActiveCondition;
 
+    [Button()]
+    void TestIsActive()
+    {
+        Debug.Log(isActiveCondition.DeterimainActiveness());
+    }
 
     private void OnValidate()
     {
@@ -133,4 +111,27 @@ public class EnemyScallingStat
 
 }
 
+public class ActiveByDistance : ActiveEnemyCondition
+{
+    public float distance;
+    public GameObject enemyGameObject;
+    public override bool DeterimainActiveness()
+    {
+        isActive = false;
+        var _distance = MovementControl.player.transform.position -
+            enemyGameObject.transform.position;
 
+        if(_distance.magnitude <= distance)
+        {
+            isActive = true;
+        }
+        return isActive;
+    }
+}
+
+public abstract class ActiveEnemyCondition
+{
+    public bool isActive { get; set; }
+
+    public abstract bool DeterimainActiveness();
+}

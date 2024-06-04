@@ -3,32 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyWaveManager : MonoBehaviour
+public static class EnemyWaveManager
 {
-    public List<EnemyBehaviour> enemies = new List<EnemyBehaviour>();
-
-    [HideInInspector] public static EnemyWaveManager instance;
-    void Start()
-    {
-        instance = this;
-    }
+    public static List<EnemyBehaviour> enemies = new List<EnemyBehaviour>();
 
     // Update is called once per frame
-    void Update()
+    public static void Update()
     {
         //Manage Current Wave
         //Decide New Wave's values
-
     }
 
     
-    // To Do: CreatNewWave()...
+    public static Wave CreatNewWave()
+    {
+        //TO DO
+        return null;
+    }
 }
 [Serializable]
 public class Wave
 {
     List<Enemy> spawnEnemies = new List<Enemy>();
     List<Enemy> aliveEnemies = new List<Enemy>();
+    List<Enemy> activeEnemies = new List<Enemy>();
     public float aliveEnemyElapsedTime;
     public float waveNumber;
     public float priority; //The setValue showing how good of an option it is
@@ -38,22 +36,125 @@ public class Wave
     {
         
     }
-}
 
-
-[Serializable]
-public struct EnemySpawningPriorityEffectingParamater
-{
-    [Serializable]
-    public enum AplyingType
+    public void UpdateEnemies()
     {
-        multiply,
-        divide,
-        add,
-        subtract
+        aliveEnemies.Clear();
+        activeEnemies.Clear();
+        foreach (var enemy in spawnEnemies)
+        {
+            if(enemy.healthSystem.currentHealth > 0)
+            {
+                aliveEnemies.Add(enemy);
+            }
+        }
+
+        foreach (var enemy in aliveEnemies)
+        {
+            if (enemy.enemySO.isActiveCondition.DeterimainActiveness())
+            {
+                activeEnemies.Add(enemy);
+            }
+        }
+    }
+}
+[Serializable]
+public static class EnemySpawningPriority
+{
+    public static ActiveEnemies activeEnemies = new ActiveEnemies();
+    public static KilledEnemies killedEnemies = new KilledEnemies();
+    public static LowHealthEnemies lowHealthEnemies= new LowHealthEnemies();
+    public static HighHealthEnemies highHealthEnemies = new HighHealthEnemies();
+    public  static SpawnGroupEnemies spawnGroupEnemies = new SpawnGroupEnemies();
+    public static SpawnGroupAmountOfEnemies spawnGroupAmount = new SpawnGroupAmountOfEnemies();
+
+
+    public class ActiveEnemies : IEffectingParamater
+    {
+        public RandomValue<float> multiplier { get; set; }
+        public List<EnemyTypeSO> inclusionFlags { get; set; }
+        public float value { get; set; }
+
+        public float Calculate()
+        {
+            return value;
+        }
+    }
+    public class KilledEnemies : IEffectingParamater
+    {
+        public RandomValue<float> multiplier { get; set; }
+        public List<EnemyTypeSO> inclusionFlags { get; set; }
+        public float value { get; set; }
+
+        public float recentlyKilledTime;
+
+        public float Calculate()
+        {
+            return value;
+        }
     }
 
-    public AplyingType aplyingType;
-    public RandomValue<float> multiplier;
-    public List<EnemyTypeSO> inclusionFlags;
+    public class LowHealthEnemies : IEffectingParamater
+    {
+        public RandomValue<float> multiplier { get; set; }
+        public List<EnemyTypeSO> inclusionFlags { get; set; }
+        public float value { get; set; }
+
+        public float healthCutOff;
+
+        public float Calculate()
+        {
+            return value;
+        }
+    } 
+
+    public class HighHealthEnemies : IEffectingParamater
+    {
+        public RandomValue<float> multiplier { get; set; }
+        public List<EnemyTypeSO> inclusionFlags { get; set; }
+        public float value { get; set; }
+
+        public float healthCutOff;
+
+        public float Calculate()
+        {
+            return value;
+        }
+    }
+
+
+    public class SpawnGroupEnemies : IEffectingParamater
+    {
+        public RandomValue<float> multiplier { get; set; }
+        public List<EnemyTypeSO> inclusionFlags { get; set; }
+        public float value { get; set; }
+
+        public float Calculate()
+        {
+            return value;
+        }
+    }
+    public class SpawnGroupAmountOfEnemies : IEffectingParamater
+    {
+        public RandomValue<float> multiplier { get; set; }
+        public List<EnemyTypeSO> inclusionFlags { get; set; }
+        public float value { get; set; }
+
+        public float Calculate()
+        {
+            return value;
+        }
+    }
+
+
+
+    public interface IEffectingParamater
+    {
+        public RandomValue<float> multiplier { get; set; }
+        public List<EnemyTypeSO> inclusionFlags { get; set; }
+
+        public float value { get; set; }
+
+        public float Calculate();
+    }
 }
