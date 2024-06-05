@@ -26,7 +26,7 @@ public static class DifficultyManager
         currentRanges = GetCurrentRanges();
         allowedEnemies = GetFilteredEnemies(currentRanges);
 
-        //spawn enemies based on which ranges match up with skill value. 
+        //To do: Scale Enemies in current ranges;
     }
 
     public static void CalculateSkill()
@@ -193,7 +193,7 @@ public static class DifficultyManager
     }
     #endregion
 
-    static void OnValidate()
+    static void Validate()
     {
         for (int i = 0; i < difficultyEnemyRangeFilters.Count; i++)
         {
