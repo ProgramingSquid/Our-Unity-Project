@@ -53,12 +53,14 @@ public class EnemyTypeSO : ScriptableObject
     #endregion
 
     [SerializeReference]
-    public ActiveEnemyCondition isActiveCondition;
+    public ActiveEnemyCondition IsActiveCondition;
+    [SerializeReference]
+    public EnemySpawning spawningType;
 
     [Button()]
     void TestIsActive()
     {
-        Debug.Log(isActiveCondition.DeterimainActiveness());
+        Debug.Log(IsActiveCondition.DeterimainActiveness());
     }
 
     private void OnValidate()
@@ -96,6 +98,15 @@ public class EnemyTypeSO : ScriptableObject
             total += priority.Calculate();
         }
         return total;
+    }
+
+    public abstract class EnemySpawning
+    {
+        public virtual GameObject Spawn(GameObject prefab)
+        {
+            var newGameObject = Instantiate(prefab);
+            return newGameObject;
+        }
     }
 }
 
@@ -145,3 +156,5 @@ public abstract class ActiveEnemyCondition
 
     public abstract bool DeterimainActiveness();
 }
+
+

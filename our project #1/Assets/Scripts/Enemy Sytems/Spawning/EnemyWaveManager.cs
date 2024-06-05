@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class Wave
@@ -10,11 +11,14 @@ public class Wave
         public List<Enemy> aliveEnemies = new List<Enemy>();
         public List<Enemy> activeEnemies = new List<Enemy>();
         public float waveNumber;
-        public float priority; //The setValue showing how good of an option it is
+        public float priority;
 
         public void SpawnEnemies()
         {
-            //To DO
+            foreach (var enemy in spawnEnemies)
+            {
+                enemy.enemySO.spawningType.Spawn(enemy.enemySO.prefab);
+            }
         }
 
         public void UpdateInfo()
@@ -32,7 +36,7 @@ public class Wave
 
             foreach (var enemy in aliveEnemies)
             {
-                if (enemy.enemySO.isActiveCondition.DeterimainActiveness())
+                if (enemy.enemySO.IsActiveCondition.DeterimainActiveness())
                 {
                     activeEnemies.Add(enemy);
                 }
@@ -46,6 +50,8 @@ public class Wave
             {
                 total += enemy.enemySO.CalculatePriority() * enemy.enemySO.spawningPriorityInfluence;
             }
+            priority = total;
+
             return total;
         }
     }
