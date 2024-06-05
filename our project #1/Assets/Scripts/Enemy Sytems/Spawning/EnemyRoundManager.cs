@@ -23,19 +23,22 @@ public static class EnemyRoundManager
     [LabelText("Start Of Game Grace Time")]
     public static RandomValue<float> gameStartGraceTime;
 
+    public static RandomValue<float> timeBetweenRounds;
+
     [FoldoutGroup("Round Langth")]
     public static RandomValue<float> MinRoundTime;
     [FoldoutGroup("Round Langth")]
     public static RandomValue<float> MaxRoundTime;
 
     [FoldoutGroup("Wave Amount")]
-    public static RandomValue<float> roundMinAmountOfWaves;
+    public static RandomValue<int> roundMinAmountOfWaves;
     [FoldoutGroup("Wave Amount")]
-    public static RandomValue<float> roundMaxAmountOfWaves;
+    public static RandomValue<int> roundMaxAmountOfWaves;
 
     [Space(20)]
     public static Round currentRound;
     [DisplayAsString] public static bool inRound = false;
+
     [Space(20)]
     [Tooltip("How high the highest wave spawning priority needs to be for a round to creat a new wave")]
     public static RandomValue<float> minWaveCreatingPriority;
@@ -64,8 +67,6 @@ public static class EnemyRoundManager
                 wave.UpdateInfo();
             }
 
-            //To Do: Creat new wave if needed
-
             var enemies = new List<Enemy>();
             foreach (var enemy in DifficultyManager.allowedEnemies)
             {
@@ -83,7 +84,13 @@ public static class EnemyRoundManager
 
             if (BestWave.priority >= minWaveCreatingPriority.value)
             {
-                //To DO: Spawn Wave with cloaset to best wave - random offset
+                var priority = BestWave.priority - waveCreatingRandomnessOffset.value;
+                var wave = EnemyWaveManager.WaveFinder.FindNearestPriorityWaves( enemies, priority, 
+                    minEnemiesInWave.value, 
+                    maxEnemiesInWave.value)[0];
+
+                wave.SpawnEnemies();
+
             }
 
 
@@ -103,6 +110,19 @@ public static class EnemyRoundManager
 
         return null;
     }
+    public static class RoundPriority
+    {
+
+        public interface IPriorityParamater
+        {
+            public RandomValue<float> multiplier { get; set; }
+
+            public float value { get; set; }
+
+            public float Calculate();
+        }
+    }
+    
 }
 [System.Serializable]
 public class Round

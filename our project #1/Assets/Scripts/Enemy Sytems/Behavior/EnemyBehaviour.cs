@@ -256,20 +256,11 @@ public struct Enemy
     public EnemyBehaviour enemyBehaviour;
     public EnemyTypeSO enemySO;
     public HealthSystem healthSystem;
-    [AssetsOnly] public GameObject gameObject;
 
-    public Enemy(EnemyBehaviour behaviour, EnemyTypeSO enemyType, HealthSystem health, GameObject go)
-    {
-        enemyBehaviour = behaviour;
-        enemySO = enemyType;
-        healthSystem = health;
-        gameObject = go;
-    }
     public Enemy(EnemyTypeSO enemyType)
     {
-        enemyBehaviour = null;
+        enemyBehaviour = enemyType.prefab.GetComponent<EnemyBehaviour>();
         enemySO = enemyType;
-        healthSystem = null;
-        gameObject = null;
+        healthSystem = enemyType.prefab.GetComponent<HealthSystem>();
     }
 }
