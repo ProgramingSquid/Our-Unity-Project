@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
 
 public static class DifficultyManager
 {
@@ -26,7 +27,13 @@ public static class DifficultyManager
         currentRanges = GetCurrentRanges();
         allowedEnemies = GetFilteredEnemies(currentRanges);
 
-        //To do: Scale Enemies in current ranges;
+            foreach (var enemy in allowedEnemies)
+            {
+                foreach (var stat in enemy.scallingStats)
+                {
+                    stat.ScaleStat(enemy.rangeFilter.difficultyCaculation);
+                }
+            }
     }
 
     public static void CalculateSkill()
@@ -193,7 +200,7 @@ public static class DifficultyManager
     }
     #endregion
 
-    static void Validate()
+    public static void Validate()
     {
         for (int i = 0; i < difficultyEnemyRangeFilters.Count; i++)
         {
@@ -205,14 +212,17 @@ public static class DifficultyManager
 
             foreach (var enemy in difficultyEnemyRangeFilter.includedEnemies)
             {
+                enemy.rangeFilter = difficultyEnemyRangeFilter;
                 enemy.Validate();
             }
             foreach (var enemy in difficultyEnemyRangeFilter.blockedEnemies)
             {
+                enemy.rangeFilter = difficultyEnemyRangeFilter;
                 enemy.Validate();
             }
             foreach (var enemy in difficultyEnemyRangeFilter.mustHaveEnemies)
             {
+                enemy.rangeFilter = difficultyEnemyRangeFilter;
                 enemy.Validate();
 
             }
@@ -246,9 +256,12 @@ public class DifficultyEnemyRangeFilter
        
         [Sirenix.OdinInspector.Required]public EnemyTypeSO enemyType;
         public List<EnemyScallingStat> scallingStats = new List<EnemyScallingStat>();
-        
+        public DifficultyEnemyRangeFilter rangeFilter;
+
         public void Validate()
         {
+            
+
             for (int i = 0; i < scallingStats.Count; i++)
             {
                 var stat = scallingStats[i];

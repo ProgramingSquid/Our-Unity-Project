@@ -117,11 +117,14 @@ public class EnemyScallingStat
     public float scallingMax;
     public float scallingMin;
     public float scallingMultiplyier;
+    public float scallingSpeedMultiplyier;
     public ScallingType scallingType;
     
-    [ShowIf("scallingType", ScallingType.function)] public LeanTweenType scallingCurveType;
+    [ShowIf("scallingType", ScallingType.function)]
+    [SerializeReference]
+    public MathimaticalFunctions.IMathimaticalFunction scallingCurveType;
 
-   public enum ScallingType
+    public enum ScallingType
     {
         function,
         multiply,
@@ -130,6 +133,34 @@ public class EnemyScallingStat
         substract
     }
 
+    public void ScaleStat(IDifficultyCalculation difficulty)
+    {
+        if (!enemyStat.AllowScalling) { return; }
+        switch (scallingType)
+        {
+            case ScallingType.function:
+                enemyStat.value.min += scallingMultiplyier * scallingCurveType.GetYValue(difficulty.value * scallingSpeedMultiplyier);
+                enemyStat.value.max += scallingMultiplyier * scallingCurveType.GetYValue(difficulty.value * scallingSpeedMultiplyier);
+                break;
+
+            case ScallingType.multiply:
+                enemyStat.value.min *= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                enemyStat.value.max *= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                break;
+            case ScallingType.divide:
+                enemyStat.value.min /= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                enemyStat.value.max /= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                break;
+            case ScallingType.add:
+                enemyStat.value.min += scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                enemyStat.value.max += scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                break;
+            case ScallingType.substract:
+                enemyStat.value.min -= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                enemyStat.value.max -= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                break;
+        } 
+    }
 }
 
 public class ActiveByDistance : ActiveEnemyCondition

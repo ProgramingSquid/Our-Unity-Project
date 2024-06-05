@@ -8,12 +8,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        DifficultyManager.Validate();
     }
 
     void Update()
     {
         DifficultyManager.Update();
+        
         EnemyRoundManager.Update();
+    }
+
+    private void OnValidate()
+    {
+        DifficultyManager.Validate();
     }
 }
