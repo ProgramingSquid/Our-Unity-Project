@@ -22,4 +22,9 @@ public class GameManager : MonoBehaviour
     {
         DifficultyManager.Validate();
     }
+
+    public void StartGame()
+    {
+        EnemyRoundManager.StartFirstRound();
+    }
 }

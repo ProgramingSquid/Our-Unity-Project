@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,11 +13,6 @@ public enum RandomnesssType
 
 public static class EnemyRoundManager
 {
-
-    [Sirenix.OdinInspector.BoxGroup("Grace Time in Between Rounds", false)]
-    [LabelText("Between Round Grace Time")]
-    public static RandomValue<float> roundGraceTime;
-
     [Sirenix.OdinInspector.BoxGroup("Time Before First Round", false)]
     [LabelText("Start Of Game Grace Time")]
     public static RandomValue<float> gameStartGraceTime;
@@ -49,6 +45,7 @@ public static class EnemyRoundManager
     public static RandomValue<int> maxEnemiesInWave;
     [HorizontalGroup]
     public static RandomValue<int> minEnemiesInWave;
+    static float roundPriority;
 
 
     // Update is called once per frame
@@ -78,6 +75,7 @@ public static class EnemyRoundManager
             }
             if(!inRound) { return; }
 
+            #region caluclate best waves
             var enemies = new List<Enemy>();
             foreach (var enemy in DifficultyManager.allowedEnemies)
             {
@@ -92,6 +90,9 @@ public static class EnemyRoundManager
 
                 );
             var BestWave = BestWaves[0];
+            #endregion
+
+            #region Spawn Best Waves if meet requirments:
 
             if (BestWave.priority >= minWaveCreatingPriority.value)
             {
@@ -104,25 +105,38 @@ public static class EnemyRoundManager
                 currentRound.newestWave = wave;
                 wave.SpawnEnemies();
             }
+            #endregion
         }
         else
         {
             timmerBetweenRounds += Time.deltaTime;
-            var totalPriority = new float();
 
             //Updating round creating conditions:
             foreach (var priority in priorities)
             {
-                totalPriority += priority.CalculatePriority();
+                roundPriority += priority.CalculatePriority();
             }
             //Start new round if needed:
-            if(totalPriority >= minRoundCreatingPriority.RandonizeValue()) 
+            if(roundPriority >= minRoundCreatingPriority.RandonizeValue()) 
             {
                 if(timmerBetweenRounds < timeBetweenRounds.RandonizeValue()) { return; }
                 currentRound = StartNewRound();
             }
         }
     }
+
+    public static IEnumerator<Round> StartFirstRound()
+    {
+        if (roundPriority >= minRoundCreatingPriority.RandonizeValue())
+        {
+            new WaitForSeconds(gameStartGraceTime.RandonizeValue());
+            AmountOfRounds = 0;
+            var round = StartNewRound();
+            currentRound = round;
+            yield return round;
+        }
+    }
+
 
     public static Round StartNewRound()
     {
