@@ -4,8 +4,10 @@ using Sirenix.Serialization;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
 using static UnityEditor.Progress;
 using static UnityEngine.Rendering.DebugUI;
@@ -18,6 +20,7 @@ public class EnemyTypeSO : ScriptableObject
     /*(All enemies must have...)*/
 
     [LabelText("Name")]
+    [OnValueChanged("ChangeName")]
     public string enemyName;
 
     public EnemyStat maxHealth;
@@ -63,9 +66,37 @@ public class EnemyTypeSO : ScriptableObject
         Debug.Log(IsActiveCondition.DeterimainActiveness());
     }
 
+    private void OnEnable()
+    {
+        
+        
+    }
+
     private void OnValidate()
     {
         ValidateSubTypes();
+    }
+
+    void ChangeName()
+    {
+        var path = AssetDatabase.GetAssetPath(this);
+        var supioriority = new string(string.Empty);
+        if (this.hasSubTypes)
+        {
+            supioriority = "_base";
+        }
+        else if (this.hasDifficultyVeriants)
+        {
+            supioriority = "_subType";
+        }
+        
+        else
+        {
+            supioriority = "_difficultyVeriant";
+        }
+        string assetName = (this.enemyName.Replace("basic", string.Empty, StringComparison.OrdinalIgnoreCase)).Replace(" ", string.Empty) + supioriority;
+        this.name = assetName;
+        AssetDatabase.RenameAsset(path, assetName);
     }
 
     void ValidateSubTypes()

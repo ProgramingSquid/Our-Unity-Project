@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15c1a41219bf53f49a26edc111840ad2, type: 3}
-  m_Name: DroneEnemyType
+  m_Name: Drone_base
   m_EditorClassIdentifier: 
   enemyName: Basic Drone
   maxHealth: {fileID: 11400000, guid: e6e18cc174c61ee4cae48693942e070d, type: 2}
@@ -23,7 +23,9 @@ MonoBehaviour:
   baseSpawningPriority: 0
   spawningPriorityInfluence: 0
   spawningPriority: []
-  isActiveCondition:
+  IsActiveCondition:
+    rid: -2
+  spawningType:
     rid: -2
   references:
     version: 2
