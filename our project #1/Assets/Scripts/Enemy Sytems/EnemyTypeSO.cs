@@ -20,7 +20,7 @@ public class EnemyTypeSO : ScriptableObject
     /*(All enemies must have...)*/
 
     [LabelText("Name")]
-    [OnValueChanged("ChangeName")]
+    [OnValueChanged("SetObjectName")]
     public string enemyName;
 
     public EnemyStat maxHealth;
@@ -77,7 +77,7 @@ public class EnemyTypeSO : ScriptableObject
         ValidateSubTypes();
     }
 
-    void ChangeName()
+    public void SetObjectName()
     {
         var path = AssetDatabase.GetAssetPath(this);
         var supioriority = new string(string.Empty);
