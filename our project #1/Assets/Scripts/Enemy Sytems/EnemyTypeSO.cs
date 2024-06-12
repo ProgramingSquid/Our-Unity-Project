@@ -1,16 +1,10 @@
 using JetBrains.Annotations;
 using Sirenix.OdinInspector;
-using Sirenix.Serialization;
+using Sirenix.Utilities.Editor;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
-using static UnityEditor.Progress;
-using static UnityEngine.Rendering.DebugUI;
 
 [CreateAssetMenu(fileName = "EnemyType", menuName = "EnemyType")]
 public class EnemyTypeSO : ScriptableObject
@@ -27,14 +21,13 @@ public class EnemyTypeSO : ScriptableObject
     [AssetsOnly] public GameObject prefab;
     [Space(5)]
 
-
-    [InlineEditor, ShowIf("hasSubTypes")]
+    [EnableIf("hasSubTypes")]
     public List<EnemyTypeSO> SubTypes;
-    [DisplayAsString] public bool hasSubTypes = true;
+    [DisplayAsString, LabelText("can have subTypes:")]public bool hasSubTypes = true;
+    [EnableIf("hasDifficultyVeriants")]
+    public List<EnemyTypeSO> difficultyVeriants;
+    [DisplayAsString, LabelText("can have Difficulty Veriants:")] public bool hasDifficultyVeriants = true;
 
-    [InlineEditor]
-    [ShowIf("hasDifficultyVeriants")] public List<EnemyTypeSO> difficultyVeriants;
-    [DisplayAsString] public bool hasDifficultyVeriants = true;
 
     public List<EnemyStat> EnemyStats = new List<EnemyStat>();
 
@@ -66,14 +59,18 @@ public class EnemyTypeSO : ScriptableObject
         Debug.Log(IsActiveCondition.DeterimainActiveness());
     }
 
-    private void OnEnable()
-    {
-        
-        
-    }
-
+    
     private void OnValidate()
     {
+        if (!hasDifficultyVeriants) 
+        { 
+            SubTypes.Clear(); difficultyVeriants.Clear();
+        }
+
+        if (!hasSubTypes)
+        {
+            SubTypes.Clear();
+        }
         ValidateSubTypes();
     }
 
@@ -99,7 +96,7 @@ public class EnemyTypeSO : ScriptableObject
         AssetDatabase.RenameAsset(path, assetName);
     }
 
-    void ValidateSubTypes()
+    public void ValidateSubTypes()
     {
         foreach (EnemyTypeSO item in SubTypes)
         {
@@ -218,5 +215,3 @@ public abstract class ActiveEnemyCondition
 
     public abstract bool DeterimainActiveness();
 }
-
-
