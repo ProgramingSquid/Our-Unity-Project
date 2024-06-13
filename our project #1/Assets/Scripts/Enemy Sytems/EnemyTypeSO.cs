@@ -95,6 +95,7 @@ public class EnemyTypeSO : ScriptableObject
         {
             SubTypes.Clear();
         }
+        
         ValidateSubTypes();
     }
 
@@ -122,12 +123,17 @@ public class EnemyTypeSO : ScriptableObject
 
     public void ValidateSubTypes()
     {
+        hasDifficultyVeriants = true;
+        hasSubTypes = true;
+
         foreach (EnemyTypeSO item in SubTypes)
         {
+            if(item == this) { SubTypes.Remove(item);  continue; }
             item.hasSubTypes = false;
         }
         foreach (EnemyTypeSO item in difficultyVeriants)
         {
+            if (item == this) { difficultyVeriants.Remove(item); continue; }
             item.hasSubTypes = false;
             item.hasDifficultyVeriants = false;
         }

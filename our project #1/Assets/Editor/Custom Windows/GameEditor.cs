@@ -61,11 +61,13 @@ public class EnemyEditor : OdinMenuEditorWindow
                 MenuTree.Selection.Clear();
                 MenuTree.Selection.Add(MenuTree.GetMenuItem("Create New Enemy Stat"));
             }
+            GUILayout.FlexibleSpace();
+            if (SirenixEditorGUI.ToolbarButton(SdfIconType.ArrowClockwise))
+            {
+                selectedEnemyData.ValidateSubTypes();
+            }
         }
-
-
-
-        GUILayout.FlexibleSpace();
+        else { GUILayout.FlexibleSpace(); }
 
         if(!(selection.SelectedValue is EnemyTypeSO || selection.SelectedValue is EnemyStat)) 
         { SirenixEditorGUI.EndHorizontalToolbar(); return; }
