@@ -13,21 +13,20 @@ MonoBehaviour:
   m_Name: Drone_base
   m_EditorClassIdentifier: 
   enemyName: Basic Drone
+  prefab: {fileID: 3440454382318124906, guid: 3f724b13ea923f64d808d4f46baec5d9, type: 3}
+  discription: A Basic Drone
   maxHealth: {fileID: 11400000, guid: e6e18cc174c61ee4cae48693942e070d, type: 2}
-  prefab: {fileID: 0}
+  EnemyStats: []
   SubTypes: []
   hasSubTypes: 1
   difficultyVeriants: []
   hasDifficultyVeriants: 1
-  EnemyStats:
-  - {fileID: 0}
-  - {fileID: 11400000, guid: 5612b9f11fa610142b1764f6cd07e2b8, type: 2}
   baseSpawningPriority: 0
   spawningPriorityInfluence: 0
   spawningPriority: []
-  IsActiveCondition:
-    rid: -2
   spawningType:
+    rid: -2
+  IsActiveCondition:
     rid: -2
   references:
     version: 2

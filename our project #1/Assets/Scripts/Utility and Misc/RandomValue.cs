@@ -26,7 +26,7 @@ public class RandomValue<T>
     [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.none)]
     [LabelText("value")] public T setValue;
 
-    [DisplayAsString]public T value;
+    [DisplayAsString, HideInInlineEditors]public T value;
 
 
 

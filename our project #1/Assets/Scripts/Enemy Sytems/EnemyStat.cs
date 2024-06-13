@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using Sirenix.OdinInspector;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewEnemyStat", menuName = "Enemy Stat")]
 public class EnemyStat : ScriptableObject
 {
     public string tag;
     public bool AllowScalling;
-    public RandomValue<float> value;
+    
+    [HideLabel]public RandomValue<float> value;
 }
 
 
