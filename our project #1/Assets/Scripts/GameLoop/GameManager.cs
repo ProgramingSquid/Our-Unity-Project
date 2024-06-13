@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private void Awake()
+    {
+        DifficultyManager.SetGameSettings();
+        EnemyRoundManager.SetGameSettings();
+    }
     //Calls Update and Start methods for static mangaging classes
 
     void Start()
     {
         DifficultyManager.Validate();
+        StartGame();
     }
 
     void Update()

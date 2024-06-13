@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090e9b21138ddee45a393c2562239562, type: 3}
+  m_Name: GameSettings
+  m_EditorClassIdentifier: 
+  gameStartGraceTime:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  timeBetweenRounds:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  timmerBetweenRounds: 0
+  MinRoundTime:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  MaxRoundTime:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  roundMaxAmountOfWaves:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  priorities: []
+  minRoundCreatingPriority:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  minWaveCreatingPriority:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  waveCreatingRandomnessOffset:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  maxEnemiesInWave:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  minEnemiesInWave:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  difficultyEnemyRangeFilters: []
+  references:
+    version: 2
+    RefIds: []

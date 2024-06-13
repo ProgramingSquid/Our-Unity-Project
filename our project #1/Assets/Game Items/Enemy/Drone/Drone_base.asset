@@ -26,7 +26,7 @@ MonoBehaviour:
   spawningPriorityInfluence: 0
   spawningPriority: []
   spawningType:
-    rid: -2
+    rid: 4319641725348085831
   IsActiveCondition:
     rid: -2
   references:
@@ -34,3 +34,6 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 4319641725348085831
+      type: {class: EnemyTypeSO/EnemySpawning/SpawnAtOrigion, ns: , asm: Assembly-CSharp}
+      data: 

@@ -11,14 +11,18 @@ using Unity.VisualScripting;
 public static class DifficultyManager
 {
     //Is responsible for handling difficulty
-    //Decides which enemies should spawn and which values should be scalled based on player's skill
-    public static List<DifficultyEnemyRangeFilter> difficultyEnemyRangeFilters = new List<DifficultyEnemyRangeFilter>();
+    public static GameSettings gameSettings;
 
     [Sirenix.OdinInspector.ReadOnly]
-    [HideInEditorMode] public static List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> allowedEnemies = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+    public static List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> allowedEnemies = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
     
     [Sirenix.OdinInspector.ReadOnly]
-    [HideInEditorMode] public static List<DifficultyEnemyRangeFilter> currentRanges = new List<DifficultyEnemyRangeFilter>();
+    public static List<DifficultyEnemyRangeFilter> currentRanges = new List<DifficultyEnemyRangeFilter>();
+
+    public static void SetGameSettings()
+    {
+        gameSettings = AssetDatabase.LoadAssetAtPath<GameSettings>("Assets/GameSettings.asset");
+    }
 
     // Update is called once per frame
     public static void Update()
@@ -45,7 +49,7 @@ public static class DifficultyManager
     {
         var ranges = new List<DifficultyEnemyRangeFilter>();
 
-        foreach (var range in difficultyEnemyRangeFilters)
+        foreach (var range in gameSettings.difficultyEnemyRangeFilters)
         {
             if (range.difficultyCaculation.value >= range.minValue && range.difficultyCaculation.value <= range.maxValue)
             {
@@ -202,9 +206,9 @@ public static class DifficultyManager
 
     public static void Validate()
     {
-        for (int i = 0; i < difficultyEnemyRangeFilters.Count; i++)
+        for (int i = 0; i < gameSettings.difficultyEnemyRangeFilters.Count; i++)
         {
-            DifficultyEnemyRangeFilter difficultyEnemyRangeFilter = difficultyEnemyRangeFilters[i];
+            DifficultyEnemyRangeFilter difficultyEnemyRangeFilter = gameSettings.difficultyEnemyRangeFilters[i];
 
             difficultyEnemyRangeFilter.includedEnemies = FilterDuplicates(difficultyEnemyRangeFilter.includedEnemies, true);
             difficultyEnemyRangeFilter.blockedEnemies = FilterDuplicates(difficultyEnemyRangeFilter.blockedEnemies, true);
@@ -255,7 +259,7 @@ public class DifficultyEnemyRangeFilter
     {
        
         [Sirenix.OdinInspector.Required]public EnemyTypeSO enemyType;
-        public List<EnemyScallingStat> scallingStats = new List<EnemyScallingStat>();
+        public List<EnemyScallingStat> scallingStats;
         public DifficultyEnemyRangeFilter rangeFilter;
 
         public void Validate()

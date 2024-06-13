@@ -70,7 +70,7 @@ public class EnemyTypeSO : ScriptableObject
 
     [TabGroup("tab group", "Spawning")]
     [SerializeReference]
-    public EnemySpawning spawningType;
+    public EnemySpawning.EnemySpawningType spawningType;
 
     [SerializeReference]
     [TabGroup("tab group", "Active Condition")]
@@ -157,13 +157,25 @@ public class EnemyTypeSO : ScriptableObject
         }
         return total;
     }
-
-    public abstract class EnemySpawning
+    public class EnemySpawning
     {
-        public virtual GameObject Spawn(GameObject prefab)
+        public abstract class EnemySpawningType
         {
-            var newGameObject = Instantiate(prefab);
-            return newGameObject;
+            public virtual GameObject Spawn(GameObject prefab)
+            {
+                var newGameObject = Instantiate(prefab);
+                return newGameObject;
+            }
+        }
+
+
+        public class SpawnAtOrigion : EnemySpawningType
+        {
+            public override GameObject Spawn(GameObject prefab)
+            {
+                
+                return base.Spawn(prefab);
+            }
         }
     }
 }

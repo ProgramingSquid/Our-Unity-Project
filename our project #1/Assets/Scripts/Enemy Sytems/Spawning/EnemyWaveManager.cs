@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class Wave
     {
-        public List<Enemy> spawnEnemies = new List<Enemy>();
+        public List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> spawnEnemies = new();
         public List<Enemy> aliveEnemies = new List<Enemy>();
         public List<Enemy> activeEnemies = new List<Enemy>();
         public float waveNumber;
@@ -17,7 +17,7 @@ public class Wave
         {
             foreach (var enemy in spawnEnemies)
             {
-                enemy.enemySO.spawningType.Spawn(enemy.enemySO.prefab);
+                enemy.enemyType.spawningType.Spawn(enemy.enemyType.prefab);
             }
         }
 
@@ -28,9 +28,9 @@ public class Wave
             activeEnemies.Clear();
             foreach (var enemy in spawnEnemies)
             {
-                if (enemy.healthSystem.currentHealth > 0)
+                if (enemy.enemyType.prefab.GetComponent<HealthSystem>().currentHealth > 0)
                 {
-                    aliveEnemies.Add(enemy);
+                    aliveEnemies.Add(new Enemy(enemy.enemyType));
                 }
             }
 
@@ -48,7 +48,7 @@ public class Wave
             float total = 0;
             foreach (var enemy in spawnEnemies)
             {
-                total += enemy.enemySO.CalculatePriority() * enemy.enemySO.spawningPriorityInfluence;
+                total += enemy.enemyType.CalculatePriority() * enemy.enemyType.spawningPriorityInfluence;
             }
             priority = total;
 
@@ -161,14 +161,14 @@ public static class EnemyWaveManager
 
     public static class WaveFinder
     {
-        public static List<Wave> FindNearestPriorityWaves(List<Enemy> enemies, float targetPriority, int minGroupSize, int maxGroupSize)
+        public static List<Wave> FindNearestPriorityWaves(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> enemies, float targetPriority, int minGroupSize, int maxGroupSize)
         {
             var allPossibleWaves = GetAllPossibleWaves(enemies, minGroupSize, maxGroupSize);
             var closestWaves = allPossibleWaves.OrderBy(wave => Math.Abs(targetPriority - wave.GetTotalPriority())).ToList();
 
             return closestWaves;
         }
-        public static List<Wave> FindHighestPriorityWaves(List<Enemy> enemies, int minGroupSize, int maxGroupSize)
+        public static List<Wave> FindHighestPriorityWaves(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> enemies, int minGroupSize, int maxGroupSize)
         {
             var allPossibleWaves = GetAllPossibleWaves(enemies, minGroupSize, maxGroupSize);
             var closestWaves = allPossibleWaves.OrderByDescending(wave => wave.GetTotalPriority()).ToList();
@@ -176,31 +176,41 @@ public static class EnemyWaveManager
             return closestWaves;
         }
 
-        private static List<Wave> GetAllPossibleWaves(List<Enemy> enemies, int minGroupSize, int maxGroupSize)
+        private static List<Wave> GetAllPossibleWaves(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> enemies, int minGroupSize, int maxGroupSize)
         {
             var allWaves = new List<Wave>();
-
+            Debug.Log("enemy amount: "+ enemies.Count);
+            
+            //To Fix:
             for (int i = minGroupSize; i <= maxGroupSize; i++)
             {
-                allWaves.AddRange(GetCombinations(enemies, i).Select(combination => new Wave { spawnEnemies = combination }));
+                //For Loop Code isn't get ran...
+                var combinations = GetCombinations(enemies, i);
+                Debug.Log("combination amount: "+ combinations.ToList().Count);
+                foreach (var comination in combinations)
+                {
+                    Debug.Log("combination enemy:"+ comination[0].enemyType.name);
+                    allWaves.Add(new Wave { spawnEnemies = comination});
+                }
+                
             }
-
+            Debug.Log("all wave amount: "+allWaves.Count);
             return allWaves;
         }
 
-        private static IEnumerable<List<Enemy>> GetCombinations(List<Enemy> enemies, int groupSize)
+        private static IEnumerable<List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>> GetCombinations(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> enemies, int groupSize)
         {
             if (groupSize == 0)
             {
-                yield return new List<Enemy>();
+                yield return new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
                 yield break;
             }
 
             if (enemies.Count < groupSize)
                 yield break;
 
-            Enemy first = enemies[0];
-            List<Enemy> rest = enemies.Skip(1).ToList();
+            DifficultyEnemyRangeFilter.DifficultyRangeEnemy first = enemies[0];
+            List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> rest = enemies.Skip(1).ToList();
 
             foreach (var combination in GetCombinations(rest, groupSize - 1))
             {

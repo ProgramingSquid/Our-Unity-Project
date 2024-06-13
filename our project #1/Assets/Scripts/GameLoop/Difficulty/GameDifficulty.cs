@@ -4,16 +4,16 @@ using UnityEngine;
 
 public static class GameDifficulty
 {
-    public static PlayerAgression agressivness = new PlayerAgression();
-    public class PlayerAgression : IDifficultyCalculation
+    public static Difficulty agressivness = new Difficulty();
+    public class Difficulty : IDifficultyCalculation
     {
         public float value { get; set; }
 
 
         public float Calculate()
         {
-            value = 1;
-            return 1;
+            value++;
+            return value;
         }
     }
 
