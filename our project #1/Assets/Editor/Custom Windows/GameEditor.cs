@@ -10,13 +10,15 @@ using Codice.CM.Client.Differences.Graphic;
 using System.IO;
 using static UnityEditor.Rendering.InspectorCurveEditor;
 using Unity.Plastic.Antlr3.Runtime.Tree;
+using Unity.VisualScripting;
 
 public class EnemyEditor : OdinMenuEditorWindow
 {
     [MenuItem("Windows/GameEditors/EnemyEditor")]
     public static void ShowWindow()
     {
-        GetWindow<EnemyEditor>("EnemyEditors");
+        var window = GetWindow<EnemyEditor>("EnemyEditors");
+        window.minSize = new Vector2(700, 500);
     }
 
     protected override void OnDestroy()
@@ -28,67 +30,83 @@ public class EnemyEditor : OdinMenuEditorWindow
     protected override void OnBeginDrawEditors() 
     {
         var selection = MenuTree.Selection;
+        EnemyTypeSO selectedEnemyData = new();
         SirenixEditorGUI.BeginHorizontalToolbar();
         if (selection.SelectedValue is EnemyTypeSO)
         {
-            var selectedEnemyData = selection.SelectedValue as EnemyTypeSO;
+            selectedEnemyData = selection.SelectedValue as EnemyTypeSO;
             if (selectedEnemyData.hasSubTypes)
             {
-                if (SirenixEditorGUI.ToolbarButton("Create New Sub Type Of Selected"))
+                if (SirenixEditorGUI.ToolbarButton("New Sub Type Of Selected"))
                 {
                     subEnemyCreateGUI.baseEnemy = selectedEnemyData;
                     MenuTree.Selection.Clear();
-                    MenuTree.Selection.Add(MenuTree.GetMenuItem("Create New Sub Enemy"));
+                    MenuTree.Selection.Add(MenuTree.GetMenuItem("Create New Sub Type"));
                 }
             }
 
             if (selectedEnemyData.hasDifficultyVeriants)
             {
-                if (SirenixEditorGUI.ToolbarButton("Create New Difficulty Veriant Of Selected"))
+                if (SirenixEditorGUI.ToolbarButton("New Difficulty Veriant of Selected"))
                 {
                     veriantEnemyCreateGUI.baseEnemy = selectedEnemyData;
                     MenuTree.Selection.Clear();
-                    MenuTree.Selection.Add(MenuTree.GetMenuItem("Create New Difficulty Veriant Enemy"));
+                    MenuTree.Selection.Add(MenuTree.GetMenuItem("New Difficulty Veriant"));
                 }
             }
 
-
-            GUILayout.FlexibleSpace();
-            if (SirenixEditorGUI.ToolbarButton(SdfIconType.ArrowUpSquare))
+            if (SirenixEditorGUI.ToolbarButton("Create New Stat"))
             {
-                while (!MenuTree.Selection[0].SmartName.Contains("_base"))
+                enemyStatCreateGUI.enemyData = selectedEnemyData;
+                MenuTree.Selection.Clear();
+                MenuTree.Selection.Add(MenuTree.GetMenuItem("Create New Enemy Stat"));
+            }
+        }
+
+
+
+        GUILayout.FlexibleSpace();
+
+        if(!(selection.SelectedValue is EnemyTypeSO || selection.SelectedValue is EnemyStat)) 
+        { SirenixEditorGUI.EndHorizontalToolbar(); return; }
+
+        if (SirenixEditorGUI.ToolbarButton(SdfIconType.ArrowUpSquare))
+        {
+            while (!MenuTree.Selection[0].SmartName.Contains("_base"))
+            {
+                if (!MenuTree.Selection[0].ChildMenuItems.Any(child => child.SmartName.Contains("_base")))
                 {
-                    if (!MenuTree.Selection[0].ChildMenuItems.Any(child => child.SmartName.Contains("_base")))
-                    {
-                        var path = MenuTree.Selection[0].Parent.GetFullPath();
-                        MenuTree.Selection.Clear();
-                        MenuTree.Selection.Add(MenuTree.GetMenuItem(path));
-                        continue;
-                    }
+                    var path = MenuTree.Selection[0].Parent.GetFullPath();
+                    MenuTree.Selection.Clear();
+                    MenuTree.Selection.Add(MenuTree.GetMenuItem(path));
+                    continue;
+                }
 
-                    foreach (var child in MenuTree.Selection[0].ChildMenuItems)
-                    {
-                        if (!child.SmartName.Contains("_base")) { continue; }
-                        MenuTree.Selection.Clear();
-                        MenuTree.Selection.Add(child);
-                        return;
-                    }
+                foreach (var child in MenuTree.Selection[0].ChildMenuItems)
+                {
+                    if (!child.SmartName.Contains("_base")) { continue; }
+                    MenuTree.Selection.Clear();
+                    MenuTree.Selection.Add(child);
+                    return;
                 }
             }
+        }
 
-            if (SirenixEditorGUI.ToolbarButton(SdfIconType.Trash))
+        if (SirenixEditorGUI.ToolbarButton(SdfIconType.Trash))
+        {
+            bool confirmed = EditorUtility.DisplayDialog("Confirm Deletion",
+                "Are you sure you want to delete this selected Enemy Data? This action cannot be undone.", "Delete", "Cancel");
+
+            if (!confirmed) { return; }
+            var assetPath = AssetDatabase.GetAssetPath((Object)selection.SelectedValue);
+            string path = assetPath;
+            if(selection.SelectedValue is EnemyTypeSO)
             {
-                bool confirmed = EditorUtility.DisplayDialog("Confirm Deletion",
-                    "Are you sure you want to delete this selected Enemy Data? This action cannot be undone.", "Delete", "Cancel");
-
-                if (!confirmed) { return; }
-                var assetPath = AssetDatabase.GetAssetPath(selectedEnemyData);
-                string path = AssetUtilities.GetAssetFolder(assetPath);
-                AssetDatabase.DeleteAsset(path);
-                AssetDatabase.SaveAssets();
+                path = AssetUtilities.GetAssetFolder(assetPath);
             }
             
-
+            AssetDatabase.DeleteAsset(path);
+            AssetDatabase.SaveAssets();
         }
         SirenixEditorGUI.EndHorizontalToolbar();
     }
@@ -96,6 +114,7 @@ public class EnemyEditor : OdinMenuEditorWindow
     EnemyCreateGUI enemyCreationGUI;
     SubEnemyCreateGUI subEnemyCreateGUI;
     VeriantEnemyCreateGUI veriantEnemyCreateGUI;
+    EnemyStatCreateGUI enemyStatCreateGUI;
     protected override OdinMenuTree BuildMenuTree()
     {
         OdinMenuTree tree;
@@ -105,12 +124,16 @@ public class EnemyEditor : OdinMenuEditorWindow
         enemyCreationGUI = new EnemyCreateGUI();
         subEnemyCreateGUI = new SubEnemyCreateGUI();
         veriantEnemyCreateGUI = new VeriantEnemyCreateGUI();
+        enemyStatCreateGUI = new EnemyStatCreateGUI();
+
         var enemyTypePath = "Assets/Game Items/Enemy";
         tree.Add("Create New Base Enemy", enemyCreationGUI);
-        tree.Add("Create New Sub Enemy", subEnemyCreateGUI);
-        tree.Add("Create New Difficulty Veriant Enemy", veriantEnemyCreateGUI);
+        tree.Add("Create New Sub Type", subEnemyCreateGUI);
+        tree.Add("New Difficulty Veriant", veriantEnemyCreateGUI);
+        tree.Add("Create New Enemy Stat", enemyStatCreateGUI);
 
         tree.AddAllAssetsAtPath("Enemy Data", enemyTypePath, typeof(EnemyTypeSO), true, false);
+        tree.AddAllAssetsAtPath("Enemy Data", enemyTypePath, typeof(EnemyStat), true, false);
         return tree;
 
 
@@ -141,9 +164,6 @@ public class EnemyEditor : OdinMenuEditorWindow
             enemyData.enemyName = "New Enemy";
             enemyData.SetObjectName();
         }
-
-        
-        
     } 
     class SubEnemyCreateGUI
     {
@@ -166,7 +186,7 @@ public class EnemyEditor : OdinMenuEditorWindow
             enemyData.SetObjectName();
 
             string assetPath = AssetDatabase.GetAssetPath(baseEnemy);
-            string folder = System.IO.Path.GetDirectoryName(assetPath);
+            string folder = AssetUtilities.GetAssetFolder(assetPath);
 
             string GUID = AssetDatabase.CreateFolder(folder + "/" + "Sub Types", enemyData.name.Replace("_subType", string.Empty));
             string path = AssetDatabase.GUIDToAssetPath(GUID);
@@ -216,6 +236,33 @@ public class EnemyEditor : OdinMenuEditorWindow
             enemyData.hasSubTypes = false;
             enemyData.hasDifficultyVeriants = false;
             enemyData.SetObjectName();
+        }
+    }
+    class EnemyStatCreateGUI
+    {
+        [InlineEditor(InlineEditorObjectFieldModes.Hidden)]
+        public EnemyStat enemyStat;
+
+        public EnemyTypeSO enemyData;
+        public EnemyStatCreateGUI()
+        {
+            enemyStat = ScriptableObject.CreateInstance<EnemyStat>();
+            enemyStat.tag = "New Stat";
+        }
+
+        [Button("Create")]
+        public void CreateEnemyVeriant()
+        {
+            enemyData.EnemyStats.Add(enemyStat);
+
+
+            string assetPath = AssetDatabase.GetAssetPath(enemyData);
+            string folder = System.IO.Path.GetDirectoryName(assetPath);
+
+            AssetDatabase.CreateAsset(enemyStat, folder + "/Stats/" + enemyStat.tag.Replace(" ", string.Empty) + ".asset");
+            AssetDatabase.SaveAssets();
+            enemyStat = ScriptableObject.CreateInstance<EnemyStat>();
+            enemyStat.tag = "New Stat";
         }
     }
 
