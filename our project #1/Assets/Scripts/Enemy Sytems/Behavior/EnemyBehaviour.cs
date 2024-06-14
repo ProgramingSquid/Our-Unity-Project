@@ -256,11 +256,13 @@ public struct Enemy
     public EnemyBehaviour enemyBehaviour;
     public EnemyTypeSO enemySO;
     public HealthSystem healthSystem;
+    public GameObject enemyGameObject;
 
-    public Enemy(EnemyTypeSO enemyType)
+    public Enemy(EnemyTypeSO enemyType, GameObject gameObject)
     {
-        enemyBehaviour = enemyType.prefab.GetComponent<EnemyBehaviour>();
+        enemyGameObject = gameObject;
+        enemyBehaviour = gameObject.GetComponent<EnemyBehaviour>();
         enemySO = enemyType;
-        healthSystem = enemyType.prefab.GetComponent<HealthSystem>();
+        healthSystem = gameObject.GetComponent<HealthSystem>();
     }
 }

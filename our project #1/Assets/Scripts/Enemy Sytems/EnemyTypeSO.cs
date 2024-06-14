@@ -65,7 +65,7 @@ public class EnemyTypeSO : ScriptableObject
 
     [TabGroup("tab group", "Spawning")]
     [SerializeReference]
-    public List<EnemyWaveManager.EnemySpawningPriority.IEffectingParamater> spawningPriority = new List<EnemyWaveManager.EnemySpawningPriority.IEffectingParamater>();
+    public List<EnemyWaveManager.EnemySpawningPriority.IEffectingParamater> spawningPriority = new();
     #endregion
 
     [TabGroup("tab group", "Spawning")]
@@ -75,13 +75,6 @@ public class EnemyTypeSO : ScriptableObject
     [SerializeReference]
     [TabGroup("tab group", "Active Condition")]
     public ActiveEnemyCondition IsActiveCondition;
-
-    [TabGroup("tab group", "Active Condition")]
-    [Button()]
-    void TestIsActive()
-    {
-        Debug.Log(IsActiveCondition.DeterimainActiveness());
-    }
 
     
     private void OnValidate()
@@ -161,20 +154,48 @@ public class EnemyTypeSO : ScriptableObject
     {
         public abstract class EnemySpawningType
         {
-            public virtual GameObject Spawn(GameObject prefab)
-            {
-                var newGameObject = Instantiate(prefab);
-                return newGameObject;
-            }
+            public abstract GameObject Spawn(GameObject prefab);
+
         }
 
 
         public class SpawnAtOrigion : EnemySpawningType
         {
+            //TEst
+            public Vector3 position;
+            public Quaternion rotation;
             public override GameObject Spawn(GameObject prefab)
             {
-                
-                return base.Spawn(prefab);
+                return Instantiate(prefab, position, rotation);
+            }
+        }
+        public class SpawnAtTransformPosition : EnemySpawningType
+        {
+            public Transform transform;
+            public Quaternion rotation;
+
+
+            public override GameObject Spawn(GameObject prefab)
+            {
+                return Instantiate(prefab, transform.position, rotation);
+            }
+        }
+        public class SpawnAtTransformRotation : EnemySpawningType
+        {
+            public Transform transform;
+            public Vector3 position;
+
+            public override GameObject Spawn(GameObject prefab)
+            {
+                return Instantiate(prefab, position, transform.rotation);
+            }
+        }
+        public class SpawnAtTransformRotationAndPosition : EnemySpawningType
+        {
+            public Transform transform;
+            public override GameObject Spawn(GameObject prefab)
+            {
+                return Instantiate(prefab, transform.position, transform.rotation);
             }
         }
     }
@@ -237,7 +258,7 @@ public class ActiveByDistance : ActiveEnemyCondition
 {
     public float distance;
     public GameObject enemyGameObject;
-    public override bool DeterimainActiveness()
+    public override bool DeterimainActiveness(GameObject enemyGameObject)
     {
         isActive = false;
         var _distance = MovementControl.player.transform.position -
@@ -255,5 +276,5 @@ public abstract class ActiveEnemyCondition
 {
     public bool isActive { get; set; }
 
-    public abstract bool DeterimainActiveness();
+    public abstract bool DeterimainActiveness(GameObject enemyGameObject);
 }

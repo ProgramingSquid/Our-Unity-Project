@@ -58,10 +58,10 @@ public static class EnemyRoundManager
             var BestWaves = EnemyWaveManager.WaveFinder.FindHighestPriorityWaves
                 (
                     DifficultyManager.allowedEnemies,
-                    gameSettings.maxEnemiesInWave.value,
-                    gameSettings.minEnemiesInWave.value
+                    gameSettings.minEnemiesInWave.value,
+                    gameSettings.maxEnemiesInWave.value
                 );
-            var BestWave = BestWaves[0]; //Fix Later...
+            var BestWave = BestWaves[0];
             #endregion
 
             #region Spawn Best Waves if meet requirments:

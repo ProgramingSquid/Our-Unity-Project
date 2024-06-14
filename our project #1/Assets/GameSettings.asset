@@ -36,8 +36,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 0
-    value: 0
+    setValue: 15
+    value: 15
   timmerBetweenRounds: 0
   MinRoundTime:
     randomnessType: 0
@@ -50,8 +50,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 0
-    value: 0
+    setValue: 30
+    value: 30
   MaxRoundTime:
     randomnessType: 0
     min: 0
@@ -63,8 +63,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 0
-    value: 0
+    setValue: 60
+    value: 60
   roundMaxAmountOfWaves:
     randomnessType: 0
     min: 0
@@ -76,8 +76,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 0
-    value: 0
+    setValue: 10
+    value: 10
   priorities: []
   minRoundCreatingPriority:
     randomnessType: 0
@@ -129,8 +129,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 0
-    value: 0
+    setValue: 3
+    value: 3
   minEnemiesInWave:
     randomnessType: 0
     min: 0
@@ -142,9 +142,70 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 0
-    value: 0
-  difficultyEnemyRangeFilters: []
+    setValue: 1
+    value: 1
+  difficultyEnemyRangeFilters:
+  - difficultyCaculation:
+      rid: 4319641725348085834
+    minValue: 0
+    maxValue: 9.9991e+31
+    priority: 15.31
+    includedEnemies:
+    - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
+      scallingStats: []
+      rangeFilter:
+        difficultyCaculation:
+          rid: 4319641725348085834
+        minValue: 0
+        maxValue: 9.9991e+31
+        priority: 15.31
+        includedEnemies:
+        - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
+          scallingStats: []
+          rangeFilter:
+            difficultyCaculation:
+              rid: 4319641725348085834
+            minValue: 0
+            maxValue: 9.9991e+31
+            priority: 15.31
+            includedEnemies:
+            - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
+              scallingStats: []
+              rangeFilter:
+                difficultyCaculation:
+                  rid: 4319641725348085834
+                minValue: 0
+                maxValue: 9.9991e+31
+                priority: 15.31
+                includedEnemies:
+                - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
+                  scallingStats: []
+                  rangeFilter:
+                    difficultyCaculation:
+                      rid: 4319641725348085834
+                    minValue: 0
+                    maxValue: 9.9991e+31
+                    priority: 15.31
+                    includedEnemies:
+                    - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
+                      scallingStats: []
+                      rangeFilter:
+                        minValue: 0
+                        maxValue: 9.9991e+31
+                        priority: 15.31
+                    blockedEnemies: []
+                    mustHaveEnemies: []
+                blockedEnemies: []
+                mustHaveEnemies: []
+            blockedEnemies: []
+            mustHaveEnemies: []
+        blockedEnemies: []
+        mustHaveEnemies: []
+    blockedEnemies: []
+    mustHaveEnemies: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 4319641725348085834
+      type: {class: GameDifficulty/Difficulty, ns: , asm: Assembly-CSharp}
+      data: 

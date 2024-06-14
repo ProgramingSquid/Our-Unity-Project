@@ -206,6 +206,7 @@ public static class DifficultyManager
 
     public static void Validate()
     {
+        if(gameSettings == null) { SetGameSettings(); }
         for (int i = 0; i < gameSettings.difficultyEnemyRangeFilters.Count; i++)
         {
             DifficultyEnemyRangeFilter difficultyEnemyRangeFilter = gameSettings.difficultyEnemyRangeFilters[i];

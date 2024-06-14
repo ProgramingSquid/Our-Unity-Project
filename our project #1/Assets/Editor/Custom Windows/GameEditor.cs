@@ -30,7 +30,7 @@ public class EnemyEditor : OdinMenuEditorWindow
     protected override void OnBeginDrawEditors() 
     {
         var selection = MenuTree.Selection;
-        EnemyTypeSO selectedEnemyData = new();
+        EnemyTypeSO selectedEnemyData;
         SirenixEditorGUI.BeginHorizontalToolbar();
         if (selection.SelectedValue is EnemyTypeSO)
         {

@@ -22,18 +22,27 @@ MonoBehaviour:
   hasSubTypes: 1
   difficultyVeriants: []
   hasDifficultyVeriants: 1
-  baseSpawningPriority: 0
-  spawningPriorityInfluence: 0
-  spawningPriority: []
+  baseSpawningPriority: 11.84
+  spawningPriorityInfluence: 1
+  spawningPriority:
+  - rid: 4319641725348085833
   spawningType:
-    rid: 4319641725348085831
+    rid: 4319641770724687875
   IsActiveCondition:
-    rid: -2
+    rid: 4319641725348085836
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 4319641725348085831
-      type: {class: EnemyTypeSO/EnemySpawning/SpawnAtOrigion, ns: , asm: Assembly-CSharp}
+    - rid: 4319641725348085833
+      type: {class: EnemyWaveManager/EnemySpawningPriority/ActiveEnemies, ns: , asm: Assembly-CSharp}
       data: 
+    - rid: 4319641725348085836
+      type: {class: ActiveByDistance, ns: , asm: Assembly-CSharp}
+      data:
+        distance: 30
+        enemyGameObject: {fileID: 0}
+    - rid: 4319641770724687875
+      type: {class: EnemyTypeSO/EnemySpawning/SpawnAtTransformPosition, ns: , asm: Assembly-CSharp}
+      data:
+        transform: {fileID: 0}
+        rotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}

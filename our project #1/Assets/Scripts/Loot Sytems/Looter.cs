@@ -81,7 +81,6 @@ public class Looter : MonoBehaviour
         
         Vector3 Apos = gameObject.transform.position;
         Vector3 Bpos = UnityEngine.Random.insideUnitSphere * pickUpRadius * 1.25f;
-        Debug.Log(Bpos);
         Vector3 Cpos = AnimationEndPos.position;
         Vector3 ABpos;
         Vector3 BCpos;

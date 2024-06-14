@@ -1,60 +1,55 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [Serializable]
 public class Wave
+{
+    public List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> spawnEnemies = new();
+    public List<Enemy> aliveEnemies = new List<Enemy>();
+    public List<Enemy> activeEnemies = new List<Enemy>();
+    public float waveNumber;
+    public float priority;
+
+    public void SpawnEnemies()
     {
-        public List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> spawnEnemies = new();
-        public List<Enemy> aliveEnemies = new List<Enemy>();
-        public List<Enemy> activeEnemies = new List<Enemy>();
-        public float waveNumber;
-        public float priority;
-
-        public void SpawnEnemies()
+        foreach (var enemy in spawnEnemies)
         {
-            foreach (var enemy in spawnEnemies)
-            {
-                enemy.enemyType.spawningType.Spawn(enemy.enemyType.prefab);
-            }
-        }
-
-        public void UpdateInfo()
-        {
-
-            aliveEnemies.Clear();
-            activeEnemies.Clear();
-            foreach (var enemy in spawnEnemies)
-            {
-                if (enemy.enemyType.prefab.GetComponent<HealthSystem>().currentHealth > 0)
-                {
-                    aliveEnemies.Add(new Enemy(enemy.enemyType));
-                }
-            }
-
-            foreach (var enemy in aliveEnemies)
-            {
-                if (enemy.enemySO.IsActiveCondition.DeterimainActiveness())
-                {
-                    activeEnemies.Add(enemy);
-                }
-            }
-        }
-
-        public float GetTotalPriority()
-        {
-            float total = 0;
-            foreach (var enemy in spawnEnemies)
-            {
-                total += enemy.enemyType.CalculatePriority() * enemy.enemyType.spawningPriorityInfluence;
-            }
-            priority = total;
-
-            return total;
+            var gameObject =  enemy.enemyType.spawningType.Spawn(enemy.enemyType.prefab);
+            aliveEnemies.Add(new Enemy(enemy.enemyType, gameObject));
         }
     }
+
+    public void UpdateInfo()
+    {
+
+        activeEnemies.Clear();
+        aliveEnemies.RemoveAll(enemy => enemy.healthSystem.currentHealth <= 0);
+
+        foreach (var enemy in aliveEnemies)
+        {
+            if (enemy.enemySO.IsActiveCondition.DeterimainActiveness(enemy.enemyGameObject))
+            {
+                activeEnemies.Add(enemy);
+            }
+        }
+    }
+
+    public float GetTotalPriority()
+    {
+        float total = 0;
+        foreach (var enemy in spawnEnemies)
+        {
+            total += enemy.enemyType.CalculatePriority() * enemy.enemyType.spawningPriorityInfluence;
+        }
+        priority = total;
+        return total;
+    }
+}
 public static class EnemyWaveManager
 {
 
@@ -71,13 +66,21 @@ public static class EnemyWaveManager
 
         public class ActiveEnemies : IEffectingParamater
         {
-            public RandomValue<float> multiplier { get; set; }
-            public List<EnemyTypeSO> inclusionFlags { get; set; }
+            [ShowInInspector] RandomValue<float> Multiplier { get; set; }
+            public RandomValue<float> multiplier { get => Multiplier; set => Multiplier = value; }
+
+            [ShowInInspector] List<EnemyTypeSO> InclusionFlags;
+            public List<EnemyTypeSO> inclusionFlags { get => InclusionFlags; set => InclusionFlags = value; }
             public float value { get; set; }
 
             public float Calculate()
             {
-                return value;
+                value = 0;
+                foreach (var wave in EnemyRoundManager.currentRound.waves)
+                {
+                    value += wave.activeEnemies.Count();
+                }
+                return value * multiplier.RandonizeValue();
             }
         }
         public class KilledEnemies : IEffectingParamater
@@ -170,6 +173,7 @@ public static class EnemyWaveManager
         }
         public static List<Wave> FindHighestPriorityWaves(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> enemies, int minGroupSize, int maxGroupSize)
         {
+            
             var allPossibleWaves = GetAllPossibleWaves(enemies, minGroupSize, maxGroupSize);
             var closestWaves = allPossibleWaves.OrderByDescending(wave => wave.GetTotalPriority()).ToList();
 
@@ -179,22 +183,14 @@ public static class EnemyWaveManager
         private static List<Wave> GetAllPossibleWaves(List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> enemies, int minGroupSize, int maxGroupSize)
         {
             var allWaves = new List<Wave>();
-            Debug.Log("enemy amount: "+ enemies.Count);
-            
-            //To Fix:
-            for (int i = minGroupSize; i <= maxGroupSize; i++)
+            for (int i = minGroupSize; i < maxGroupSize; i++)
             {
-                //For Loop Code isn't get ran...
                 var combinations = GetCombinations(enemies, i);
-                Debug.Log("combination amount: "+ combinations.ToList().Count);
                 foreach (var comination in combinations)
                 {
-                    Debug.Log("combination enemy:"+ comination[0].enemyType.name);
-                    allWaves.Add(new Wave { spawnEnemies = comination});
+                    allWaves.Add(new Wave { spawnEnemies = comination });
                 }
-                
             }
-            Debug.Log("all wave amount: "+allWaves.Count);
             return allWaves;
         }
 
