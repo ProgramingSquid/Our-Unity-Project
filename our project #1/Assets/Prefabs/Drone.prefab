@@ -386,7 +386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 6105664965057187943, guid: feb5cf99a38170544bada73c6f410f82, type: 3}
   targetTag: Player
-  offsetFromTransform: {x: 0, y: 0, z: 0}
+  offsetFromTransform: {x: 0, y: 1, z: 0}
   timeBetweenShots:
     tag: FireRate
     randomnessValue:
@@ -400,7 +400,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 0
+      setValue: 0.25
       value: 0
   spreadAngle:
     tag: Spread
@@ -415,7 +415,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 0
+      setValue: 25
       value: 0
   SwivleAngle:
     tag: SwivleAngle
@@ -430,7 +430,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 0
+      setValue: 10
       value: 0
   exitNode: 0
 --- !u!1 &3440454382318124906
@@ -620,7 +620,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     multiplyier: 10
     setValue: 10
-    value: 11.809091
+    value: 12.472155
   currentHealth: 10
   graceTime: 0
   renderer: {fileID: 3440454382318124904}

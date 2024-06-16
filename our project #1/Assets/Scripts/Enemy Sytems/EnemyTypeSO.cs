@@ -2,6 +2,7 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ public class EnemyTypeSO : ScriptableObject
 
     //The base class that all enemy classes inheret from
     /*(All enemies must have...)*/
-    [TabGroup("tab group","basic values")]
+    [TabGroup("tab group", "basic values")]
     [HorizontalGroup("tab group/basic values/base", 160)]
     [HideLabel, LabelWidth(90)]
     [VerticalGroup("tab group/basic values/base/left"), OnValueChanged("SetObjectName"), Title("Name", Bold = false, HorizontalLine = false)]
@@ -20,14 +21,14 @@ public class EnemyTypeSO : ScriptableObject
     [VerticalGroup("tab group/basic values/base/left")]
     [AssetsOnly, HideLabel, PreviewField(150)] public GameObject prefab;
 
-    [VerticalGroup("tab group/basic values/base/right"),TextArea(4, 6)]
+    [VerticalGroup("tab group/basic values/base/right"), TextArea(4, 6)]
     public string discription;
 
     [Title("Health:")]
-    [BoxGroup("tab group/basic values/base/right/Health",false), InlineEditor(InlineEditorObjectFieldModes.Hidden)]
+    [BoxGroup("tab group/basic values/base/right/Health", false), InlineEditor(InlineEditorObjectFieldModes.Hidden)]
     public EnemyStat maxHealth;
 
-    
+
     [VerticalGroup("tab group/basic values/stats"), InlineEditor(InlineEditorObjectFieldModes.Hidden)]
     public List<EnemyStat> EnemyStats = new List<EnemyStat>();
 
@@ -36,7 +37,7 @@ public class EnemyTypeSO : ScriptableObject
     public List<EnemyTypeSO> SubTypes;
 
     [TabGroup("tab group", "Enemy Veriants")]
-    [DisplayAsString, LabelText("can have subTypes:")]public bool hasSubTypes = true;
+    [DisplayAsString, LabelText("can have subTypes:")] public bool hasSubTypes = true;
 
     [EnableIf("hasDifficultyVeriants")]
     [TabGroup("tab group", "Enemy Veriants")]
@@ -76,11 +77,11 @@ public class EnemyTypeSO : ScriptableObject
     [TabGroup("tab group", "Active Condition")]
     public ActiveEnemyCondition IsActiveCondition;
 
-    
+
     private void OnValidate()
     {
-        if (!hasDifficultyVeriants) 
-        { 
+        if (!hasDifficultyVeriants)
+        {
             SubTypes.Clear(); difficultyVeriants.Clear();
         }
 
@@ -88,7 +89,7 @@ public class EnemyTypeSO : ScriptableObject
         {
             SubTypes.Clear();
         }
-        
+
         ValidateSubTypes();
     }
 
@@ -104,7 +105,7 @@ public class EnemyTypeSO : ScriptableObject
         {
             supioriority = "_subType";
         }
-        
+
         else
         {
             supioriority = "_difficultyVeriant";
@@ -121,7 +122,7 @@ public class EnemyTypeSO : ScriptableObject
 
         foreach (EnemyTypeSO item in SubTypes)
         {
-            if(item == this) { SubTypes.Remove(item);  continue; }
+            if (item == this) { SubTypes.Remove(item); continue; }
             item.hasSubTypes = false;
         }
         foreach (EnemyTypeSO item in difficultyVeriants)
@@ -152,6 +153,15 @@ public class EnemyTypeSO : ScriptableObject
     }
     public class EnemySpawning
     {
+        public enum RunTimeGettingType
+        {
+            FromTag,
+            FromComponant,
+            FromName,
+            FromPartOfName,
+            SetThroughCode
+        }
+
         public abstract class EnemySpawningType
         {
             public abstract GameObject Spawn(GameObject prefab);
@@ -159,9 +169,8 @@ public class EnemyTypeSO : ScriptableObject
         }
 
 
-        public class SpawnAtOrigion : EnemySpawningType
+        public class SpawnAtPositionAndRotation : EnemySpawningType
         {
-            //TEst
             public Vector3 position;
             public Quaternion rotation;
             public override GameObject Spawn(GameObject prefab)
@@ -198,9 +207,78 @@ public class EnemyTypeSO : ScriptableObject
                 return Instantiate(prefab, transform.position, transform.rotation);
             }
         }
+        public class SpawnAtSpawnPoint : EnemySpawningType
+        {
+            [Tooltip("The gameobject to spawn at")]
+            private GameObject spawnPoint;
+            public Vector3 positionOffset;
+            public Quaternion rotation;
+
+            public override GameObject Spawn(GameObject prefab)
+            {
+                var position = spawnPoint.transform.position + positionOffset;
+                return Instantiate(prefab, position, rotation);
+            }
+        }
+        public class SpawnAtSpawnPoints : EnemySpawningType
+        {
+            public Vector3 positionOffset;
+            public Quaternion rotation;
+            [Tooltip("A parrent Game Object of the spawnPoints")]
+            public GameObject spawnPointParrent;
+
+            public override GameObject Spawn(GameObject prefab)
+            {
+                int randomIndex = UnityEngine.Random.Range(0, spawnPointParrent.transform.childCount);
+                var spawnPoint = spawnPointParrent.transform.GetChild(randomIndex);
+                var position = spawnPoint.transform.position + positionOffset;
+                return Instantiate(prefab, position, rotation);
+            }
+        }
+        public class SpawnAtSpawnPointRUNTIME : EnemySpawningType
+        {
+            public RunTimeGettingType runtimeGettingType;
+            [ShowIf("runtimeGettingType", RunTimeGettingType.FromTag)]
+            [NaughtyAttributes.Tag] public string tag;
+            [ShowIf("runtimeGettingType", RunTimeGettingType.FromComponant)]
+            [SerializeReference] public MonoBehaviour componant;
+            [ShowIf("runtimeGettingType", RunTimeGettingType.FromName)]
+            public string gameObjectsName;
+            [ShowIf("runtimeGettingType", RunTimeGettingType.FromPartOfName)]
+            public string partOfGameObjectsName;
+            [ReadOnly(), HideInEditorMode]
+            public GameObject spawnPoint;
+            public Vector3 positionOffset;
+            public Quaternion rotation;
+
+            public override GameObject Spawn(GameObject prefab)
+            {
+
+                switch (runtimeGettingType)
+                {
+                    case RunTimeGettingType.SetThroughCode:
+                        break;
+                    case RunTimeGettingType.FromTag:
+                        spawnPoint = GameObject.FindGameObjectWithTag(tag);
+                        break;
+                    case RunTimeGettingType.FromComponant:
+                        spawnPoint = (GameObject)FindSceneObjectsOfType(componant.GetType())[0];
+                        break;
+                    case RunTimeGettingType.FromName:
+                        spawnPoint = GameObject.Find(gameObjectsName);
+                        break;
+                    case RunTimeGettingType.FromPartOfName:
+                        var gameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+                        spawnPoint = gameObjects.Where(obj => obj.name.Contains(partOfGameObjectsName)).ToList()[0];
+                        break;
+                }
+                var position = spawnPoint.transform.position + positionOffset;
+                return Instantiate(prefab, position, rotation);
+            }
+        }
+
     }
 }
-
 [Serializable]
 public class EnemyScallingStat
 {
