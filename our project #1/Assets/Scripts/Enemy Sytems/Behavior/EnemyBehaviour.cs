@@ -55,7 +55,20 @@ public class EnemyBehaviour : MonoBehaviour
         ValidateBehavior();
         SetStatistics();
     }
+    public void OnSpawn()
+    {
+        foreach (var transition in rootTransitions)
+        {
+            transition.OnEnemySpawn();
+        }
+        foreach (var transition in transitions)
+        {
+            transition.interfaceTo.OnEnemySpawn();
+            transition.interfaceFrom.OnEnemySpawn();
+        }
+    }
 
+    [Button()]
     public void SetStatistics()
     {
         //Setting Health:
@@ -65,34 +78,28 @@ public class EnemyBehaviour : MonoBehaviour
         //Setting Other Stats:
         var floatPrameters = new List<EnemyPamater<float>>();
         var intPrameters = new List<EnemyPamater<int>>();
-
         foreach (var node in GetAllNodes())
         {
-            var nodeParameters = GetProperties<EnemyPamater<float>>(node);
-
+            var nodeParameters = GetStats<EnemyPamater<float>>(node);
             floatPrameters.AddRange(nodeParameters);
             
         }
         foreach (var node in GetAllNodes())
         {
-            var nodeParameters = GetProperties<EnemyPamater<int>>(node);
-
+            var nodeParameters = GetStats<EnemyPamater<int>>(node);
             intPrameters.AddRange(nodeParameters);
 
         }
 
         foreach (var pram in floatPrameters)
         {
+            if(type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No float stat tag matches with:" + pram.tag); return; }
+
             var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag);
             if(MatchingEnemyStats.Count() > 1 ) 
             { 
                 Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString()); 
                 return; 
-            }
-            if(MatchingEnemyStats.Count() == 0) 
-            {
-                Debug.LogWarning("No float stat tag matches with:" + pram.tag);
-                return;
             }
 
             if(MatchingEnemyStats.Count() == 1)
@@ -103,16 +110,12 @@ public class EnemyBehaviour : MonoBehaviour
         } 
         foreach (var pram in intPrameters)
         {
+            if (type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No int stat tag matches with:" + pram.tag); return; }
             var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag);
             if(MatchingEnemyStats.Count() > 1 ) 
             { 
                 Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString()); 
                 return; 
-            }
-            if(MatchingEnemyStats.Count() == 0) 
-            {
-                Debug.LogWarning("No float stat tag matches with:" + pram.tag);
-                return;
             }
 
             if(MatchingEnemyStats.Count() == 1)
@@ -170,19 +173,17 @@ public class EnemyBehaviour : MonoBehaviour
 
         return nodes;
     }
-    public List<T> GetProperties<T>(object obj)
+    public List<T> GetStats<T>(object obj)
     {
-        List<PropertyInfo> properties = obj.GetType()
-        .GetProperties()
-        .Where(prop => prop.PropertyType == typeof(T))
-        .ToList();
+
+        var feilds = obj.GetType()
+        .GetFields().Where(prop => prop.FieldType == typeof(T));
 
         var values = new List<T>();
-        foreach (var prop in properties)
+        foreach (var feild in feilds)
         {
-            values.Add((T)prop.GetValue(obj));
+            values.Add((T)feild.GetValue(obj));
         }
-
         return values;
     }
     public void SetTransitions()

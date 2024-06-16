@@ -20,7 +20,13 @@ public class Wave
         foreach (var enemy in spawnEnemies)
         {
             var gameObject =  enemy.enemyType.spawningType.Spawn(enemy.enemyType.prefab);
-            aliveEnemies.Add(new Enemy(enemy.enemyType, gameObject));
+            var enemyObject = new Enemy(enemy.enemyType, gameObject);
+            enemyObject.enemyBehaviour.SetStatistics();
+            enemyObject.enemyBehaviour.SetTransitions();
+            enemyObject.enemyBehaviour.ValidateBehavior();
+            enemyObject.enemyBehaviour.OnSpawn();
+            aliveEnemies.Add(enemyObject);
+            
         }
     }
 

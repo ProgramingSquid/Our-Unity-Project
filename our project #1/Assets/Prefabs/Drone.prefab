@@ -388,14 +388,50 @@ MonoBehaviour:
   targetTag: Player
   offsetFromTransform: {x: 0, y: 0, z: 0}
   timeBetweenShots:
-    tag: 
-    value: 0
+    tag: FireRate
+    randomnessValue:
+      randomnessType: 0
+      min: 0
+      max: 0
+      curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      multiplyier: 0
+      setValue: 0
+      value: 0
   spreadAngle:
-    tag: 
-    value: 0
+    tag: Spread
+    randomnessValue:
+      randomnessType: 0
+      min: 0
+      max: 0
+      curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      multiplyier: 0
+      setValue: 0
+      value: 0
   SwivleAngle:
-    tag: 
-    value: 0
+    tag: SwivleAngle
+    randomnessValue:
+      randomnessType: 0
+      min: 0
+      max: 0
+      curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      multiplyier: 0
+      setValue: 0
+      value: 0
   exitNode: 0
 --- !u!1 &3440454382318124906
 GameObject:
@@ -513,14 +549,50 @@ MonoBehaviour:
   target: {fileID: 0}
   targetTag: Player
   targetDisFormTarget:
-    tag: 
-    value: 0
+    tag: TargetDistance
+    randomnessValue:
+      randomnessType: 0
+      min: 0
+      max: 0
+      curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      multiplyier: 0
+      setValue: 10
+      value: 0
   lookAngle:
-    tag: 
-    value: 0
+    tag: LookAngle
+    randomnessValue:
+      randomnessType: 0
+      min: 0
+      max: 0
+      curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      multiplyier: 0
+      setValue: 25
+      value: 0
   speed:
-    tag: speed
-    value: 0
+    tag: Speed
+    randomnessValue:
+      randomnessType: 0
+      min: 0
+      max: 0
+      curve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      multiplyier: 0
+      setValue: 7
+      value: 0
   rotationOffset: {x: 90, y: -90, z: 0}
   exitNode: 1
   drawDebugGizmos: 0
@@ -536,7 +608,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 119f273b50cd91b4c9b5aaf7c93314a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth:
+    randomnessType: 1
+    min: 1
+    max: 1.25
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 10
+    setValue: 10
+    value: 11.809091
   currentHealth: 10
   graceTime: 0
   renderer: {fileID: 3440454382318124904}

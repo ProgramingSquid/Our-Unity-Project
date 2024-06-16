@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eae20511323b3ec44a1e2c06c27e6e4a, type: 3}
-  m_Name: Health
+  m_Name: SwivleAngle
   m_EditorClassIdentifier: 
-  tag: Health
+  tag: SwivleAngle
   AllowScalling: 1
   value:
-    randomnessType: 1
-    min: 1
-    max: 1.25
+    randomnessType: 0
+    min: 0
+    max: 0
     curve:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    multiplyier: 10
+    multiplyier: 0
     setValue: 10
-    value: 12.261118
+    value: 0

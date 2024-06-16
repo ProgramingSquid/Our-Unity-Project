@@ -103,8 +103,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 0
-    value: 0
+    setValue: 11
+    value: 11
   waveCreatingRandomnessOffset:
     randomnessType: 0
     min: 0
