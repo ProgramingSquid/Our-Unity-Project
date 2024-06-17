@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tag: Health
   AllowScalling: 1
-  value:
+  defualtValue:
     randomnessType: 1
     min: 1
     max: 1.25
@@ -26,4 +26,17 @@ MonoBehaviour:
       m_RotationOrder: 4
     multiplyier: 10
     setValue: 10
-    value: 12.261118
+    value: 0
+  value:
+    randomnessType: 1
+    min: 1.0000513
+    max: 1.2500513
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 10
+    setValue: 2
+    value: 11.749363

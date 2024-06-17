@@ -146,49 +146,96 @@ MonoBehaviour:
     value: 1
   difficultyEnemyRangeFilters:
   - difficultyCaculation:
-      rid: 4319641725348085834
+      difficultyCaculationType:
+        rid: 4319641770724687954
+      difficultyCaculationFeildName: agressivness
     minValue: 0
     maxValue: 9.9991e+31
     priority: 15.31
     includedEnemies:
     - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
-      scallingStats: []
+      scallingStats:
+      - enemyStat: {fileID: 11400000, guid: e6e18cc174c61ee4cae48693942e070d, type: 2}
+        scallingMax: 2
+        scallingMin: 0.5
+        scallingMultiplyier: 0.001
+        scallingSpeedMultiplyier: 0.00001
+        scallingType: 3
+        scallingCurveType:
+          rid: -2
       rangeFilter:
         difficultyCaculation:
-          rid: 4319641725348085834
+          difficultyCaculationType:
+            rid: 4319641770724687954
+          difficultyCaculationFeildName: agressivness
         minValue: 0
         maxValue: 9.9991e+31
         priority: 15.31
         includedEnemies:
         - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
-          scallingStats: []
+          scallingStats:
+          - enemyStat: {fileID: 11400000, guid: e6e18cc174c61ee4cae48693942e070d, type: 2}
+            scallingMax: 2
+            scallingMin: 0.5
+            scallingMultiplyier: 0.001
+            scallingSpeedMultiplyier: 0.00001
+            scallingType: 3
+            scallingCurveType:
+              rid: -2
           rangeFilter:
             difficultyCaculation:
-              rid: 4319641725348085834
+              difficultyCaculationType:
+                rid: 4319641770724687954
+              difficultyCaculationFeildName: agressivness
             minValue: 0
             maxValue: 9.9991e+31
             priority: 15.31
             includedEnemies:
             - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
-              scallingStats: []
+              scallingStats:
+              - enemyStat: {fileID: 11400000, guid: e6e18cc174c61ee4cae48693942e070d, type: 2}
+                scallingMax: 2
+                scallingMin: 0.5
+                scallingMultiplyier: 0.001
+                scallingSpeedMultiplyier: 0.00001
+                scallingType: 3
+                scallingCurveType:
+                  rid: -2
               rangeFilter:
                 difficultyCaculation:
-                  rid: 4319641725348085834
+                  difficultyCaculationType:
+                    rid: 4319641770724687954
+                  difficultyCaculationFeildName: agressivness
                 minValue: 0
                 maxValue: 9.9991e+31
                 priority: 15.31
                 includedEnemies:
                 - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
-                  scallingStats: []
+                  scallingStats:
+                  - enemyStat: {fileID: 11400000, guid: e6e18cc174c61ee4cae48693942e070d, type: 2}
+                    scallingMax: 2
+                    scallingMin: 0.5
+                    scallingMultiplyier: 0.001
+                    scallingSpeedMultiplyier: 0.00001
+                    scallingType: 3
+                    scallingCurveType:
+                      rid: -2
                   rangeFilter:
                     difficultyCaculation:
-                      rid: 4319641725348085834
+                      difficultyCaculationType:
+                        rid: 4319641770724687954
+                      difficultyCaculationFeildName: agressivness
                     minValue: 0
                     maxValue: 9.9991e+31
                     priority: 15.31
                     includedEnemies:
                     - enemyType: {fileID: 11400000, guid: eed409d8d22142542922faf6457cd858, type: 2}
-                      scallingStats: []
+                      scallingStats:
+                      - scallingMax: 2
+                        scallingMin: 0.5
+                        scallingMultiplyier: 0.001
+                        scallingSpeedMultiplyier: 0.00001
+                        scallingType: 3
                       rangeFilter:
                         minValue: 0
                         maxValue: 9.9991e+31
@@ -206,6 +253,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 4319641725348085834
+    - rid: -2
+      type: {class: , ns: , asm: }
+    - rid: 4319641770724687954
       type: {class: GameDifficulty/Difficulty, ns: , asm: Assembly-CSharp}
       data: 

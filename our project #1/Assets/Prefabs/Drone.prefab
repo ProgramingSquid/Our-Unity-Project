@@ -619,8 +619,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 10
-    setValue: 10
-    value: 12.472155
+    setValue: 2
+    value: 2
   currentHealth: 10
   graceTime: 0
   renderer: {fileID: 3440454382318124904}

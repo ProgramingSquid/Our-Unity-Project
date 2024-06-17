@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         DifficultyManager.Validate();
+        DifficultyManager.ResetScalling();
         StartGame();
     }
 

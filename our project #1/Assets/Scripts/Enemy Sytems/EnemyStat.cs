@@ -7,7 +7,8 @@ public class EnemyStat : ScriptableObject
     public string tag;
     public bool AllowScalling;
     
-    [HideLabel]public RandomValue<float> value;
+    [HideLabel]public RandomValue<float> defualtValue;
+    [ReadOnly, HideInEditorMode]public RandomValue<float> value;
 }
 
 

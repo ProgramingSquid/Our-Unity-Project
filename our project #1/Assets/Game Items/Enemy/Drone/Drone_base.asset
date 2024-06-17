@@ -49,6 +49,6 @@ MonoBehaviour:
     - rid: 4319641770724687947
       type: {class: EnemyTypeSO/EnemySpawning/SpawnAtSpawnPoints, ns: , asm: Assembly-CSharp}
       data:
-        positionOffset: {x: 0, y: 0, z: 0}
-        rotation: {x: 0, y: 0, z: 0, w: 0}
+        positionOffset: {x: 0, y: 2, z: 0}
+        rotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
         spawnPointParrent: {fileID: 0}

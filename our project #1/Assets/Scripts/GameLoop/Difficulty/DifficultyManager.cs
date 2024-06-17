@@ -24,18 +24,28 @@ public static class DifficultyManager
         gameSettings = AssetDatabase.LoadAssetAtPath<GameSettings>("Assets/GameSettings.asset");
     }
 
+    public static void ResetScalling()
+    {
+        foreach (var enemy in allowedEnemies)
+        {
+            foreach (var stat in enemy.scallingStats)
+            {
+                stat.enemyStat.value = stat.enemyStat.defualtValue;
+                stat.enemyStat.value.randomnessType = stat.enemyStat.defualtValue.randomnessType;
+            }
+        }
+    }
     // Update is called once per frame
     public static void Update()
     {
         CalculateSkill();
         currentRanges = GetCurrentRanges();
         allowedEnemies = GetFilteredEnemies(currentRanges);
-
             foreach (var enemy in allowedEnemies)
             {
                 foreach (var stat in enemy.scallingStats)
                 {
-                    stat.ScaleStat(enemy.rangeFilter.difficultyCaculation);
+                    stat.ScaleStat(enemy.rangeFilter.difficultyCaculation.difficultyCaculation);
                 }
             }
     }
@@ -51,7 +61,7 @@ public static class DifficultyManager
 
         foreach (var range in gameSettings.difficultyEnemyRangeFilters)
         {
-            if (range.difficultyCaculation.value >= range.minValue && range.difficultyCaculation.value <= range.maxValue)
+            if (range.difficultyCaculation.difficultyCaculation.value >= range.minValue && range.difficultyCaculation.difficultyCaculation.value <= range.maxValue)
             {
                 ranges.Add(range);
             }
@@ -207,9 +217,12 @@ public static class DifficultyManager
     public static void Validate()
     {
         if(gameSettings == null) { SetGameSettings(); }
+
+
         for (int i = 0; i < gameSettings.difficultyEnemyRangeFilters.Count; i++)
         {
             DifficultyEnemyRangeFilter difficultyEnemyRangeFilter = gameSettings.difficultyEnemyRangeFilters[i];
+            difficultyEnemyRangeFilter.difficultyCaculation.TrySetDifficultyCaculation();
 
             difficultyEnemyRangeFilter.includedEnemies = FilterDuplicates(difficultyEnemyRangeFilter.includedEnemies, true);
             difficultyEnemyRangeFilter.blockedEnemies = FilterDuplicates(difficultyEnemyRangeFilter.blockedEnemies, true);
@@ -238,7 +251,7 @@ public static class DifficultyManager
 [Serializable]
 public class DifficultyEnemyRangeFilter
 {
-    [SerializeReference] public IDifficultyCalculation difficultyCaculation;
+    public GameDifficultyVar difficultyCaculation;
     [Space(20)]
     public float minValue;
     public float maxValue;
@@ -265,8 +278,6 @@ public class DifficultyEnemyRangeFilter
 
         public void Validate()
         {
-            
-
             for (int i = 0; i < scallingStats.Count; i++)
             {
                 var stat = scallingStats[i];

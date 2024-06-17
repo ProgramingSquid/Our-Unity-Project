@@ -340,25 +340,30 @@ public class EnemyScallingStat
         switch (scallingType)
         {
             case ScallingType.function:
-                enemyStat.value.min += scallingMultiplyier * scallingCurveType.GetYValue(difficulty.value * scallingSpeedMultiplyier);
-                enemyStat.value.max += scallingMultiplyier * scallingCurveType.GetYValue(difficulty.value * scallingSpeedMultiplyier);
+                enemyStat.value.min = Mathf.Clamp(enemyStat.defualtValue.min + (scallingMultiplyier * scallingCurveType.GetYValue(difficulty.value * scallingSpeedMultiplyier)),scallingMin, scallingMax);
+                enemyStat.value.max = Mathf.Clamp(enemyStat.defualtValue.max + (scallingMultiplyier * scallingCurveType.GetYValue(difficulty.value * scallingSpeedMultiplyier)), scallingMin, scallingMax);
+                enemyStat.value.setValue = Mathf.Clamp(enemyStat.defualtValue.setValue + (scallingMultiplyier * scallingCurveType.GetYValue(difficulty.value * scallingSpeedMultiplyier)), scallingMin, scallingMax);
                 break;
 
             case ScallingType.multiply:
-                enemyStat.value.min *= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
-                enemyStat.value.max *= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                enemyStat.value.min = Mathf.Clamp(enemyStat.defualtValue.min * (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
+                enemyStat.value.max = Mathf.Clamp(enemyStat.defualtValue.max * (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
+                enemyStat.value.setValue = Mathf.Clamp(enemyStat.defualtValue.setValue * (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
                 break;
             case ScallingType.divide:
-                enemyStat.value.min /= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
-                enemyStat.value.max /= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                enemyStat.value.min = Mathf.Clamp(enemyStat.defualtValue.min / (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
+                enemyStat.value.max = Mathf.Clamp(enemyStat.defualtValue.max / (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
+                enemyStat.value.setValue = Mathf.Clamp(enemyStat.defualtValue.setValue / (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
                 break;
             case ScallingType.add:
-                enemyStat.value.min += scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
-                enemyStat.value.max += scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                enemyStat.value.min = Mathf.Clamp(enemyStat.defualtValue.min + (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
+                enemyStat.value.max = Mathf.Clamp(enemyStat.defualtValue.max + (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
+                enemyStat.value.setValue = Mathf.Clamp(enemyStat.defualtValue.setValue + (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
                 break;
             case ScallingType.substract:
-                enemyStat.value.min -= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
-                enemyStat.value.max -= scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier;
+                enemyStat.value.min = Mathf.Clamp(enemyStat.defualtValue.min - (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
+                enemyStat.value.max = Mathf.Clamp(enemyStat.defualtValue.max - (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
+                enemyStat.value.setValue = Mathf.Clamp(enemyStat.defualtValue.setValue - (scallingMultiplyier * difficulty.value * scallingSpeedMultiplyier), scallingMin, scallingMax);
                 break;
         } 
     }
