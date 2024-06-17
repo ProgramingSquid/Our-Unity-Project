@@ -156,7 +156,6 @@ public class EnemyTypeSO : ScriptableObject
         public enum RunTimeGettingType
         {
             FromTag,
-            FromComponant,
             FromName,
             FromPartOfName,
             SetThroughCode
@@ -210,7 +209,7 @@ public class EnemyTypeSO : ScriptableObject
         public class SpawnAtSpawnPoint : EnemySpawningType
         {
             [Tooltip("The gameobject to spawn at")]
-            private GameObject spawnPoint;
+            public GameObject spawnPoint;
             public Vector3 positionOffset;
             public Quaternion rotation;
 
@@ -224,7 +223,7 @@ public class EnemyTypeSO : ScriptableObject
         {
             public Vector3 positionOffset;
             public Quaternion rotation;
-            [Tooltip("A parrent Game Object of the spawnPoints")]
+            [Tooltip("A parrent Game Object of the spawnPoint")]
             public GameObject spawnPointParrent;
 
             public override GameObject Spawn(GameObject prefab)
@@ -235,13 +234,49 @@ public class EnemyTypeSO : ScriptableObject
                 return Instantiate(prefab, position, rotation);
             }
         }
+        public class SpawnAtSpawnPointsRUNTIME : EnemySpawningType
+        {
+            public RunTimeGettingType runtimeGettingType;
+            [ShowIf("runtimeGettingType", RunTimeGettingType.FromTag)]
+            [NaughtyAttributes.Tag] public string tag;
+            [ShowIf("runtimeGettingType", RunTimeGettingType.FromName)]
+            public string gameObjectsName;
+            [ShowIf("runtimeGettingType", RunTimeGettingType.FromPartOfName)]
+            public string partOfGameObjectsName;
+            [ReadOnly(), HideInEditorMode]
+            public GameObject spawnPointParrent;
+            public Vector3 positionOffset;
+            public Quaternion rotation;
+
+            public override GameObject Spawn(GameObject prefab)
+            {
+
+                switch (runtimeGettingType)
+                {
+                    case RunTimeGettingType.SetThroughCode:
+                        break;
+                    case RunTimeGettingType.FromTag:
+                        spawnPointParrent = GameObject.FindGameObjectWithTag(tag);
+                        break;
+                    case RunTimeGettingType.FromName:
+                        spawnPointParrent = GameObject.Find(gameObjectsName);
+                        break;
+                    case RunTimeGettingType.FromPartOfName:
+                        var gameObjects = FindObjectsByType<GameObject>(FindObjectsSortMode.None);
+                        spawnPointParrent = gameObjects.Where(obj => obj.name.Contains(partOfGameObjectsName)).ToList()[0];
+                        break;
+                }
+                int randomIndex = UnityEngine.Random.Range(0, spawnPointParrent.transform.childCount);
+                var spawnPoint = spawnPointParrent.transform.GetChild(randomIndex);
+                var position = spawnPointParrent.transform.position + positionOffset;
+                return Instantiate(prefab, position, rotation);
+            }
+        }
         public class SpawnAtSpawnPointRUNTIME : EnemySpawningType
         {
             public RunTimeGettingType runtimeGettingType;
             [ShowIf("runtimeGettingType", RunTimeGettingType.FromTag)]
             [NaughtyAttributes.Tag] public string tag;
-            [ShowIf("runtimeGettingType", RunTimeGettingType.FromComponant)]
-            [SerializeReference] public MonoBehaviour componant;
             [ShowIf("runtimeGettingType", RunTimeGettingType.FromName)]
             public string gameObjectsName;
             [ShowIf("runtimeGettingType", RunTimeGettingType.FromPartOfName)]
@@ -260,9 +295,6 @@ public class EnemyTypeSO : ScriptableObject
                         break;
                     case RunTimeGettingType.FromTag:
                         spawnPoint = GameObject.FindGameObjectWithTag(tag);
-                        break;
-                    case RunTimeGettingType.FromComponant:
-                        spawnPoint = (GameObject)FindSceneObjectsOfType(componant.GetType())[0];
                         break;
                     case RunTimeGettingType.FromName:
                         spawnPoint = GameObject.Find(gameObjectsName);

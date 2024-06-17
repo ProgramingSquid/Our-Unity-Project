@@ -23,8 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa66da148a719d54e850da0f95f78600, type: 2}
   - {fileID: 11400000, guid: 5897e5dcb491ff64398551132428d99b, type: 2}
   - {fileID: 11400000, guid: a6638d6626d2cda44af95460c1794957, type: 2}
-  SubTypes:
-  - {fileID: 11400000, guid: a761ef58f09aea3498cb2501115c620b, type: 2}
+  SubTypes: []
   hasSubTypes: 1
   difficultyVeriants: []
   hasDifficultyVeriants: 1
@@ -33,7 +32,7 @@ MonoBehaviour:
   spawningPriority:
   - rid: 4319641725348085833
   spawningType:
-    rid: 4319641770724687875
+    rid: 4319641770724687947
   IsActiveCondition:
     rid: 4319641725348085836
   references:
@@ -45,10 +44,11 @@ MonoBehaviour:
     - rid: 4319641725348085836
       type: {class: ActiveByDistance, ns: , asm: Assembly-CSharp}
       data:
-        distance: 15
+        distance: 40
         enemyGameObject: {fileID: 0}
-    - rid: 4319641770724687875
-      type: {class: EnemyTypeSO/EnemySpawning/SpawnAtTransformPosition, ns: , asm: Assembly-CSharp}
+    - rid: 4319641770724687947
+      type: {class: EnemyTypeSO/EnemySpawning/SpawnAtSpawnPoints, ns: , asm: Assembly-CSharp}
       data:
-        transform: {fileID: 0}
-        rotation: {x: -0.70710677, y: 0, z: 0, w: 0.70710677}
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotation: {x: 0, y: 0, z: 0, w: 0}
+        spawnPointParrent: {fileID: 0}
