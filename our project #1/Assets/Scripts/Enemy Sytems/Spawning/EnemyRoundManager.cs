@@ -16,7 +16,7 @@ public static class EnemyRoundManager
 {
     [InlineEditor(InlineEditorObjectFieldModes.Hidden)]
     public static GameSettings gameSettings;
-
+    [ReadOnly] public static float timmerBetweenRounds;
     public static int AmountOfRounds;
     public static float roundPriority;
     public static Round currentRound;
@@ -28,7 +28,7 @@ public static class EnemyRoundManager
     }
 
     // Update is called once per frame
-    public static void Update()
+    public static void Update(float deltaTime)
     {
         if(inRound)
         {
@@ -81,7 +81,7 @@ public static class EnemyRoundManager
         }
         else
         {
-            gameSettings.timmerBetweenRounds += Time.deltaTime;
+            timmerBetweenRounds += deltaTime;
 
             //Updating round creating conditions:
             foreach (var priority in gameSettings.priorities)
@@ -91,21 +91,21 @@ public static class EnemyRoundManager
             //Start new round if needed:
             if(roundPriority >= gameSettings.minRoundCreatingPriority.RandonizeValue()) 
             {
-                if(gameSettings.timmerBetweenRounds < gameSettings.timeBetweenRounds.RandonizeValue()) { return; }
+                if(timmerBetweenRounds < gameSettings.timeBetweenRounds.RandonizeValue()) { return; }
                 currentRound = StartNewRound();
             }
         }
     }
 
-    public static IEnumerator<Round> StartFirstRound()
+    public static IEnumerator StartFirstRound()
     {
         if (roundPriority >= gameSettings.minRoundCreatingPriority.RandonizeValue())
         {
-            new WaitForSeconds(gameSettings.gameStartGraceTime.RandonizeValue());
+
+            yield return new WaitForSeconds(gameSettings.gameStartGraceTime.RandonizeValue());
             AmountOfRounds = 0;
             var round = StartNewRound();
             currentRound = round;
-            yield return round;
         }
     }
 
@@ -113,12 +113,12 @@ public static class EnemyRoundManager
     public static Round StartNewRound()
     {
         inRound = true;
+        timmerBetweenRounds = 0;
         gameSettings.roundMaxAmountOfWaves.RandonizeValue();
         gameSettings.minWaveCreatingPriority.RandonizeValue();
         gameSettings.waveCreatingRandomnessOffset.RandonizeValue();
         gameSettings.minEnemiesInWave.RandonizeValue();
         gameSettings.maxEnemiesInWave.RandonizeValue();
-        gameSettings.timmerBetweenRounds = 0;
         AmountOfRounds++;
         var round = new Round(AmountOfRounds);
         return round;

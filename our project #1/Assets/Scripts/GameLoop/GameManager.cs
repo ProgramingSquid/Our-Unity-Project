@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     {
         DifficultyManager.Update();
         
-        EnemyRoundManager.Update();
+        EnemyRoundManager.Update(Time.deltaTime);
     }
 
     private void OnValidate()
@@ -32,6 +32,6 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        EnemyRoundManager.StartFirstRound();
+        StartCoroutine(EnemyRoundManager.StartFirstRound());
     }
 }

@@ -10,7 +10,6 @@ public class GameSettings : ScriptableObject
     public  RandomValue<float> gameStartGraceTime;
 
     public  RandomValue<float> timeBetweenRounds;
-    [ReadOnly] public  float timmerBetweenRounds;
 
     [FoldoutGroup("Round Langth")]
     public  RandomValue<float> MinRoundTime;

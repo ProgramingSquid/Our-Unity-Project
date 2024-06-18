@@ -53,7 +53,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         SetTransitions();
         ValidateBehavior();
-        SetStatistics();
+        setStats();
     }
     public void OnSpawn()
     {
@@ -69,6 +69,61 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     [Button()]
+    public void setStats()
+    {
+        //Setting Health:
+        gameObject.GetComponent<HealthSystem>().maxHealth = type.maxHealth.value;
+
+
+        //Setting Other Stats:
+        var floatPrameters = new List<EnemyPamater<float>>();
+        var intPrameters = new List<EnemyPamater<int>>();
+        foreach (var node in GetAllNodes())
+        {
+            var nodeParameters = GetStats<EnemyPamater<float>>(node);
+            floatPrameters.AddRange(nodeParameters);
+
+        }
+        foreach (var node in GetAllNodes())
+        {
+            var nodeParameters = GetStats<EnemyPamater<int>>(node);
+            intPrameters.AddRange(nodeParameters);
+
+        }
+
+        foreach (var pram in floatPrameters)
+        {
+            if (type.EnemyStats.Where(i => i.tag == pram.tag).ToList() == null) { Debug.LogWarning("No float stat tag matches with:" + pram.tag); return; }
+
+            var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
+            if (MatchingEnemyStats.Count() > 1)
+            {
+                Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString());
+                return;
+            }
+            
+            if (MatchingEnemyStats.Count() == 1)
+            {
+                pram.randomnessValue = MatchingEnemyStats[0].defualtValue;
+            }
+
+        }
+        foreach (var pram in intPrameters)
+        {
+            if (type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No int stat tag matches with:" + pram.tag); return; }
+            var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
+            if (MatchingEnemyStats.Count() > 1)
+            {
+                Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString());
+                return;
+            }
+
+            if (MatchingEnemyStats.Count() == 1)
+            {
+                pram.randomnessValue = (RandomValue<int>)(object)MatchingEnemyStats[0].defualtValue;
+            }
+        }
+    }
     public void SetStatistics()
     {
         //Setting Health:
@@ -93,9 +148,9 @@ public class EnemyBehaviour : MonoBehaviour
 
         foreach (var pram in floatPrameters)
         {
-            if(type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No float stat tag matches with:" + pram.tag); return; }
+            if(type.EnemyStats.Where(i => i.tag == pram.tag).ToList() == null) { Debug.LogWarning("No float stat tag matches with:" + pram.tag); return; }
 
-            var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag);
+            var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
             if(MatchingEnemyStats.Count() > 1 ) 
             { 
                 Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString()); 
@@ -104,14 +159,14 @@ public class EnemyBehaviour : MonoBehaviour
 
             if(MatchingEnemyStats.Count() == 1)
             {
-                pram.randomnessValue = MatchingEnemyStats.ElementAt(0).value;
+                pram.randomnessValue = MatchingEnemyStats[0].value;
             }
 
         } 
         foreach (var pram in intPrameters)
         {
             if (type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No int stat tag matches with:" + pram.tag); return; }
-            var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag);
+            var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
             if(MatchingEnemyStats.Count() > 1 ) 
             { 
                 Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString()); 
@@ -120,7 +175,7 @@ public class EnemyBehaviour : MonoBehaviour
 
             if(MatchingEnemyStats.Count() == 1)
             {
-                pram.randomnessValue = (RandomValue<int>)(object)MatchingEnemyStats.ElementAt(0).value;
+                pram.randomnessValue = (RandomValue<int>)(object)MatchingEnemyStats[0].value;
             }
         }
     }

@@ -400,7 +400,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 0.25
+      setValue: 10
       value: 0
   spreadAngle:
     tag: Spread
@@ -415,7 +415,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 25
+      setValue: 15
       value: 0
   SwivleAngle:
     tag: SwivleAngle
@@ -430,7 +430,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 10
+      setValue: 15
       value: 0
   exitNode: 0
 --- !u!1 &3440454382318124906
@@ -591,7 +591,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 7
+      setValue: 10
       value: 0
   rotationOffset: {x: 90, y: -90, z: 0}
   exitNode: 1
@@ -620,7 +620,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     multiplyier: 10
     setValue: 2
-    value: 2
+    value: 11.4658785
   currentHealth: 10
   graceTime: 0
   renderer: {fileID: 3440454382318124904}

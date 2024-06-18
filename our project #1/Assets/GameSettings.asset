@@ -23,8 +23,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 0
-    value: 0
+    setValue: 3
+    value: 3
   timeBetweenRounds:
     randomnessType: 0
     min: 0
@@ -38,7 +38,6 @@ MonoBehaviour:
     multiplyier: 0
     setValue: 15
     value: 15
-  timmerBetweenRounds: 0
   MinRoundTime:
     randomnessType: 0
     min: 0
