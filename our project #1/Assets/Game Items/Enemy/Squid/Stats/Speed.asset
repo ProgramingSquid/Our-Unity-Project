@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Speed
   m_EditorClassIdentifier: 
   tag: Speed
-  AllowScalling: 1
+  AllowScalling: 0
   defualtValue:
     randomnessType: 0
     min: 0

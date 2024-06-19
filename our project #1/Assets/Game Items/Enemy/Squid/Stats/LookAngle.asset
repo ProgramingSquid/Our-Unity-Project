@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eae20511323b3ec44a1e2c06c27e6e4a, type: 3}
-  m_Name: Speed
+  m_Name: LookAngle
   m_EditorClassIdentifier: 
-  tag: Speed
-  AllowScalling: 1
+  tag: LookAngle
+  AllowScalling: 0
   defualtValue:
     randomnessType: 0
     min: 0
@@ -25,7 +25,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 7
+    setValue: 15
     value: 0
   value:
     randomnessType: 0

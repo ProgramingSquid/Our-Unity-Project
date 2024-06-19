@@ -2798,7 +2798,7 @@ public class LeanTween : MonoBehaviour {
 
 
     /**
-    * Remove an event listener you have added
+    * RemoveValue an event listener you have added
     * @method LeanTween.removeListener
     * @param {GameObject} caller:GameObject the gameObject the listener is attached to
     * @param {int} eventId:int a unique int that describes the event (best to use an enum)

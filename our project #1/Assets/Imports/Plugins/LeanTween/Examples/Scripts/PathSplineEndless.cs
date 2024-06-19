@@ -100,7 +100,7 @@ public class PathSplineEndless : MonoBehaviour {
 
 		trackPts.Add( randomInFrontPosition ); // Add a future spline node
 		if(trackPts.Count > trackMaxItems)
-			trackPts.RemoveAt(0); // Remove the trailing spline node
+			trackPts.RemoveAt(0); // RemoveValue the trailing spline node
 
 		zIter++;
 	}

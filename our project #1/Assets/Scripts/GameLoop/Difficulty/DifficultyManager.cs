@@ -71,9 +71,9 @@ public static class DifficultyManager
 
     static List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy> GetFilteredEnemies(List<DifficultyEnemyRangeFilter> currentRanges)
     {
-        var allIncluded = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
-        var allBlocked = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
-        var allMustHave = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allIncluded = new MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allBlocked = new MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allMustHave = new MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
 
         //Get dictionaries for each list on each range:
         allIncluded = GetRangeEnemies(currentRanges).included;
@@ -90,38 +90,52 @@ public static class DifficultyManager
 
         //Combining All dictionaries into one list
         var combinedAllowedEnemies = new List<DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
-        foreach (var enemy in included)
+        foreach (var kvp in included.internalDictionary)
         {
-            combinedAllowedEnemies.Add(enemy.Value);
+            foreach (var enemy in kvp.Value)
+            {
+                combinedAllowedEnemies.Add(enemy);
+            }
+            
         }
-        foreach (var enemy in filteredBlocked)
+        foreach (var kvp in filteredBlocked.internalDictionary)
         {
-            combinedAllowedEnemies.Remove(enemy.Value);
+            foreach (var enemy in kvp.Value)
+            {
+                combinedAllowedEnemies.Remove(enemy);
+            }
         }
-        foreach (var enemy in mustHave)
+        foreach (var kvp in mustHave.internalDictionary)
         {
-            combinedAllowedEnemies.Add(enemy.Value);
+            foreach (var enemy in kvp.Value)
+            {
+                combinedAllowedEnemies.Add(enemy);
+            }
         }
 
-        //Remove duplicates in final enemy list
+        //RemoveValue duplicates in final enemy list
         var allowedEnemies = FilterDuplicates(combinedAllowedEnemies);
 
         return allowedEnemies;
     }
 
     #region FilterDuplicateValues(dictionary)
-    static Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicateValues
-        (Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dictionary)
+    static MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> FilterDuplicateValues
+        (MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dictionary)
     {
         var uniqueValues = new HashSet<EnemyTypeSO>();
-        var final = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var final = new MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
 
-        foreach (var pair in dictionary)
+        foreach (var pair in dictionary.internalDictionary)
         {
-            if (uniqueValues.Add(pair.Value.enemyType))
+            foreach(var value in pair.Value)
             {
-                final.Add(pair.Key, pair.Value);
+                if (uniqueValues.Add(value.enemyType))
+                {
+                    final.Add(pair.Key, value);
+                }
             }
+            
         }
 
         return final;
@@ -148,15 +162,15 @@ public static class DifficultyManager
     #region GetRangeEnemies(Ranges)
     static
         (
-        Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> included,
-        Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> blocked,
-        Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> mustHave
+        MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> included,
+        MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> blocked,
+        MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> mustHave
         )
         GetRangeEnemies(List<DifficultyEnemyRangeFilter> Ranges)
     {
-        var allIncluded = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
-        var allBlocked = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
-        var allMustHave = new Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allIncluded = new MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allBlocked = new MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
+        var allMustHave = new MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy>();
 
         foreach (var range in Ranges)
         {
@@ -179,23 +193,22 @@ public static class DifficultyManager
     #endregion
 
     #region CrossFilter(Dictionary1, Dictionary2)
-    static Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> 
-        CrossFilter(Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dict1,
-        Dictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dict2)
+    static MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> 
+        CrossFilter(MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dict1,
+        MultiValueDictionary<DifficultyEnemyRangeFilter, DifficultyEnemyRangeFilter.DifficultyRangeEnemy> dict2)
     {
         var keysToRemove = new List<DifficultyEnemyRangeFilter>();
 
-        foreach (var kvp in dict1)
+        foreach (var kvp in dict1.internalDictionary)
         {
             var key1 = kvp.Key;
-            var value1 = kvp.Value;
+            var values1 = kvp.Value;
 
-            foreach (var kvp2 in dict2)
+            foreach (var kvp2 in dict2.internalDictionary)
             {
                 var key2 = kvp2.Key;
-                var value2 = kvp2.Value;
-
-                if (value1 == value2)
+                var values2 = kvp2.Value;
+                if (dict1.internalDictionary.Any(kvp1 => kvp1.Value.Any(dict1 => dict2.internalDictionary.Any(kvp2 => kvp2.Value.Contains(dict1)))))
                 {
                     if (key1.priority < key2.priority)
                         keysToRemove.Add(key1);
@@ -205,7 +218,7 @@ public static class DifficultyManager
             }
         }
 
-        // Remove the smaller keys
+        // RemoveValue the smaller keys
         foreach (var key in keysToRemove)
         {
             dict1.Remove(key);
@@ -298,4 +311,35 @@ public interface IDifficultyCalculation
 {
     public float value { get; set; }
     public float Calculate();
+}
+
+public class MultiValueDictionary<TKey, TValue>
+{
+    public Dictionary<TKey, List<TValue>> internalDictionary = new Dictionary<TKey, List<TValue>>();
+
+    public void Add(TKey key, TValue value)
+    {
+        if (!internalDictionary.ContainsKey(key))
+        {
+            internalDictionary[key] = new List<TValue>();
+        }
+        internalDictionary[key].Add(value);
+    }
+    public bool Remove(TKey key)
+    {
+        return internalDictionary.Remove(key);
+    }
+    public bool RemoveValue(TKey key, TValue value)
+    {
+        if (internalDictionary.ContainsKey(key))
+        {
+            return internalDictionary[key].Remove(value);
+        }
+        return false;
+    }
+
+    public List<TValue> this[TKey key]
+    {
+        get { return internalDictionary.ContainsKey(key) ? internalDictionary[key] : null; }
+    }
 }

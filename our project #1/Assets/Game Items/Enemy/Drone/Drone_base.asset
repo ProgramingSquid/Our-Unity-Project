@@ -19,10 +19,11 @@ MonoBehaviour:
   EnemyStats:
   - {fileID: 11400000, guid: 1b117d46c4ddc3c4aa628ecb6a214a03, type: 2}
   - {fileID: 11400000, guid: e447357eac1756c4aab8d7105521ec0d, type: 2}
-  - {fileID: 11400000, guid: 7292df4d575b870489a503d335bdb5f2, type: 2}
+  - {fileID: 0}
   - {fileID: 11400000, guid: fa66da148a719d54e850da0f95f78600, type: 2}
   - {fileID: 11400000, guid: 5897e5dcb491ff64398551132428d99b, type: 2}
   - {fileID: 11400000, guid: a6638d6626d2cda44af95460c1794957, type: 2}
+  - {fileID: 11400000, guid: 7292df4d575b870489a503d335bdb5f2, type: 2}
   SubTypes: []
   hasSubTypes: 1
   difficultyVeriants: []

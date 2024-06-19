@@ -61,7 +61,8 @@ public static class EnemyRoundManager
                     gameSettings.minEnemiesInWave.value,
                     gameSettings.maxEnemiesInWave.value
                 );
-            var BestWave = BestWaves[0];
+            var bestWaveRandomIndex = Random.Range(0, BestWaves.Count);
+            var BestWave = BestWaves[bestWaveRandomIndex];
             #endregion
 
             #region Spawn Best Waves if meet requirments:
@@ -69,9 +70,11 @@ public static class EnemyRoundManager
             if (BestWave.priority >= gameSettings.minWaveCreatingPriority.value)
             {
                 var priority = BestWave.priority - gameSettings.waveCreatingRandomnessOffset.value;
-                var wave = EnemyWaveManager.WaveFinder.FindNearestPriorityWaves(DifficultyManager.allowedEnemies, priority,
+                var waves = EnemyWaveManager.WaveFinder.FindNearestPriorityWaves(DifficultyManager.allowedEnemies, priority,
                     gameSettings.minEnemiesInWave.value,
-                    gameSettings.maxEnemiesInWave.value)[0];
+                    gameSettings.maxEnemiesInWave.value);
+                var randomIndex = Random.Range(0, waves.Count);
+                var wave = waves[randomIndex];
 
                 currentRound.waves.Add(wave);
                 currentRound.newestWave = wave;

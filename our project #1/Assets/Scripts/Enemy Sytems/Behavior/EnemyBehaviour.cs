@@ -93,7 +93,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         foreach (var pram in floatPrameters)
         {
-            if (type.EnemyStats.Where(i => i.tag == pram.tag).ToList() == null) { Debug.LogWarning("No float stat tag matches with:" + pram.tag); return; }
+            if (type.EnemyStats.Where(i => i.tag == pram.tag).ToList() == null) { Debug.LogWarning("No float stat tagFilter matches with:" + pram.tag); return; }
 
             var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
             if (MatchingEnemyStats.Count() > 1)
@@ -110,7 +110,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
         foreach (var pram in intPrameters)
         {
-            if (type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No int stat tag matches with:" + pram.tag); return; }
+            if (type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No int stat tagFilter matches with:" + pram.tag); return; }
             var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
             if (MatchingEnemyStats.Count() > 1)
             {
@@ -148,7 +148,7 @@ public class EnemyBehaviour : MonoBehaviour
 
         foreach (var pram in floatPrameters)
         {
-            if(type.EnemyStats.Where(i => i.tag == pram.tag).ToList() == null) { Debug.LogWarning("No float stat tag matches with:" + pram.tag); return; }
+            if(type.EnemyStats.Where(i => i.tag == pram.tag).ToList() == null) { Debug.LogWarning("No float stat tagFilter matches with:" + pram.tag); return; }
 
             var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
             if(MatchingEnemyStats.Count() > 1 ) 
@@ -165,7 +165,7 @@ public class EnemyBehaviour : MonoBehaviour
         } 
         foreach (var pram in intPrameters)
         {
-            if (type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No int stat tag matches with:" + pram.tag); return; }
+            if (type.EnemyStats.Where(i => i.tag == pram.tag) == null) { Debug.LogWarning("No int stat tagFilter matches with:" + pram.tag); return; }
             var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
             if(MatchingEnemyStats.Count() > 1 ) 
             { 

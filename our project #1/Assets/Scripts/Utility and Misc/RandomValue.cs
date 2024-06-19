@@ -16,7 +16,7 @@ public class RandomValue<T>
 
     [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.MinAndMax)]
 
-    [CurveRange(0, 0, 1, 1, EColor.Orange), Sirenix.OdinInspector.BoxGroup]
+    [CurveRange(0, -2, 1, 2, EColor.Orange), Sirenix.OdinInspector.BoxGroup]
     [Sirenix.OdinInspector.ShowIf("randomnessType", RandomnesssType.RandomOnCurve)]
     public AnimationCurve curve;
     [Sirenix.OdinInspector.HideIf("@this.randomnessType == RandomnesssType.none")]
