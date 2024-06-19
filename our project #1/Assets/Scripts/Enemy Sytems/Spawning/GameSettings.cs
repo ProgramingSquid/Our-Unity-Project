@@ -7,31 +7,41 @@ public class GameSettings : ScriptableObject
  {
     [Title("Rounds")]
     [LabelText("Start Of Game Grace Time")]
-    public  RandomValue<float> gameStartGraceTime;
+    public  RandomValue<float> gameStartGraceTime; //Randomized on use
 
-    public  RandomValue<float> timeBetweenRounds;
+    public  RandomValue<float> timeBetweenRounds; //Randomized on use
 
     [FoldoutGroup("Round Langth")]
-    public  RandomValue<float> MinRoundTime;
+    public  RandomValue<float> minRoundTimeOffset; //Randomized on use, todo; on round start
     [FoldoutGroup("Round Langth")]
-    public  RandomValue<float> MaxRoundTime;
+    public  RandomValue<float> baseMinRoundTime; //Randomized on round start
+    [FoldoutGroup("Round Langth")]
+    public  RandomValue<float> maxRoundTimeOffset; //Randomized on use
+    [FoldoutGroup("Round Langth")]
+    public  RandomValue<float> baseMaxRoundTime; //Randomized on round start
 
+    [LabelText("Max Wave Amount Offset")]
+    public  RandomValue<int> roundMaxAmountOfWavesOffset; // Randomized on use
     [LabelText("Max Wave Amount")]
-    public  RandomValue<int> roundMaxAmountOfWaves;
+    public  RandomValue<int> baseRoundMaxAmountOfWaves; // Randomized on round start
     [Space(20)]
     [SerializeReference]
     public  List<EnemyRoundManager.RoundPriority.IPriorityParamater> priorities = new List<EnemyRoundManager.RoundPriority.IPriorityParamater>();
-    public  RandomValue<float> minRoundCreatingPriority;
+    public  RandomValue<float> minRoundCreatingPriority; //Randomized on 2 uses
     [Space(20)]
     [Tooltip("How high the highest wave spawning priority needs to be for a round to creat a new wave")]
-    public  RandomValue<float> minWaveCreatingPriority;
+    public  RandomValue<float> baseMinWaveCreatingPriority; // Randomized on round start
+    public  RandomValue<float> minWaveCreatingPriorityOffset; // Randomized on use
     [Tooltip("Creats a wave who's priority is the cloasest to highest wave's priority - this value. " +
         "With a value of zero the round always creats the wave with the highest posible priority")]
-    public  RandomValue<float> waveCreatingRandomnessOffset;
-    [HorizontalGroup]
-    public  RandomValue<int> maxEnemiesInWave;
-    [HorizontalGroup]
-    public  RandomValue<int> minEnemiesInWave;
+    public  RandomValue<float> baseWaveCreatingRandomness; // Randomized on round start
+    public  RandomValue<float> waveCreatingRandomnessOffset; // Randomized on use
+    [HorizontalGroup("EnemiesInWave")]
+    [BoxGroup("EnemiesInWave/Max")]public  RandomValue<int> baseMaxEnemiesInWave; // Randomizde on round start
+    [BoxGroup("EnemiesInWave/Max")] public  RandomValue<int> maxEnemiesInWaveOffset; // Randomized on 2 uses
+    [HorizontalGroup("EnemiesInWave")]
+    [BoxGroup("EnemiesInWave/Min")] public  RandomValue<int> baseMinEnemiesInWave; // Randomized on round start, todo on 2 of its uses
+    [BoxGroup("EnemiesInWave/Min")] public  RandomValue<int> minEnemiesInWaveOffset; // Randomized on 2  uses
 
     [Title("Difficulty")]
     //Decides which enemies should spawn and which values should be scalled based on player's skill
