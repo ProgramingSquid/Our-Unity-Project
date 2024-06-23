@@ -3200,22 +3200,38 @@ MonoBehaviour:
     bloomIntesity: 7
     bloomThreshold: 0.99
     bloomScatter: 0.5
-    bloomTint: {r: 1, g: 1, b: 1, a: 1}
+    bloomTint:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
     AberrationIntesity: 1
     vignetteIntesity: 0.325
     vignetteSmoothness: 1
-    vignetteColor: {r: 0, g: 0, b: 0, a: 0}
+    vignetteColor:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
     distortionIntesity: 0.4
     distortionScale: 1.025
   - name: TryDash
     bloomIntesity: 6
     bloomThreshold: 0.95
     bloomScatter: 0.5
-    bloomTint: {r: 1, g: 0.6273585, b: 0.6273585, a: 0}
+    bloomTint:
+      r: 1
+      g: 0.6273585
+      b: 0.6273585
+      a: 0
     AberrationIntesity: 1
     vignetteIntesity: 0.5
     vignetteSmoothness: 0.3
-    vignetteColor: {r: 0.1792453, g: 0, b: 0, a: 0}
+    vignetteColor:
+      r: 0.1792453
+      g: 0
+      b: 0
+      a: 0
     distortionIntesity: 0.347
     distortionScale: 1.03
 --- !u!114 &739540737
@@ -5424,13 +5440,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1266391157}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e39311ca9e47bd4eb3a0e3f9208a022, type: 3}
+  m_Script: {fileID: 11500000, guid: faf77ac02ed13ac47b3b95f3c2203a77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bloom: {fileID: 0}
-  chromaticAberration: {fileID: 0}
-  vignette: {fileID: 0}
-  lensDistortion: {fileID: 0}
+  volume: {fileID: 0}
+  effect:
+    maxDuration: 10
+    componants: []
 --- !u!1 &1269305917
 GameObject:
   m_ObjectHideFlags: 0
@@ -8691,8 +8707,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1394339990}
   m_HandleRect: {fileID: 1394339989}
   m_Direction: 2
-  m_Value: 1.0000001
-  m_Size: 0.38961038
+  m_Value: 1.0000004
+  m_Size: 0.3896104
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
