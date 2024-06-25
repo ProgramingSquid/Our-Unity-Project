@@ -20,6 +20,7 @@ MonoBehaviour:
   currentLevel: 0
   powerLevel: 0
   isEquiped: 0
+  rotationSpeed: 6
   verticleSpringStrangth: 2.5
   verticleDampining: 8
   raycastMaxDistance: 5.5

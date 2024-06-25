@@ -36,6 +36,7 @@ public class MovementControl : MonoBehaviour
       [HideInInspector] public float raycastMaxDistance = 4;
 
     [Space(30)]
+    [HideInInspector] public float rotationSpeed = 3;
     [HideInInspector] public AnimationCurve forceSpeedAccelerationCurve;
       [HideInInspector] public float acelerationSpeed;
       [HideInInspector] public float baseForceSpeed = 3f;
@@ -67,7 +68,7 @@ public class MovementControl : MonoBehaviour
     public UnityEvent<float> OnDash;
     [Foldout("Events")]
     public UnityEvent<float> OnEndDash;
-    
+
 
     private void Awake() 
     {
@@ -76,6 +77,7 @@ public class MovementControl : MonoBehaviour
         inputActions.Enable();
         inputActions.Player.Aim.performed += ctx => rotation = ctx.ReadValue<Vector2>();
 
+        rotationSpeed = movment.rotationSpeed;
         verticleSpringStrangth = movment.verticleSpringStrangth;
         verticleDampining = movment.verticleDampining;
         raycastMaxDistance = movment.raycastMaxDistance;
@@ -107,7 +109,7 @@ public class MovementControl : MonoBehaviour
         angle = Mathf.Atan2(difernce.z, difernce.x);
         Debug.DrawRay(transform.position, difernce);
         DesieredRot = Quaternion.Euler(90, 0, angle * Mathf.Rad2Deg); // aplying rotation
-        transform.rotation = DesieredRot;  
+        transform.rotation = Quaternion.Slerp(transform.rotation, DesieredRot, rotationSpeed * Time.deltaTime);
         #endregion
 
         #region Hovering

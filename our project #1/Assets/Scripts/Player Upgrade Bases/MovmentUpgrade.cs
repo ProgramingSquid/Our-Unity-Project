@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Movment Upgrade", menuName = "Upgrades/Movment Upgrade")]
 public class MovmentUpgrade : Upgrade
 {
+    public float rotationSpeed = 3;
     public float verticleSpringStrangth;
     public float verticleDampining;
     public float raycastMaxDistance = 4;

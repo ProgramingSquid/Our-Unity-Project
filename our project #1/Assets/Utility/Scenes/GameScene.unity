@@ -2768,7 +2768,6 @@ GameObject:
   - component: {fileID: 739540732}
   - component: {fileID: 739540731}
   - component: {fileID: 739540735}
-  - component: {fileID: 739540736}
   - component: {fileID: 739540737}
   m_Layer: 6
   m_Name: Player
@@ -2968,6 +2967,7 @@ MonoBehaviour:
   verticleSpringStrangth: 1.5
   verticleDampining: 22
   raycastMaxDistance: 4
+  rotationSpeed: 3
   forceSpeedAccelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -3004,22 +3004,10 @@ MonoBehaviour:
   OnTryDash:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 739540736}
-        m_TargetAssemblyTypeName: VolumeEffectTrigger, Assembly-CSharp
-        m_MethodName: TrigerEffect
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 739540736}
-        m_TargetAssemblyTypeName: VolumeEffectTrigger, Assembly-CSharp
-        m_MethodName: ResetAll
-        m_Mode: 4
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: GameplayPostProcessingEffect, Assembly-CSharp
+        m_MethodName: PlayEffect
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3030,43 +3018,7 @@ MonoBehaviour:
         m_CallState: 2
   OnStartDash:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 739540736}
-        m_TargetAssemblyTypeName: VolumeEffectTrigger, Assembly-CSharp
-        m_MethodName: TrigerEffect
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 739540736}
-        m_TargetAssemblyTypeName: VolumeEffectTrigger, Assembly-CSharp
-        m_MethodName: TrigerEffect
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 739540736}
-        m_TargetAssemblyTypeName: VolumeEffectTrigger, Assembly-CSharp
-        m_MethodName: ResetAll
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0.5
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   OnDash:
     m_PersistentCalls:
       m_Calls: []
@@ -3183,57 +3135,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &739540736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739540726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 078375d1931c23a49bfd8fbbcd38ea6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  postProcesing:
-  - name: StartDash
-    bloomIntesity: 7
-    bloomThreshold: 0.99
-    bloomScatter: 0.5
-    bloomTint:
-      r: 1
-      g: 1
-      b: 1
-      a: 1
-    AberrationIntesity: 1
-    vignetteIntesity: 0.325
-    vignetteSmoothness: 1
-    vignetteColor:
-      r: 0
-      g: 0
-      b: 0
-      a: 0
-    distortionIntesity: 0.4
-    distortionScale: 1.025
-  - name: TryDash
-    bloomIntesity: 6
-    bloomThreshold: 0.95
-    bloomScatter: 0.5
-    bloomTint:
-      r: 1
-      g: 0.6273585
-      b: 0.6273585
-      a: 0
-    AberrationIntesity: 1
-    vignetteIntesity: 0.5
-    vignetteSmoothness: 0.3
-    vignetteColor:
-      r: 0.1792453
-      g: 0
-      b: 0
-      a: 0
-    distortionIntesity: 0.347
-    distortionScale: 1.03
 --- !u!114 &739540737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5391,7 +5292,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1266391159}
   - component: {fileID: 1266391158}
-  - component: {fileID: 1266391160}
   m_Layer: 0
   m_Name: Global Volume
   m_TagString: Untagged
@@ -5431,22 +5331,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 547216714}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1266391160
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1266391157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faf77ac02ed13ac47b3b95f3c2203a77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  volume: {fileID: 0}
-  effect:
-    maxDuration: 10
-    componants: []
 --- !u!1 &1269305917
 GameObject:
   m_ObjectHideFlags: 0
@@ -8707,8 +8591,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1394339990}
   m_HandleRect: {fileID: 1394339989}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.3896104
+  m_Value: 1.0000001
+  m_Size: 0.38961038
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

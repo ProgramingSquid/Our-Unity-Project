@@ -196,7 +196,7 @@ namespace DentedPixel.LTExamples
             GameObject cubeRotateB = cubeNamed("cubeRotateB");
             cubeRotateB.transform.position = new Vector3(200f, 10f, 8f);
             LeanTween.rotateAround(cubeRotateB, Vector3.forward, 360f, 0.3f).setPoint(new Vector3(5f, 3f, 2f)).setOnComplete(() => {
-                LeanTest.expect(cubeRotateB.transform.position.ToString() == (new Vector3(200f, 10f, 8f)).ToString(), "ROTATE AROUND 360", "expected rotate pos:" + (new Vector3(200f, 10f, 8f)) + " returned:" + cubeRotateB.transform.position);
+                LeanTest.expect(cubeRotateB.transform.position.ToString() == (new Vector3(200f, 10f, 8f)).ToString(), "ROTATE AROUND 360", "expected rotate shakePos:" + (new Vector3(200f, 10f, 8f)) + " returned:" + cubeRotateB.transform.position);
             });
 
             // Alpha, onUpdate with passing setValue, onComplete setValue
@@ -354,7 +354,7 @@ namespace DentedPixel.LTExamples
                     //                  Debug.LogError("OUT OF BOUNDS");
                 }
             }).setLoopPingPong().setRepeat(8).setOnComplete(() => {
-                LeanTest.expect(didPassBounds, "OUT OF BOUNDS", "pos x:" + failPoint.x + " y:" + failPoint.y + " z:" + failPoint.z);
+                LeanTest.expect(didPassBounds, "OUT OF BOUNDS", "shakePos x:" + failPoint.x + " y:" + failPoint.y + " z:" + failPoint.z);
             });
 
             // Local scale check

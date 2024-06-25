@@ -127,7 +127,7 @@ public class TestingZLegacy : MonoBehaviour {
 	}
 	
 	public void customTweenExample(){
-		Debug.Log("customTweenExample starting pos:"+ltLogo.transform.position+" origin:"+origin);
+		Debug.Log("customTweenExample starting shakePos:"+ltLogo.transform.position+" origin:"+origin);
 		
 		LeanTween.moveX( ltLogo, -10.0f, 0.5f ).setEase(customAnimationCurve).setUseEstimatedTime(useEstimatedTime);
 		LeanTween.moveX( ltLogo, 0.0f, 0.5f ).setEase(customAnimationCurve).setDelay(0.5f).setUseEstimatedTime(useEstimatedTime);
