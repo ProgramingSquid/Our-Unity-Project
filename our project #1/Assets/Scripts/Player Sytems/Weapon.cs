@@ -11,12 +11,12 @@ public class Weapon : MonoBehaviour
     public float timer = 0;
     public CameraShake CameraShake;
     public GameObject player;
-    MovementControl PlayerMovment;
+    MovementControl playerMovment;
     float timeBetweenShots;
 
     private void Start()
     {
-        PlayerMovment = player.GetComponent<MovementControl>();
+        playerMovment = player.GetComponent<MovementControl>();
         timeBetweenShots = 1 / weapon.fireRate;
     }
 
@@ -28,8 +28,13 @@ public class Weapon : MonoBehaviour
         weapon.projectile.speed = weapon.projectileSpeed;
         weapon.projectile.lifeTime = weapon.lifeTime;
 
-        timer -= Time.deltaTime;
+        var difernce = playerMovment.difernce;
+        var angle = Mathf.Atan2(difernce.z, difernce.x);
+        Debug.DrawRay(transform.position, difernce);
+        var DesieredRot = Quaternion.Euler(90, 0, angle * Mathf.Rad2Deg); // aplying rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, DesieredRot,weapon.turretSpeed * Time.deltaTime);
 
+        timer -= Time.deltaTime;
         TryShoot();
     }
 

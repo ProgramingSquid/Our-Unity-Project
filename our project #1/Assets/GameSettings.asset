@@ -38,7 +38,20 @@ MonoBehaviour:
     multiplyier: 0
     setValue: 15
     value: 15
-  MinRoundTime:
+  minRoundTimeOffset:
+    randomnessType: 1
+    min: -5
+    max: 5
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 1
+    setValue: 0
+    value: -2.2599273
+  baseMinRoundTime:
     randomnessType: 0
     min: 0
     max: 0
@@ -51,7 +64,7 @@ MonoBehaviour:
     multiplyier: 0
     setValue: 30
     value: 30
-  MaxRoundTime:
+  maxRoundTimeOffset:
     randomnessType: 0
     min: 0
     max: 0
@@ -62,9 +75,35 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 60
-    value: 60
-  roundMaxAmountOfWaves:
+    setValue: 0
+    value: 0
+  baseMaxRoundTime:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 150
+    value: 150
+  roundMaxAmountOfWavesOffset:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  baseRoundMaxAmountOfWaves:
     randomnessType: 0
     min: 0
     max: 0
@@ -91,7 +130,7 @@ MonoBehaviour:
     multiplyier: 0
     setValue: 0
     value: 0
-  minWaveCreatingPriority:
+  baseMinWaveCreatingPriority:
     randomnessType: 0
     min: 0
     max: 0
@@ -102,9 +141,9 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     multiplyier: 0
-    setValue: 11
-    value: 11
-  waveCreatingRandomnessOffset:
+    setValue: 22
+    value: 22
+  minWaveCreatingPriorityOffset:
     randomnessType: 0
     min: 0
     max: 0
@@ -117,7 +156,33 @@ MonoBehaviour:
     multiplyier: 0
     setValue: 0
     value: 0
-  maxEnemiesInWave:
+  baseWaveCreatingRandomness:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 1
+    setValue: 0
+    value: 0
+  waveCreatingRandomnessOffset:
+    randomnessType: 1
+    min: -11
+    max: 11
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 1
+    setValue: 0
+    value: -1.4107714
+  baseMaxEnemiesInWave:
     randomnessType: 0
     min: 0
     max: 0
@@ -130,7 +195,20 @@ MonoBehaviour:
     multiplyier: 0
     setValue: 3
     value: 3
-  minEnemiesInWave:
+  maxEnemiesInWaveOffset:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
+  baseMinEnemiesInWave:
     randomnessType: 0
     min: 0
     max: 0
@@ -143,6 +221,19 @@ MonoBehaviour:
     multiplyier: 0
     setValue: 1
     value: 1
+  minEnemiesInWaveOffset:
+    randomnessType: 0
+    min: 0
+    max: 0
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    multiplyier: 0
+    setValue: 0
+    value: 0
   difficultyEnemyRangeFilters:
   - difficultyCaculation:
       difficultyCaculationType:

@@ -25,6 +25,7 @@ MonoBehaviour:
   projectileSpeed: 15
   speadAngle: 10
   distance: 15
+  turretSpeed: 15
   isAutomatic: 1
   lifeTime: 1
   shakeDuration: 0.125

@@ -13,6 +13,7 @@ public class WeaponUpgrade : Upgrade
     public float projectileSpeed;
     public float speadAngle;
     public float distance = 5;
+    public float turretSpeed = 7;
     public bool isAutomatic = true;
     [HideInInspector] public float lifeTime;
     public float shakeDuration = .15f;
