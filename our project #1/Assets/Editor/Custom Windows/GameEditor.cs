@@ -5,12 +5,6 @@ using Sirenix.Utilities.Editor;
 using System.Collections;
 using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
-using Codice.CM.Client.Differences.Graphic;
-using System.IO;
-using static UnityEditor.Rendering.InspectorCurveEditor;
-using Unity.Plastic.Antlr3.Runtime.Tree;
-using Unity.VisualScripting;
 
 public class EnemyEditor : OdinMenuEditorWindow
 {
@@ -72,7 +66,7 @@ public class EnemyEditor : OdinMenuEditorWindow
         if(!(selection.SelectedValue is EnemyTypeSO || selection.SelectedValue is EnemyStat)) 
         { SirenixEditorGUI.EndHorizontalToolbar(); return; }
 
-        if (SirenixEditorGUI.ToolbarButton(SdfIconType.ArrowUpSquare))
+        if (SirenixEditorGUI.ToolbarButton(SdfIconType.BarChartSteps))
         {
             while (!MenuTree.Selection[0].SmartName.Contains("_base"))
             {
