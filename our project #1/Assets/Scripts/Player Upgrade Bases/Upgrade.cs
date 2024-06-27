@@ -9,12 +9,6 @@ public class Upgrade : ScriptableObject
     public string titel;
     [Multiline] public string discription;
     [Space(40)]
-    public int currentExpAmount;
-    public int expNeededForCurrentLevel;
-    public int baseExpNeeded;
-    public int currentLevel;
-    [Space(40)]
-    public int powerLevel;
     public bool isEquiped;
 
 
