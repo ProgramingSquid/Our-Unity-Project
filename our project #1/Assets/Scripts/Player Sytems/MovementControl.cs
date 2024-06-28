@@ -52,6 +52,8 @@ public class MovementControl : MonoBehaviour
     [HideInInspector]
       public Vector3 difernce;
     [HideInInspector]
+    public Vector3 difernce2D;
+    [HideInInspector]
       public Vector2 current;
         Vector2 mousePos;
       [HideInInspector] public Vector3 worldPosition;
@@ -69,7 +71,13 @@ public class MovementControl : MonoBehaviour
     [Foldout("Events")]
     public UnityEvent<float> OnEndDash;
 
-
+    private void OnValidate()
+    {
+        if(player == null)
+        {
+            player = this;
+        }
+    }
     private void Awake() 
     {
         player = this;
@@ -95,19 +103,18 @@ public class MovementControl : MonoBehaviour
         #region Rotation
         mousePos = Mouse.current.position.ReadValue();
 
-        
-        Debug.DrawLine(transform.position, worldPosition);
         if (!isUsingController)
         {
             worldPosition = camera.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, camera.farClipPlane));
             difernce = worldPosition - transform.position;
+            difernce2D = new Vector3(worldPosition.x, transform.position.y, worldPosition.z) - transform.position;
         }
         else
         {
             difernce = Vector3.right * rotation.x + Vector3.forward * rotation.y;
         }
         angle = Mathf.Atan2(difernce.z, difernce.x);
-        Debug.DrawRay(transform.position, difernce);
+        Debug.DrawRay(transform.position, difernce2D, Color.magenta);
         DesieredRot = Quaternion.Euler(90, 0, angle * Mathf.Rad2Deg); // aplying rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, DesieredRot, rotationSpeed * Time.deltaTime);
         #endregion
