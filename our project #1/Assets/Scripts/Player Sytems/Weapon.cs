@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviour, IAimAssistable
 {
     [InlineEditor] public WeaponUpgrade weapon;
     public float timer = 0;
@@ -13,6 +13,8 @@ public class Weapon : MonoBehaviour
     public GameObject player;
     MovementControl playerMovment;
     float timeBetweenShots;
+
+    Transform IAimAssistable.transform { get => transform; }
 
     private void Start()
     {
@@ -59,4 +61,20 @@ public class Weapon : MonoBehaviour
         }
     }
     public void FireInput(InputAction.CallbackContext context) { weapon.Fire(context); }
+
+    public Ray GetInput()
+    {
+        var player = MovementControl.player;
+        return new Ray(player.transform.position, player.difernce2D);
+    }
+
+    public void SetAim(Ray assist)
+    {
+        Vector3 direction = assist.direction;
+        direction.x = 0;
+        direction.z = 0;
+
+        Quaternion rotation = Quaternion.LookRotation(direction);
+        transform.rotation = rotation;
+    }
 }
