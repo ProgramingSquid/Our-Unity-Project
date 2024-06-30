@@ -12,6 +12,7 @@ public class AimAssistController : MonoBehaviour
     public float range;
     [Range(0,1)] public float wieght;
     public bool enableAssist;
+    public bool showDebug;
     List<AimAssistTarget> targets = new();
     [HideInInspector] public Ray assist { get; private set; }
 
@@ -29,33 +30,45 @@ public class AimAssistController : MonoBehaviour
     {
         Ray inputRay = aim.GetInput();
         Vector3 sum = Vector3.zero;
-        float totalWeight = 0;
 
-        //Get all targets in range and add them to list: targets.
-        targets = GetTargets();
-
-        foreach (var target in targets)
+        if (enableAssist)
         {
-            //Calculate assit value for each target.
-            target.assistValue = target.CalculateAssistValue(inputRay);
-            //Calculate a inputRay that points in the average direction of all targets weighted by thier assistValue.
-            Vector3 dir = target.transform.position - inputRay.origin;
-            Debug.DrawRay(inputRay.origin, dir, Color.yellow + new Color(0, targets.Count - (targets.IndexOf(target) / 10),0));
-            sum += dir * target.assistValue;
-            totalWeight += target.assistValue;
+            float totalWeight = 0;
+
+            //Get all targets in range and add them to list: targets.
+            targets = GetTargets();
+
+            foreach (var target in targets)
+            {
+                //Calculate assit value for each target.
+                target.assistValue = target.CalculateAssistValue(inputRay);
+                //Calculate a inputRay that points in the average direction of all targets weighted by thier assistValue.
+                Vector3 dir = target.transform.position - inputRay.origin;
+                sum += dir * target.assistValue;
+                totalWeight += target.assistValue;
+
+                if (!showDebug) { continue; }
+                Debug.DrawRay(inputRay.origin, dir, Color.yellow + new Color(0, targets.Count - (targets.IndexOf(target) / 10), 0));
+            }
+            var avg = sum / totalWeight;
+
+            if (totalWeight == 0) { assist = new Ray(inputRay.origin, inputRay.direction); }
+            else
+            {
+                Vector3 assitDir = Vector3.Lerp(inputRay.direction.normalized, avg.normalized, wieght);
+                assist = new Ray(inputRay.origin, assitDir.normalized);
+            }
+
+            if (showDebug) 
+            {
+                Debug.DrawRay(inputRay.origin, avg.normalized * 15, Color.cyan);
+            }
+            
         }
-        var avg = sum / totalWeight;
-        //Calculate a new inputRay with a direction from a average of the previous inputRay and the inputRay retured by GetInput()
-        Vector3 assitDir = Vector3.Lerp(inputRay.direction.normalized, avg.normalized, wieght);
+        else { assist = inputRay; }
 
-        //Call SetAim() passing in the final calculated inputRay
-        Debug.Log(totalWeight);
-
-        if(totalWeight == 0) { assitDir = inputRay.direction; }
-        assist = new Ray(inputRay.origin, assitDir.normalized);
+        
         aim.SetAim(assist);
-        Debug.DrawRay(inputRay.origin, avg.normalized * 15, Color.cyan);
-        Debug.DrawRay(assist.origin, assitDir.normalized * 15, Color.green);
     }
 
     private List<AimAssistTarget> GetTargets()
@@ -75,8 +88,16 @@ public class AimAssistController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = new Color(0, 1, 1, .75f);
-        Gizmos.DrawWireSphere(transform.position, range);
+        if (!Application.isPlaying) 
+        {
+            Gizmos.color = new Color(0, 1, 1, .75f);
+            Gizmos.DrawWireSphere(transform.position, range);
+            return; 
+        }
+
+        if (!showDebug) { return; }
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(assist.origin, assist.direction.normalized * 15);
     }
 }
 public interface IAimAssistable

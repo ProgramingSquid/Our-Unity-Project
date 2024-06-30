@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour, IAimAssistable
     public GameObject player;
     MovementControl playerMovment;
     float timeBetweenShots;
+    Quaternion DesieredRot;
 
     Transform IAimAssistable.transform { get => transform; }
 
@@ -30,10 +31,7 @@ public class Weapon : MonoBehaviour, IAimAssistable
         weapon.projectile.speed = weapon.projectileSpeed;
         weapon.projectile.lifeTime = weapon.lifeTime;
 
-        var difernce = playerMovment.difernce;
-        var angle = Mathf.Atan2(difernce.z, difernce.x);
-        Debug.DrawRay(transform.position, difernce);
-        var DesieredRot = Quaternion.Euler(90, 0, angle * Mathf.Rad2Deg); // aplying rotation
+      
         transform.rotation = Quaternion.Slerp(transform.rotation, DesieredRot,weapon.turretSpeed * Time.deltaTime);
 
         timer -= Time.deltaTime;
@@ -70,11 +68,8 @@ public class Weapon : MonoBehaviour, IAimAssistable
 
     public void SetAim(Ray assist)
     {
-        Vector3 direction = assist.direction;
-        direction.x = 0;
-        direction.z = 0;
-
-        Quaternion rotation = Quaternion.LookRotation(direction);
-        transform.rotation = rotation;
+        var angle = Mathf.Atan2(assist.direction.z, assist.direction.x);
+        Debug.DrawRay(transform.position, assist.direction);
+        DesieredRot = Quaternion.Euler(90, 0, angle * Mathf.Rad2Deg); // aplying rotation
     }
 }

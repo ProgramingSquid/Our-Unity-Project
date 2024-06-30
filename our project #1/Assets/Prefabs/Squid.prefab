@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 418886133930433669}
   - component: {fileID: 4601243282737016059}
   - component: {fileID: -2423128434607054601}
+  - component: {fileID: 6288018577404066374}
   m_Layer: 7
   m_Name: Squid
   m_TagString: Enemy
@@ -168,7 +169,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 2
+      setValue: 0.1
       value: 0
   targetDisFormTarget:
     tag: Distance
@@ -183,7 +184,7 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
       multiplyier: 0
-      setValue: 7
+      setValue: 1.5
       value: 0
   lookAngle:
     tag: LookAngle
@@ -246,8 +247,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth:
     randomnessType: 0
-    min: 1.0000046
-    max: 1.1000047
+    min: 1.0000321
+    max: 1.1000321
     curve:
       serializedVersion: 2
       m_Curve: []
@@ -256,7 +257,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     multiplyier: 0
     setValue: 0.75
-    value: 0
+    value: 0.75
   currentHealth: 7
   graceTime: 0
   renderer: {fileID: 700879430836580102}
@@ -402,6 +403,57 @@ MonoBehaviour:
   inspectorRootTransitions:
   - nodeObject: {fileID: 700879430836580100}
   - nodeObject: {fileID: 7486502307994997700}
+--- !u!114 &6288018577404066374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 700879430836580097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ef570762f80e441a73fafd6789ee65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3
+  strangth: 1
+  falloffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.9999996
+      outSlope: -0.9999996
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.0169679
+      value: 0.9830321
+      inSlope: -0.99999976
+      outSlope: -0.99999976
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  positionOffset: {x: 0, y: 0}
+  assistValue: 0
+  percent: 0
+  showDebug: 0
 --- !u!1 &700879430962045508
 GameObject:
   m_ObjectHideFlags: 0

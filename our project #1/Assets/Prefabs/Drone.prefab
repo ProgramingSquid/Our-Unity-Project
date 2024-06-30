@@ -451,6 +451,7 @@ GameObject:
   - component: {fileID: 4779519443828115174}
   - component: {fileID: -5379854388115220373}
   - component: {fileID: 8977425586389692968}
+  - component: {fileID: 7859765029183763528}
   m_Layer: 7
   m_Name: Drone
   m_TagString: Enemy
@@ -610,8 +611,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth:
     randomnessType: 1
-    min: 1
-    max: 1.25
+    min: 1.0000321
+    max: 1.2500321
     curve:
       serializedVersion: 2
       m_Curve: []
@@ -620,7 +621,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     multiplyier: 10
     setValue: 2
-    value: 11.4658785
+    value: 10.703534
   currentHealth: 10
   graceTime: 0
   renderer: {fileID: 3440454382318124904}
@@ -851,6 +852,57 @@ MonoBehaviour:
   inspectorRootTransitions:
   - nodeObject: {fileID: 3440454382318124819}
   - nodeObject: {fileID: 7011461258887806023}
+--- !u!114 &7859765029183763528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3440454382318124906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05ef570762f80e441a73fafd6789ee65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 3
+  strangth: 1
+  falloffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.9999996
+      outSlope: -0.9999996
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.0169679
+      value: 0.9830321
+      inSlope: -0.99999976
+      outSlope: -0.99999976
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1
+      outSlope: -1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  positionOffset: {x: 0, y: 0}
+  assistValue: 0
+  percent: 0
+  showDebug: 0
 --- !u!1 &5078782558339207480
 GameObject:
   m_ObjectHideFlags: 0
