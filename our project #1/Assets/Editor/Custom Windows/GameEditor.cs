@@ -29,6 +29,7 @@ public class EnemyEditor : OdinMenuEditorWindow
         if (selection.SelectedValue is EnemyTypeSO)
         {
             selectedEnemyData = selection.SelectedValue as EnemyTypeSO;
+            EditorUtility.SetDirty(selectedEnemyData);
             if (selectedEnemyData.hasSubTypes)
             {
                 if (SirenixEditorGUI.ToolbarButton("New Sub Type Of Selected"))
@@ -154,6 +155,7 @@ public class EnemyEditor : OdinMenuEditorWindow
             AssetDatabase.CreateFolder(path, "Sub Types");
             AssetDatabase.CreateFolder(path, "Difficulty Verients");
             AssetDatabase.CreateAsset(enemyData, path + "/" + enemyData.name + ".asset");
+            EditorUtility.SetDirty(enemyData);
             AssetDatabase.SaveAssets();
 
             enemyData = ScriptableObject.CreateInstance<EnemyTypeSO>();
@@ -189,6 +191,7 @@ public class EnemyEditor : OdinMenuEditorWindow
             AssetDatabase.CreateFolder(path, "Stats");
             AssetDatabase.CreateFolder(path, "Difficulty Verients");
             AssetDatabase.CreateAsset(enemyData, path + "/" + enemyData.name + ".asset");
+            EditorUtility.SetDirty(enemyData);
             AssetDatabase.SaveAssets();
 
             enemyData = ScriptableObject.CreateInstance<EnemyTypeSO>();
@@ -225,6 +228,7 @@ public class EnemyEditor : OdinMenuEditorWindow
             string path = AssetDatabase.GUIDToAssetPath(GUID);
             AssetDatabase.CreateFolder(path, "Stats");
             AssetDatabase.CreateAsset(enemyData, path + "/" + enemyData.name + ".asset");
+            EditorUtility.SetDirty(enemyData);
             AssetDatabase.SaveAssets();
 
             enemyData = ScriptableObject.CreateInstance<EnemyTypeSO>();
@@ -247,7 +251,7 @@ public class EnemyEditor : OdinMenuEditorWindow
         }
 
         [Button("Create")]
-        public void CreateEnemyVeriant()
+        public void CreateEnemStat()
         {
             enemyData.EnemyStats.Add(enemyStat);
 
@@ -256,6 +260,7 @@ public class EnemyEditor : OdinMenuEditorWindow
             string folder = System.IO.Path.GetDirectoryName(assetPath);
 
             AssetDatabase.CreateAsset(enemyStat, folder + "/Stats/" + enemyStat.tag.Replace(" ", string.Empty) + ".asset");
+            EditorUtility.SetDirty(enemyStat);
             AssetDatabase.SaveAssets();
             enemyStat = ScriptableObject.CreateInstance<EnemyStat>();
             enemyStat.tag = "New Stat";
