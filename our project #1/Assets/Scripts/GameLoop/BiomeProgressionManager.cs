@@ -50,7 +50,9 @@ public class BiomeProgressionManager : MonoBehaviour
 
     void ProgressToNewBiome()
     {
-        MapGenerator.Generator.GenerateStartValues(true);
+        //To Fix
+        /*MapGenerator.Generator.GenerateStartValues(true);*/ 
+
         BiomeQuestManager.instance.ClearEquiped();
         playerHealth.healManager.Heal();
 
