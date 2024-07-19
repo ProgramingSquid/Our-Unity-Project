@@ -1,8 +1,9 @@
-﻿using System;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class TerrainNoise : GenerationFeature
+using static GenerationBase;
+public class XZPlaneTerrainBase : GenerationBase
 {
     [Serializable]
     public struct Properties
@@ -10,12 +11,9 @@ public class TerrainNoise : GenerationFeature
         public int xSize;
         public int zSize;
         public float resolution;
-        //To do: Add an overall scale and amplitude scalar for noise
-        //To do: Add offset control for noise
 
-        public List<NoiseLayer> noiseLayers;
         public bool shadeSmooth;
-        public Transform parent;
+
         public Material defaultMaterial;
 
         #region Contructors
@@ -26,9 +24,7 @@ public class TerrainNoise : GenerationFeature
             this.xSize = xSize;
             this.zSize = zSize;
             this.resolution = resolution;
-            this.noiseLayers = noiseLayers;
             this.shadeSmooth = shadeSmooth;
-            this.parent = parent;
             this.defaultMaterial = defaultMaterial;
         }
         public Properties(Properties properties)
@@ -36,9 +32,7 @@ public class TerrainNoise : GenerationFeature
             this.xSize = properties.xSize;
             this.zSize = properties.zSize;
             this.resolution = properties.resolution;
-            this.noiseLayers = properties.noiseLayers;
             this.shadeSmooth = properties.shadeSmooth;
-            this.parent = properties.parent;
             this.defaultMaterial = properties.defaultMaterial;
         }
 
@@ -51,22 +45,25 @@ public class TerrainNoise : GenerationFeature
     MeshFilter filter;
     MeshRenderer renderer;
 
-    public TerrainNoise(Properties properties)
+    public XZPlaneTerrainBase(Properties properties)
     {
         this.properties = properties;
+        this.parent = null;
+    }
+    public XZPlaneTerrainBase(Properties properties, Transform parent)
+    {
+        this.properties = properties;
+        this.parent = parent;
     }
 
-    public void UpdateMesh()
-    {
-        filter.mesh = mesh;
-    }
 
-    public override void Generate()
+    public override void Generate(Vector3 GameObjectPos)
     {
+
         // Create a new GameObject for this feature
-        GameObject featureObject = new GameObject("Feature");
-        featureObject.transform.parent = properties.parent;
-        featureObject.transform.localPosition = Vector3.zero;
+        GameObject featureObject = new GameObject("Base");
+        featureObject.transform.parent = parent;
+        featureObject.transform.position = GameObjectPos;
         featureObject.transform.localRotation = Quaternion.identity;
 
         // Add a MeshFilter and MeshRenderer to the GameObject
@@ -93,15 +90,10 @@ public class TerrainNoise : GenerationFeature
         {
             for (int x = 0; x < xCount; x++)
             {
-                float y = 0;
-                foreach (NoiseLayer layer in properties.noiseLayers)
-                {
-
-                    float xScale = (float)x * properties.resolution * layer.scale / 10;
-                    float zScale = (float)z * properties.resolution * layer.scale / 10;
-                    y += Mathf.PerlinNoise(xScale, zScale) * layer.amplitude;
-                }
-                vertices[i] = new Vector3(x * ((float)properties.xSize / xCount), y, z * ((float)properties.zSize / zCount));
+                float xPos = (float)x * properties.resolution;
+                float zPos = (float)z * properties.resolution;
+                var pos = new Vector3(x * ((float)properties.xSize / xCount), 0, z * ((float)properties.zSize / zCount));
+                vertices[i] = pos + offset.Calculate(new(xPos, zPos));
                 i++;
             }
         }
@@ -173,6 +165,37 @@ public class TerrainNoise : GenerationFeature
             mesh.normals = normals;
         }
     }
+    public override Vector3 CalculatePosition(Vector2Int gridPos)
+    {
+        //To Do:
+        //Account for plane mesh being generated with an offset.
+        return base.CalculatePosition(gridPos);
+    }
+
+
+    
+}
+
+public class CalculatePerlinNoise : OffsetCalculation
+{
+    public List<NoiseLayer> noiseLayers;
+    //To do: Add an overall scale and amplitude scalar for noise
+    //To do: Add offset control for noise
+
+    public override Vector3 Calculate(Vector3 pos)
+    {
+        float y = 0;
+        foreach (NoiseLayer layer in noiseLayers)
+        {
+            float x = pos.x * layer.scale / 10;
+            float z = pos.y * layer.scale / 10;
+
+            y += Mathf.PerlinNoise(x, z) * layer.amplitude;
+        }
+
+        return new Vector3(0, y, 0);
+    }
+
 }
 
 [System.Serializable]
@@ -181,4 +204,3 @@ public struct NoiseLayer
     public float scale; // The frequency of the noise
     public float amplitude; // The amplitude of the noise
 }
-

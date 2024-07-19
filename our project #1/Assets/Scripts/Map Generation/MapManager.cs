@@ -11,12 +11,11 @@ public static class MapManager
 {
     public static List<Biome> biomes = new List<Biome>();
     [SerializeReference]
-    public static GenerationBase.OffsetCalculation baseTerrainCalculation;
+    public static GenerationBase GenerationBase;
 
     public static void GenerateMap()
     {
-        var noise = new TerrainNoise(biomes[0].GenerationProperties.TerrainNoiseProperties);
-        noise.Generate();
+        GenerationBase.Generate(GenerationBase.parent.position);
         //To Do: Generate Generation Features with appropriate settings.
     }
 
@@ -51,7 +50,7 @@ public class Biome : ScriptableObject
     [Serializable]
     public struct GenerationFeatureProperties
     {
-        public TerrainNoise.Properties TerrainNoiseProperties;
+        
     }
 
 
@@ -78,6 +77,9 @@ public abstract class GenerationFeature
 
 public abstract class GenerationBase
 {
+    public Transform parent;
+
+    [SerializeReference]
     public OffsetCalculation offset;
     public abstract void Generate(Vector3 GameObjectPos);
     /// <summary>
