@@ -270,7 +270,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
         Overcast,
         /// <summary>Large dark clouds that cover most of the sky.</summary>
         Stormy,
-        /// <summary>Exposes properties that control the shape of the clouds.</summary>
+        /// <summary>Exposes GenerationProperties that control the shape of the clouds.</summary>
         Custom
     }
 
@@ -305,7 +305,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
                 erosionCurve.value = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(0.1f, 0.9f), new Keyframe(1.0f, 1.0f));
                 ambientOcclusionCurve.value = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.25f, 0.5f), new Keyframe(1.0f, 0.0f));
 
-                // Layer properties
+                // Layer GenerationProperties
                 bottomAltitude.value = 3000.0f;
                 altitudeRange.value = 1000.0f;
             }
@@ -336,7 +336,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
                 erosionCurve.value = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(0.1f, 0.9f), new Keyframe(1.0f, 1.0f));
                 ambientOcclusionCurve.value = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.25f, 0.4f), new Keyframe(1.0f, 0.0f));
 
-                // Layer properties
+                // Layer GenerationProperties
                 bottomAltitude.value = 1200.0f;
                 altitudeRange.value = 2000.0f;
             }
@@ -367,7 +367,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
                 erosionCurve.value = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(0.1f, 0.9f), new Keyframe(1.0f, 1.0f));
                 ambientOcclusionCurve.value = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(1.0f, 0.0f));
 
-                // Layer properties
+                // Layer GenerationProperties
                 bottomAltitude.value = 1500.0f;
                 altitudeRange.value = 2500.0f;
             }
@@ -398,7 +398,7 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
                 erosionCurve.value = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(0.05f, 0.8f), new Keyframe(0.2438f, 0.9498f), new Keyframe(0.5f, 1.0f), new Keyframe(0.93f, 0.9268f), new Keyframe(1.0f, 1.0f));
                 ambientOcclusionCurve.value = new AnimationCurve(new Keyframe(0f, 0f), new Keyframe(0.1f, 0.4f), new Keyframe(1.0f, 0.0f));
 
-                // Layer properties
+                // Layer GenerationProperties
                 bottomAltitude.value = 1000.0f;
                 altitudeRange.value = 5000.0f;
             }

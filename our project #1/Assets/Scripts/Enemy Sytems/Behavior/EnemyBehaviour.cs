@@ -98,7 +98,7 @@ public class EnemyBehaviour : MonoBehaviour
             var MatchingEnemyStats = type.EnemyStats.Where(i => i.tag == pram.tag).ToList();
             if (MatchingEnemyStats.Count() > 1)
             {
-                Debug.LogError("Eneny float stat has multiple matching tags with:" + MatchingEnemyStats.ToString());
+                Debug.LogError("Enemy float stat has multiple matching tags with:" + MatchingEnemyStats.ToString());
                 return;
             }
             

@@ -183,7 +183,7 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
         }
         else
         {
-            // Update every frame to support runtime changes to these properties.
+            // Update every frame to support runtime changes to these GenerationProperties.
             volumetricCloudsPass.resolutionScale = resolutionScale;
             volumetricCloudsPass.upscaleMode = upscaleMode;
             volumetricCloudsPass.dynamicAmbientProbe = ambientProbe == CloudsAmbientMode.Dynamic;
@@ -196,7 +196,7 @@ public class VolumetricCloudsURP : ScriptableRendererFeature
         }
         else
         {
-            // Update every frame to support runtime changes to these properties.
+            // Update every frame to support runtime changes to these GenerationProperties.
         }
     }
 
