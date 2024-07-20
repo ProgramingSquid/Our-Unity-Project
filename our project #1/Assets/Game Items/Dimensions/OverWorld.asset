@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2e4c3c5629d7f34caf4198014b08aa5, type: 3}
+  m_Name: OverWorld
+  m_EditorClassIdentifier: 
+  GenerationBase:
+    rid: 7403411363523461194
+  biomes:
+  - {fileID: 11400000, guid: a5dc836040588804ab64aff5a9517d66, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 7403411363523461194
+      type: {class: XZPlaneTerrainBase, ns: , asm: Assembly-CSharp}
+      data:
+        parent: {fileID: 0}
+        offset:
+          rid: 7403411363523461195
+        properties:
+          xSize: 50
+          zSize: 50
+          resolution: 1
+          shadeSmooth: 1
+          defaultMaterial: {fileID: 2100000, guid: bec75cac9d6b6fe43825ed1dd6152d46, type: 2}
+    - rid: 7403411363523461195
+      type: {class: CalculatePerlinNoise, ns: , asm: Assembly-CSharp}
+      data:
+        noiseLayers:
+        - scale: 0.5
+          amplitude: 2
+        - scale: 2
+          amplitude: 0.5
+        - scale: 2.5
+          amplitude: -0.5
