@@ -39,7 +39,7 @@ public abstract class GenerationBase
     public Transform parent;
 
     [SerializeReference]
-    public OffsetCalculation offset;
+    public BaseGenerator baseGenerator;
     public abstract void Generate(Vector3 GameObjectPos);
     /// <summary>
     /// An optional method which can be overridden for additional control over how Generated Chunk GameObjects' 
@@ -57,7 +57,7 @@ public abstract class GenerationBase
     /// A class used to define how vertex offsets on a base mesh should be calculated, allowing for control over biome 
     /// blending base terrain generation.
     /// </summary>
-    public abstract class OffsetCalculation
+    public abstract class BaseGenerator
     {
         public abstract Vector3 Calculate(Vector3 pos);
     }

@@ -9,7 +9,7 @@ public class Biome : ScriptableObject
     public struct Properties
     {
         [SerializeReference]
-        public GenerationBase.OffsetCalculation offsetCalculationProperties;
+        public GenerationBase.BaseGenerator offsetCalculationProperties;
     }
 
     public Properties properties;
@@ -25,6 +25,6 @@ public class Biome : ScriptableObject
     //ect...
     private void OnValidate()
     {
-        properties.offsetCalculationProperties = dimension.GenerationBase.offset;
+        properties.offsetCalculationProperties = dimension.GenerationBase.baseGenerator;
     }
 }

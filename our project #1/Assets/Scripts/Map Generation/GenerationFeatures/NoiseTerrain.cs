@@ -13,7 +13,6 @@ public class XZPlaneTerrainBase : GenerationBase
         public float resolution;
 
         public bool shadeSmooth;
-
         public Material defaultMaterial;
 
         #region Contructors
@@ -45,14 +44,16 @@ public class XZPlaneTerrainBase : GenerationBase
     MeshFilter filter;
     MeshRenderer renderer;
 
-    public XZPlaneTerrainBase(Properties properties)
+    public XZPlaneTerrainBase(Properties properties, BaseGenerator baseGenerator)
     {
         this.properties = properties;
+        this.baseGenerator = baseGenerator;
         this.parent = null;
     }
-    public XZPlaneTerrainBase(Properties properties, Transform parent)
+    public XZPlaneTerrainBase(Properties properties,BaseGenerator baseGenerator, Transform parent)
     {
         this.properties = properties;
+        this.baseGenerator = baseGenerator;
         this.parent = parent;
     }
 
@@ -90,10 +91,8 @@ public class XZPlaneTerrainBase : GenerationBase
         {
             for (int x = 0; x < xCount; x++)
             {
-                float xPos = (float)x * properties.resolution;
-                float zPos = (float)z * properties.resolution;
                 var pos = new Vector3(x * ((float)properties.xSize / xCount), 0, z * ((float)properties.zSize / zCount));
-                vertices[i] = pos + offset.Calculate(new(xPos, zPos));
+                vertices[i] = pos + baseGenerator.Calculate(new(x,0,z));
                 i++;
             }
         }
@@ -168,7 +167,7 @@ public class XZPlaneTerrainBase : GenerationBase
     public override Vector3 CalculatePosition(Vector2Int gridPos)
     {
         //To Do:
-        //Account for plane mesh being generated with an offset.
+        //Account for plane mesh being generated with an baseGenerator.
         return base.CalculatePosition(gridPos);
     }
 
@@ -176,23 +175,24 @@ public class XZPlaneTerrainBase : GenerationBase
     
 }
 
-public class CalculatePerlinNoise : OffsetCalculation
+public class CalculatePerlinNoise : BaseGenerator
 {
     public List<NoiseLayer> noiseLayers;
-    //To do: Add an overall scale and amplitude scalar for noise
-    //To do: Add offset control for noise
+    public Vector2 globalOffset;
 
     public override Vector3 Calculate(Vector3 pos)
     {
         float y = 0;
         foreach (NoiseLayer layer in noiseLayers)
         {
-            float x = pos.x * layer.scale / 10;
-            float z = pos.y * layer.scale / 10;
+            float x = (pos.x + globalOffset.x) * layer.scale / 10;
+            float z = (pos.z + globalOffset.y) * layer.scale / 10;
 
-            y += Mathf.PerlinNoise(x, z) * layer.amplitude;
+            y += Mathf.PerlinNoise(x, z)
+                * layer.amplitude;
         }
-
+        //To DO: Fix visible seems between chunks to precision errors.
+        //Try Clamping "y" between 0-1?
         return new Vector3(0, y, 0);
     }
 
