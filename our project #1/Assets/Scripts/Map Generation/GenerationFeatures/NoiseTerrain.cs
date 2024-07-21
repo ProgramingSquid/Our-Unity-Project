@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -177,6 +178,7 @@ public class XZPlaneTerrainBase : GenerationBase
 
 public class CalculatePerlinNoise : BaseGenerator
 {
+    //To Do: Add Support for using NoiseMask struct
     public List<NoiseLayer> noiseLayers;
     public Vector2 globalOffset;
 
@@ -187,17 +189,24 @@ public class CalculatePerlinNoise : BaseGenerator
         {
             float x = (pos.x + globalOffset.x) * layer.scale / 10;
             float z = (pos.z + globalOffset.y) * layer.scale / 10;
-
-            y += Mathf.PerlinNoise(x, z)
-                * layer.amplitude;
+            //To Do: Find a way to ensure seamless transitions between chunks
+            y += Mathf.Clamp01(Mathf.PerlinNoise(x, z)) * layer.amplitude;
         }
-        //To DO: Fix visible seems between chunks to precision errors.
-        //Try Clamping "y" between 0-1?
         return new Vector3(0, y, 0);
     }
-
 }
 
+[System.Serializable]
+public  struct NoiseMask
+{
+    public bool enable;
+    public List<NoiseLayer> mask;
+    [MinMaxSlider(0,1)]
+    public Vector2 range;
+    public float falloff;
+    public float intensity;
+    public List<NoiseLayer> noiseLayers;
+}
 [System.Serializable]
 public struct NoiseLayer
 {
