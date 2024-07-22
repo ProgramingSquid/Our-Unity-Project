@@ -181,6 +181,7 @@ public class CalculatePerlinNoise : BaseGenerator
     //To Do: Add Support for using NoiseMask struct
     public List<NoiseMask> noise;
     public Vector2 globalOffset;
+    public float globalAmplitude;
 
     public override Vector3 Calculate(Vector3 pos)
     {
@@ -189,18 +190,38 @@ public class CalculatePerlinNoise : BaseGenerator
         {
             float total = 0;
             float maskingValue = 0;
+            float amplitudeSum = 0;
 
             foreach (var layer in mask.mask)
             {
-                if(mask.useMask == false) { maskingValue = 1; break; }
+                if (mask.useMask == false) { maskingValue = 1; break; }
 
                 float x = (pos.x + globalOffset.x) * layer.scale / 10;
                 float z = (pos.z + globalOffset.y) * layer.scale / 10;
 
-                //To Do: Implement falloff
-                float value = Mathf.Clamp(Mathf.PerlinNoise(x, z), mask.range.x, mask.range.y);
+                float value = Mathf.PerlinNoise(x, z);
                 maskingValue += value * layer.amplitude * mask.intensity;
+                amplitudeSum += layer.amplitude;
             }
+
+            // Normalize maskingValue by dividing by the sum of amplitudes
+            if (amplitudeSum > 0)
+            {
+                maskingValue /= amplitudeSum;
+            }
+
+            // Apply thresholdRange
+            if (maskingValue < mask.thresholdRange.x)
+            {
+                maskingValue = 0;
+            }
+            else if (maskingValue > mask.thresholdRange.y)
+            {
+                maskingValue = 1;
+            }
+
+            // Apply clampRange
+            maskingValue = Mathf.Clamp(maskingValue, mask.clampRange.x, mask.clampRange.y);
 
             foreach (var layer in mask.noiseLayers)
             {
@@ -210,21 +231,25 @@ public class CalculatePerlinNoise : BaseGenerator
 
                 total += value;
             }
-            y += total * maskingValue;
+
+            // Apply falloff to the normalized maskingValue
+            y += total * Mathf.Pow(maskingValue, mask.falloff) * globalAmplitude;
         }
 
-        //To Do: Find a way to ensure seamless transitions between chunks
+        // To Do: Find a way to ensure seamless transitions between chunks
         return new Vector3(0, y, 0);
     }
 }
 
-[System.Serializable]
+    [System.Serializable]
 public  struct NoiseMask
 {
     public bool useMask;
     [ShowIf("useMask")] public List<NoiseLayer> mask;
     [MinMaxSlider(0,1)]
-    [ShowIf("useMask")] public Vector2 range;
+    [ShowIf("useMask")] public Vector2 thresholdRange;
+    [MinMaxSlider(0,1)]
+    [ShowIf("useMask")] public Vector2 clampRange;
     [ShowIf("useMask")] public float falloff;
     [Range(0.01f,1)]
     [ShowIf("useMask")] public float intensity;
