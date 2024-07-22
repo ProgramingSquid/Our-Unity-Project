@@ -179,19 +179,41 @@ public class XZPlaneTerrainBase : GenerationBase
 public class CalculatePerlinNoise : BaseGenerator
 {
     //To Do: Add Support for using NoiseMask struct
-    public List<NoiseLayer> noiseLayers;
+    public List<NoiseMask> noise;
     public Vector2 globalOffset;
 
     public override Vector3 Calculate(Vector3 pos)
     {
         float y = 0;
-        foreach (NoiseLayer layer in noiseLayers)
+        foreach (NoiseMask mask in noise)
         {
-            float x = (pos.x + globalOffset.x) * layer.scale / 10;
-            float z = (pos.z + globalOffset.y) * layer.scale / 10;
-            //To Do: Find a way to ensure seamless transitions between chunks
-            y += Mathf.Clamp01(Mathf.PerlinNoise(x, z)) * layer.amplitude;
+            float total = 0;
+            float maskingValue = 0;
+
+            foreach (var layer in mask.mask)
+            {
+                if(mask.useMask == false) { maskingValue = 1; break; }
+
+                float x = (pos.x + globalOffset.x) * layer.scale / 10;
+                float z = (pos.z + globalOffset.y) * layer.scale / 10;
+
+                //To Do: Implement falloff
+                float value = Mathf.Clamp(Mathf.PerlinNoise(x, z), mask.range.x, mask.range.y);
+                maskingValue += value * layer.amplitude * mask.intensity;
+            }
+
+            foreach (var layer in mask.noiseLayers)
+            {
+                float x = (pos.x + globalOffset.x) * layer.scale / 10;
+                float z = (pos.z + globalOffset.y) * layer.scale / 10;
+                float value = Mathf.Clamp01(Mathf.PerlinNoise(x, z)) * layer.amplitude;
+
+                total += value;
+            }
+            y += total * maskingValue;
         }
+
+        //To Do: Find a way to ensure seamless transitions between chunks
         return new Vector3(0, y, 0);
     }
 }
@@ -199,12 +221,13 @@ public class CalculatePerlinNoise : BaseGenerator
 [System.Serializable]
 public  struct NoiseMask
 {
-    public bool enable;
-    public List<NoiseLayer> mask;
+    public bool useMask;
+    [ShowIf("useMask")] public List<NoiseLayer> mask;
     [MinMaxSlider(0,1)]
-    public Vector2 range;
-    public float falloff;
-    public float intensity;
+    [ShowIf("useMask")] public Vector2 range;
+    [ShowIf("useMask")] public float falloff;
+    [Range(0.01f,1)]
+    [ShowIf("useMask")] public float intensity;
     public List<NoiseLayer> noiseLayers;
 }
 [System.Serializable]
