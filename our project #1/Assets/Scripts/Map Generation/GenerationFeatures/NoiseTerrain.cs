@@ -199,7 +199,7 @@ public class CalculatePerlinNoise : BaseGenerator
                 float x = (pos.x + globalOffset.x) * layer.scale / 10;
                 float z = (pos.z + globalOffset.y) * layer.scale / 10;
 
-                float value = Mathf.PerlinNoise(x, z);
+                float value = Mathf.PerlinNoise(x + layer.offset.x, z + layer.offset.y);
                 maskingValue += value * layer.amplitude * mask.intensity;
                 amplitudeSum += layer.amplitude;
             }
@@ -227,7 +227,7 @@ public class CalculatePerlinNoise : BaseGenerator
             {
                 float x = (pos.x + globalOffset.x) * layer.scale / 10;
                 float z = (pos.z + globalOffset.y) * layer.scale / 10;
-                float value = Mathf.Clamp01(Mathf.PerlinNoise(x, z)) * layer.amplitude;
+                float value = Mathf.Clamp01(Mathf.PerlinNoise(x + layer.offset.x, z + layer.offset.y)) * layer.amplitude;
 
                 total += value;
             }
@@ -260,4 +260,5 @@ public struct NoiseLayer
 {
     public float scale; // The frequency of the noise
     public float amplitude; // The amplitude of the noise
+    public Vector2 offset;
 }
