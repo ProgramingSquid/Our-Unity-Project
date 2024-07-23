@@ -50,7 +50,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     multiplyier: 1
     setValue: 0
-    value: -2.2599273
+    value: -4.7242355
   baseMinRoundTime:
     randomnessType: 0
     min: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
       m_RotationOrder: 4
     multiplyier: 1
     setValue: 0
-    value: -1.4107714
+    value: 2.3634005
   baseMaxEnemiesInWave:
     randomnessType: 0
     min: 0
@@ -1227,6 +1227,7 @@ MonoBehaviour:
         mustHaveEnemies: []
     blockedEnemies: []
     mustHaveEnemies: []
+  renderDistance: 3
   references:
     version: 2
     RefIds:

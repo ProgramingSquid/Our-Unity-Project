@@ -23,11 +23,11 @@ MonoBehaviour:
       type: {class: XZPlaneTerrainBase, ns: , asm: Assembly-CSharp}
       data:
         parent: {fileID: 0}
+        xSize: 100
+        zSize: 100
         baseGenerator:
           rid: 7403411363523461198
         properties:
-          xSize: 100
-          zSize: 100
           resolution: 1
           shadeSmooth: 1
           defaultMaterial: {fileID: 2100000, guid: bec75cac9d6b6fe43825ed1dd6152d46, type: 2}
@@ -54,5 +54,6 @@ MonoBehaviour:
           - scale: 1.25
             amplitude: -0.25
             offset: {x: 0, y: 0}
-        globalOffset: {x: 100, y: 0}
+        globalOffset: {x: 0, y: 0}
+        chunkOffset: {x: 549, y: -151}
         globalAmplitude: 10

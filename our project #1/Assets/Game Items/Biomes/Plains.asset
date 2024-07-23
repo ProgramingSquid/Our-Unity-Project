@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   properties:
     offsetCalculationProperties:
-      rid: 7403411363523461272
+      rid: 7403411363523461312
   maxHumidityValue:
     randomnessType: 0
     min: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 7403411363523461272
+    - rid: 7403411363523461312
       type: {class: CalculatePerlinNoise, ns: , asm: Assembly-CSharp}
       data:
         noise:
@@ -94,5 +94,6 @@ MonoBehaviour:
           - scale: 1.25
             amplitude: -0.25
             offset: {x: 0, y: 0}
-        globalOffset: {x: 100, y: 0}
+        globalOffset: {x: 0, y: 0}
+        chunkOffset: {x: 549, y: -151}
         globalAmplitude: 10

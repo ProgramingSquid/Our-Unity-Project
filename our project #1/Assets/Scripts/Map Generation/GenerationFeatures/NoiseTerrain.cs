@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Schema;
 using UnityEngine;
 using static GenerationBase;
 public class XZPlaneTerrainBase : GenerationBase
@@ -9,8 +10,6 @@ public class XZPlaneTerrainBase : GenerationBase
     [Serializable]
     public struct Properties
     {
-        public int xSize;
-        public int zSize;
         public float resolution;
 
         public bool shadeSmooth;
@@ -18,19 +17,15 @@ public class XZPlaneTerrainBase : GenerationBase
 
         #region Contructors
 
-        public Properties(int xSize, int zSize, float resolution, List<NoiseLayer> noiseLayers,
-            bool shadeSmooth, Transform parent, Material defaultMaterial)
+        public Properties(float resolution,
+            bool shadeSmooth, Material defaultMaterial)
         {
-            this.xSize = xSize;
-            this.zSize = zSize;
             this.resolution = resolution;
             this.shadeSmooth = shadeSmooth;
             this.defaultMaterial = defaultMaterial;
         }
         public Properties(Properties properties)
         {
-            this.xSize = properties.xSize;
-            this.zSize = properties.zSize;
             this.resolution = properties.resolution;
             this.shadeSmooth = properties.shadeSmooth;
             this.defaultMaterial = properties.defaultMaterial;
@@ -40,6 +35,7 @@ public class XZPlaneTerrainBase : GenerationBase
     }
 
     public Properties properties;
+
     Mesh mesh;
     GameObject gameObject;
     MeshFilter filter;
@@ -59,7 +55,7 @@ public class XZPlaneTerrainBase : GenerationBase
     }
 
 
-    public override void Generate(Vector3 GameObjectPos)
+    public override GameObject Generate(Vector3 GameObjectPos)
     {
 
         // Create a new GameObject for this feature
@@ -81,8 +77,8 @@ public class XZPlaneTerrainBase : GenerationBase
         meshFilter.mesh = mesh;
 
         // Calculate the number of vertices along each dimension
-        int xCount = Mathf.RoundToInt((float)properties.xSize * properties.resolution);
-        int zCount = Mathf.RoundToInt((float)properties.zSize * properties.resolution);
+        int xCount = Mathf.RoundToInt((float)xSize * properties.resolution);
+        int zCount = Mathf.RoundToInt((float)zSize * properties.resolution);
 
         // Create an array for the vertices
         Vector3[] vertices = new Vector3[xCount * zCount];
@@ -92,7 +88,7 @@ public class XZPlaneTerrainBase : GenerationBase
         {
             for (int x = 0; x < xCount; x++)
             {
-                var pos = new Vector3(x * ((float)properties.xSize / xCount), 0, z * ((float)properties.zSize / zCount));
+                var pos = new Vector3(x * ((float)xSize / xCount), 0, z * ((float)zSize / zCount));
                 vertices[i] = pos + baseGenerator.Calculate(new(x,0,z));
                 i++;
             }
@@ -164,12 +160,16 @@ public class XZPlaneTerrainBase : GenerationBase
             }
             mesh.normals = normals;
         }
+
+        return featureObject;
     }
     public override Vector3 CalculatePosition(Vector2Int gridPos)
     {
-        //To Do:
-        //Account for plane mesh being generated with an baseGenerator.
-        return base.CalculatePosition(gridPos);
+        Vector2 offset = new Vector2(xSize / 2, zSize / 2);
+        Vector2 position = new Vector2(gridPos.x * xSize, gridPos.y * zSize);
+        Vector3 total = new Vector3(position.x - offset.x - 1, 0, position.y - offset.x - 1);
+
+        return total;
     }
 
 
@@ -181,7 +181,13 @@ public class CalculatePerlinNoise : BaseGenerator
     //To Do: Add Support for using NoiseMask struct
     public List<NoiseMask> noise;
     public Vector2 globalOffset;
+    [ReadOnly]public Vector2 chunkOffset;
     public float globalAmplitude;
+
+    public override void OffsetChunkValues(Vector3 objectPos)
+    {
+        chunkOffset = new Vector2(objectPos.x, objectPos.z);
+    }
 
     public override Vector3 Calculate(Vector3 pos)
     {
@@ -196,8 +202,8 @@ public class CalculatePerlinNoise : BaseGenerator
             {
                 if (mask.useMask == false) { maskingValue = 1; break; }
 
-                float x = (pos.x + globalOffset.x) * layer.scale / 10;
-                float z = (pos.z + globalOffset.y) * layer.scale / 10;
+                float x = (pos.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
+                float z = (pos.z + globalOffset.y + chunkOffset.y) * layer.scale / 10;
 
                 float value = Mathf.PerlinNoise(x + layer.offset.x, z + layer.offset.y);
                 maskingValue += value * layer.amplitude * mask.intensity;
@@ -225,8 +231,8 @@ public class CalculatePerlinNoise : BaseGenerator
 
             foreach (var layer in mask.noiseLayers)
             {
-                float x = (pos.x + globalOffset.x) * layer.scale / 10;
-                float z = (pos.z + globalOffset.y) * layer.scale / 10;
+                float x = (pos.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
+                float z = (pos.z + globalOffset.y + chunkOffset.y) * layer.scale / 10;
                 float value = Mathf.Clamp01(Mathf.PerlinNoise(x + layer.offset.x, z + layer.offset.y)) * layer.amplitude;
 
                 total += value;
@@ -241,7 +247,7 @@ public class CalculatePerlinNoise : BaseGenerator
     }
 }
 
-    [System.Serializable]
+[System.Serializable]
 public  struct NoiseMask
 {
     public bool useMask;

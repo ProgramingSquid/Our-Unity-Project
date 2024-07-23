@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public Transform player;
+    public Dimension dimension;
     private void Awake()
     {
+        MapManager.SetGameSettings();
+        MapManager.target = player;
+        MapManager.dimension = dimension;
+
         DifficultyManager.SetGameSettings();
         EnemyRoundManager.SetGameSettings();
     }
-    //Calls Update and Start methods for static mangaging classes
+    //Calls Update and Start methods for static managing classes
 
     void Start()
     {
@@ -20,8 +26,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        MapManager.UpdateChunks();
         DifficultyManager.Update();
-        
         EnemyRoundManager.Update(Time.deltaTime);
     }
 

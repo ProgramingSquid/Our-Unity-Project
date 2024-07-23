@@ -4044,6 +4044,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa7fd6a03fa2062469b2f3ce6851c3fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 739540730}
+  dimension: {fileID: 11400000, guid: e56f4f715cd28874f9f8d2456e8a0d62, type: 2}
 --- !u!1 &937224323
 GameObject:
   m_ObjectHideFlags: 0
@@ -8215,7 +8217,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1394339990}
   m_HandleRect: {fileID: 1394339989}
   m_Direction: 2
-  m_Value: 1.0000002
+  m_Value: 1.0000001
   m_Size: 0.38961038
   m_NumberOfSteps: 0
   m_OnValueChanged:

@@ -1,6 +1,8 @@
 using Sirenix.OdinInspector;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -9,23 +11,87 @@ using UnityEngine;
 /// </summary>
 public static class MapManager
 {
+    [ReadOnly] public static GameSettings gameSettings;
+
     [SerializeReference]
     public static Dimension dimension;
-    public static void GenerateMap()
+    public static Transform target;
+    [ReadOnly] public static Vector2Int playerChunkPos = new();
+    [ReadOnly] public static Dictionary<Vector2Int, Chunk> chunks = new Dictionary<Vector2Int, Chunk>();
+    public static void UpdateChunks()
     {
-        dimension.GenerationBase.Generate(dimension.GenerationBase.parent.position);
-        //To Do: Generate Generation Features with appropriate settings.
+        playerChunkPos = new Vector2Int(
+            Mathf.FloorToInt(target.position.x / dimension.GenerationBase.xSize),
+            Mathf.FloorToInt(target.position.z / dimension.GenerationBase.zSize)
+        );
+
+        List<Vector2Int> chunksToDisable = new List<Vector2Int>();
+
+        foreach (var chunk in chunks)
+        {
+            if (Vector2Int.Distance(chunk.Key, playerChunkPos) > gameSettings.renderDistance)
+            {
+                chunksToDisable.Add(chunk.Key);
+            }
+        }
+
+        foreach (var chunkPos in chunksToDisable)
+        {
+            chunks[chunkPos].gameObject.SetActive(false);
+        }
+
+        for (int x = -gameSettings.renderDistance; x <= gameSettings.renderDistance; x++)
+        {
+            for (int z = -gameSettings.renderDistance; z <= gameSettings.renderDistance; z++)
+            {
+                Vector2Int gridPos = new Vector2Int(playerChunkPos.x + x, playerChunkPos.y + z);
+
+                if (!chunks.ContainsKey(gridPos))
+                {
+                    GenerateChunk(gridPos);
+                }
+                else
+                {
+                    chunks[gridPos].gameObject.SetActive(true);
+                }
+            }
+        }
     }
 
+    private static void GenerateChunk(Vector2Int gridPos)
+    {
+        Vector3 pos = dimension.GenerationBase.CalculatePosition(gridPos);
+        dimension.GenerationBase.baseGenerator.OffsetChunkValues(pos);
+
+        GameObject newChunkObject = dimension.GenerationBase.Generate(pos);
+        chunks.Add(gridPos, new Chunk(newChunkObject, newChunkObject.GetComponent<MeshFilter>().mesh));
+    }
 
     public static void GenerateMapValues()
     {
         //To Do:
         /*
-            * Generate Seeds, 
+            * UpdateChunks Seeds, 
             * Randomize RandomnessValues, 
             * ect...
         */
+    }
+
+    public static void SetGameSettings()
+    {
+        gameSettings = AssetDatabase.LoadAssetAtPath<GameSettings>("Assets/GameSettings.asset");
+    }
+}
+
+public class Chunk
+{
+    public GameObject gameObject;
+    public Mesh mesh;
+
+    public Chunk(GameObject gameObject, Mesh mesh)
+    {
+        this.gameObject = gameObject;
+        this.mesh = mesh;
     }
 }
 
@@ -37,10 +103,12 @@ public abstract class GenerationFeature
 public abstract class GenerationBase
 {
     public Transform parent;
+    public int xSize;
+    public int zSize;
 
     [SerializeReference]
     public BaseGenerator baseGenerator;
-    public abstract void Generate(Vector3 GameObjectPos);
+    public abstract GameObject Generate(Vector3 GameObjectPos);
     /// <summary>
     /// An optional method which can be overridden for additional control over how Generated Chunk GameObjects' 
     /// positions are generated relative to a grid position.
@@ -59,6 +127,9 @@ public abstract class GenerationBase
     /// </summary>
     public abstract class BaseGenerator
     {
+        public virtual void OffsetChunkValues(Vector3 objectPos)
+        {
+        }
         public abstract Vector3 Calculate(Vector3 pos);
     }
 }
