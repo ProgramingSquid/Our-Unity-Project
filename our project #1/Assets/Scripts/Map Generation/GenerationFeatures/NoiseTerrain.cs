@@ -2,7 +2,6 @@ using Sirenix.OdinInspector;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Xml.Schema;
 using UnityEngine;
 using static GenerationBase;
 public class XZPlaneTerrainBase : GenerationBase
@@ -13,22 +12,22 @@ public class XZPlaneTerrainBase : GenerationBase
         public float resolution;
 
         public bool shadeSmooth;
-        public Material defaultMaterial;
+        [AssetsOnly]public GameObject prefab;
 
         #region Contructors
 
         public Properties(float resolution,
-            bool shadeSmooth, Material defaultMaterial)
+            bool shadeSmooth, GameObject prefab)
         {
             this.resolution = resolution;
             this.shadeSmooth = shadeSmooth;
-            this.defaultMaterial = defaultMaterial;
+            this.prefab = prefab;
         }
         public Properties(Properties properties)
         {
             this.resolution = properties.resolution;
             this.shadeSmooth = properties.shadeSmooth;
-            this.defaultMaterial = properties.defaultMaterial;
+            this.prefab = properties.prefab;
         }
 
         #endregion
@@ -59,22 +58,21 @@ public class XZPlaneTerrainBase : GenerationBase
     {
 
         // Create a new GameObject for this feature
-        GameObject featureObject = new GameObject("Base");
-        featureObject.transform.parent = parent;
-        featureObject.transform.position = GameObjectPos;
-        featureObject.transform.localRotation = Quaternion.identity;
+        GameObject featureObject = GameObject.Instantiate(properties.prefab, GameObjectPos, Quaternion.identity, parent);
 
         // Add a MeshFilter and MeshRenderer to the GameObject
-        MeshFilter meshFilter = featureObject.AddComponent<MeshFilter>();
-        MeshRenderer meshRenderer = featureObject.AddComponent<MeshRenderer>();
+        MeshFilter meshFilter = new MeshFilter();
+        if(!featureObject.TryGetComponent<MeshFilter>(out meshFilter)) { meshFilter = featureObject.AddComponent<MeshFilter>(); }
 
-        // Assign the default material to the MeshRenderer
-        meshRenderer.material = properties.defaultMaterial;
+        MeshRenderer meshRenderer = new MeshRenderer();
+        if (!featureObject.TryGetComponent<MeshRenderer>(out meshRenderer)) { meshRenderer = featureObject.AddComponent<MeshRenderer>(); }
+        
         // Create a new mesh
         Mesh mesh = new Mesh();
 
-        // Assign the mesh to the MeshFilter
+        // Assign the mesh to the MeshFilter and any colliders:
         meshFilter.mesh = mesh;
+        if (featureObject.TryGetComponent<MeshCollider>(out MeshCollider collider)) { collider.sharedMesh = mesh; }
 
         // Calculate the number of vertices along each dimension
         int xCount = Mathf.RoundToInt((float)xSize * properties.resolution);

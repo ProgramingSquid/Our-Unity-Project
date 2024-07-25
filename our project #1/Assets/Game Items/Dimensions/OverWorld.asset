@@ -30,7 +30,7 @@ MonoBehaviour:
         properties:
           resolution: 1
           shadeSmooth: 1
-          defaultMaterial: {fileID: 2100000, guid: bec75cac9d6b6fe43825ed1dd6152d46, type: 2}
+          prefab: {fileID: 2697280103787456895, guid: 5071a5924c534014f9f159dd316bb526, type: 3}
     - rid: 7403411363523461198
       type: {class: CalculatePerlinNoise, ns: , asm: Assembly-CSharp}
       data:
@@ -55,5 +55,5 @@ MonoBehaviour:
             amplitude: -0.25
             offset: {x: 0, y: 0}
         globalOffset: {x: 0, y: 0}
-        chunkOffset: {x: 549, y: -151}
+        chunkOffset: {x: 249, y: 249}
         globalAmplitude: 10
