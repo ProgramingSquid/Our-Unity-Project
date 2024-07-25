@@ -61,9 +61,12 @@ public static class MapManager
     private static void GenerateChunk(Vector2Int gridPos)
     {
         Vector3 pos = dimension.GenerationBase.CalculatePosition(gridPos);
-        dimension.GenerationBase.baseGenerator.OffsetChunkValues(pos);
+
+        Vector2 chunkSize = new(dimension.GenerationBase.xSize, dimension.GenerationBase.zSize);
+        dimension.GenerationBase.baseGenerator.OffsetChunkValues(pos, gridPos, chunkSize);
 
         GameObject newChunkObject = dimension.GenerationBase.Generate(pos);
+        
         chunks.Add(gridPos, new Chunk(newChunkObject, newChunkObject.GetComponent<MeshFilter>().mesh));
     }
 
@@ -127,7 +130,7 @@ public abstract class GenerationBase
     /// </summary>
     public abstract class BaseGenerator
     {
-        public virtual void OffsetChunkValues(Vector3 objectPos)
+        public virtual void OffsetChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
         {
         }
         public abstract Vector3 Calculate(Vector3 pos);

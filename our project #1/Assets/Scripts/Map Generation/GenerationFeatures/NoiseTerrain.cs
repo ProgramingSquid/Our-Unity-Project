@@ -159,6 +159,11 @@ public class XZPlaneTerrainBase : GenerationBase
             mesh.normals = normals;
         }
 
+#if UNITY_EDITOR
+        var debug = featureObject.AddComponent<DataDebugHelper>();
+        debug.stringData = baseGenerator.ToString();
+#endif
+
         return featureObject;
     }
     public override Vector3 CalculatePosition(Vector2Int gridPos)
@@ -182,9 +187,9 @@ public class CalculatePerlinNoise : BaseGenerator
     [ReadOnly]public Vector2 chunkOffset;
     public float globalAmplitude;
 
-    public override void OffsetChunkValues(Vector3 objectPos)
+    public override void OffsetChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
     {
-        chunkOffset = new Vector2(objectPos.x, objectPos.z);
+        chunkOffset = new Vector2(gridPos.x * chunkSize.x, gridPos.y * chunkSize.y);
     }
 
     public override Vector3 Calculate(Vector3 pos)
@@ -242,6 +247,17 @@ public class CalculatePerlinNoise : BaseGenerator
 
         // To Do: Find a way to ensure seamless transitions between chunks
         return new Vector3(0, y, 0);
+    }
+
+    public override string ToString()
+    {
+        string output =
+            "globalOffset: " + globalOffset.ToString() + ", " +
+            "chunkOffset: " + chunkOffset.ToString() + ", " +
+            "globalAmplitude: " + globalAmplitude;
+
+
+        return output;
     }
 }
 
