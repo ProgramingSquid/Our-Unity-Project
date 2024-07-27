@@ -185,7 +185,10 @@ public class CalculatePerlinNoise : BaseGenerator
     public List<NoiseMask> noise;
     public Vector2 globalOffset;
     [ReadOnly]public Vector2 chunkOffset;
+    public int seed;
     public float globalAmplitude;
+
+    private SimplexNoise noiseGenerator;
 
     public override void OffsetChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
     {
@@ -194,59 +197,81 @@ public class CalculatePerlinNoise : BaseGenerator
 
     public override Vector3 Calculate(Vector3 pos)
     {
+        noiseGenerator = new SimplexNoise(seed);
+
         float y = 0;
         foreach (NoiseMask mask in noise)
         {
-            float total = 0;
-            float maskingValue = 0;
-            float amplitudeSum = 0;
+            float noise = 0;
+            float masking = 0;
 
-            foreach (var layer in mask.mask)
-            {
-                if (mask.useMask == false) { maskingValue = 1; break; }
+            masking = mask.useMask ? CalculateMask(pos, mask) : 1; // if use mask, masking equal to CalculateMask(), else masking equal to 1.
 
-                float x = (pos.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
-                float z = (pos.z + globalOffset.y + chunkOffset.y) * layer.scale / 10;
+            noise = CalculateNoise(pos, mask, noise);
 
-                float value = Mathf.PerlinNoise(x + layer.offset.x, z + layer.offset.y);
-                maskingValue += value * layer.amplitude * mask.intensity;
-                amplitudeSum += layer.amplitude;
-            }
-
-            // Normalize maskingValue by dividing by the sum of amplitudes
-            if (amplitudeSum > 0)
-            {
-                maskingValue /= amplitudeSum;
-            }
-
-            // Apply thresholdRange
-            if (maskingValue < mask.thresholdRange.x)
-            {
-                maskingValue = 0;
-            }
-            else if (maskingValue > mask.thresholdRange.y)
-            {
-                maskingValue = 1;
-            }
-
-            // Apply clampRange
-            maskingValue = Mathf.Clamp(maskingValue, mask.clampRange.x, mask.clampRange.y);
-
-            foreach (var layer in mask.noiseLayers)
-            {
-                float x = (pos.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
-                float z = (pos.z + globalOffset.y + chunkOffset.y) * layer.scale / 10;
-                float value = Mathf.Clamp01(Mathf.PerlinNoise(x + layer.offset.x, z + layer.offset.y)) * layer.amplitude;
-
-                total += value;
-            }
-
-            // Apply falloff to the normalized maskingValue
-            y += total * Mathf.Pow(maskingValue, mask.falloff) * globalAmplitude;
+            y += noise * masking * globalAmplitude;
         }
 
         // To Do: Find a way to ensure seamless transitions between chunks
         return new Vector3(0, y, 0);
+    }
+
+    private float CalculateMask(Vector3 pos, NoiseMask mask)
+    {
+        float maskingValue = 0;
+        float amplitudeSum = 0;
+        foreach (var layer in mask.mask)
+        {
+            float x = (pos.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
+            float z = (pos.z + globalOffset.y + chunkOffset.y) * layer.scale / 10;
+
+            float value = noiseGenerator.Calculate(x + layer.offset.x, z + layer.offset.y);
+            // Normalize the value from [-1, 1] to [0, 1]
+            value = (value + 1) / 2;
+            maskingValue += value * layer.amplitude * mask.intensity;
+            amplitudeSum += layer.amplitude;
+        }
+
+        // Normalize maskingValue by dividing by the sum of amplitudes
+        if (amplitudeSum > 0)
+        {
+            maskingValue /= amplitudeSum;
+        }
+
+        // Apply thresholdRange
+        if (maskingValue < mask.thresholdRange.x)
+        {
+            maskingValue = 0;
+        }
+        else if (maskingValue > mask.thresholdRange.y)
+        {
+            maskingValue = 1;
+        }
+
+        // Apply clampRange
+        maskingValue = Mathf.Clamp(maskingValue, mask.clampRange.x, mask.clampRange.y);
+
+        // Apply falloff to the normalized maskingValue
+        var output = Mathf.Pow(maskingValue, mask.falloff);
+
+        return output;
+    }
+
+    private float CalculateNoise(Vector3 pos, NoiseMask mask, float total)
+    {
+        foreach (var layer in mask.noiseLayers)
+        {
+            float x = (pos.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
+            float z = (pos.z + globalOffset.y + chunkOffset.y) * layer.scale / 10;
+            float value = noiseGenerator.Calculate(x + layer.offset.x, z + layer.offset.y);
+            // Normalize the value from [-1, 1] to [0, 1]
+            value = (value + 1) / 2;
+            value = Mathf.Clamp01(value) * layer.amplitude;
+
+            total += value;
+        }
+
+        return total;
     }
 
     public override string ToString()

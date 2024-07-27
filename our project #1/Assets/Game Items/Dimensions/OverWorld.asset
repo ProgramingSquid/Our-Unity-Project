@@ -37,23 +37,18 @@ MonoBehaviour:
         noise:
         - useMask: 1
           mask:
-          - scale: 0.25
+          - scale: 0.1
             amplitude: 1
             offset: {x: 0, y: 0}
-          thresholdRange: {x: 0, y: 0.5224647}
+          thresholdRange: {x: 0, y: 1}
           clampRange: {x: 0, y: 1}
-          falloff: 2
+          falloff: 1
           intensity: 1
           noiseLayers:
-          - scale: 0.25
-            amplitude: 1
-            offset: {x: 0, y: 0}
-          - scale: 1
-            amplitude: 0.25
-            offset: {x: 0, y: 0}
-          - scale: 1.25
-            amplitude: -0.25
+          - scale: 0.175
+            amplitude: 2
             offset: {x: 0, y: 0}
         globalOffset: {x: 0, y: 0}
-        chunkOffset: {x: 249, y: 249}
+        chunkOffset: {x: 200, y: -400}
+        seed: 0
         globalAmplitude: 10
