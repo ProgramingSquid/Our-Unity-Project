@@ -182,13 +182,11 @@ public class XZPlaneTerrainBase : GenerationBase
 public class CalculatePerlinNoise : BaseGenerator
 {
     //To Do: Add Support for using NoiseMask struct
-    public List<NoiseMask> noise;
+    public List<NoiseLayerGroup> noiseBlendingGroups;
     public Vector2 globalOffset;
     [ReadOnly]public Vector2 chunkOffset;
     public int seed;
     public float globalAmplitude;
-
-    private SimplexNoise noiseGenerator;
 
     public override void OffsetChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
     {
@@ -197,81 +195,63 @@ public class CalculatePerlinNoise : BaseGenerator
 
     public override Vector3 Calculate(Vector3 pos)
     {
-        noiseGenerator = new SimplexNoise(seed);
-
-        float y = 0;
-        foreach (NoiseMask mask in noise)
+        float Remap(float value, float from1, float to1, float from2, float to2)
         {
-            float noise = 0;
-            float masking = 0;
-
-            masking = mask.useMask ? CalculateMask(pos, mask) : 1; // if use mask, masking equal to CalculateMask(), else masking equal to 1.
-
-            noise = CalculateNoise(pos, mask, noise);
-
-            y += noise * masking * globalAmplitude;
+            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
         }
 
-        // To Do: Find a way to ensure seamless transitions between chunks
-        return new Vector3(0, y, 0);
-    }
-
-    private float CalculateMask(Vector3 pos, NoiseMask mask)
-    {
-        float maskingValue = 0;
-        float amplitudeSum = 0;
-        foreach (var layer in mask.mask)
+        float final = 0;
+        foreach (NoiseLayerGroup group in noiseBlendingGroups)
         {
-            float x = (pos.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
-            float z = (pos.z + globalOffset.y + chunkOffset.y) * layer.scale / 10;
+            float groupValue = 0;
+            foreach (NoiseLayer layer in group.layers)
+            {
+                var noiseGenerator = new SimplexNoise(seed);
 
-            float value = noiseGenerator.Calculate(x + layer.offset.x, z + layer.offset.y);
-            // Normalize the value from [-1, 1] to [0, 1]
-            value = (value + 1) / 2;
-            maskingValue += value * layer.amplitude * mask.intensity;
-            amplitudeSum += layer.amplitude;
+                float x = (pos.x + layer.offset.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
+                float y = (pos.z + layer.offset.y + globalOffset.y + chunkOffset.y) * layer.scale / 10;
+
+                float baseValue = Remap(noiseGenerator.Calculate(x, y), -1, 1, 0, 1);
+
+                float falloffValue = Mathf.Pow(baseValue, layer.falloff);
+
+                float clampValue = Mathf.Clamp(falloffValue, layer.clampRange.x, layer.clampRange.y);
+
+                float value = clampValue * layer.amplitude * globalAmplitude;
+
+                switch (layer.blendingType)
+                {
+                    case noiseBlendingType.Add:
+                        groupValue += value;
+                        break;
+                    case noiseBlendingType.Subtract:
+                        groupValue -= value;
+                        break;
+                    case noiseBlendingType.Multiply:
+                        groupValue *= value;
+                        break;
+                    case noiseBlendingType.Divide:
+                        groupValue /= value;
+                        break;
+                }
+            }
+            switch (group.blendingType)
+            {
+                case noiseBlendingType.Add:
+                    final += groupValue;
+                    break;
+                case noiseBlendingType.Subtract:
+                    final -= groupValue;
+                    break;
+                case noiseBlendingType.Multiply:
+                    final *= groupValue;
+                    break;
+                case noiseBlendingType.Divide:
+                    final /= groupValue;
+                    break;
+            }
         }
-
-        // Normalize maskingValue by dividing by the sum of amplitudes
-        if (amplitudeSum > 0)
-        {
-            maskingValue /= amplitudeSum;
-        }
-
-        // Apply thresholdRange
-        if (maskingValue < mask.thresholdRange.x)
-        {
-            maskingValue = 0;
-        }
-        else if (maskingValue > mask.thresholdRange.y)
-        {
-            maskingValue = 1;
-        }
-
-        // Apply clampRange
-        maskingValue = Mathf.Clamp(maskingValue, mask.clampRange.x, mask.clampRange.y);
-
-        // Apply falloff to the normalized maskingValue
-        var output = Mathf.Pow(maskingValue, mask.falloff);
-
-        return output;
-    }
-
-    private float CalculateNoise(Vector3 pos, NoiseMask mask, float total)
-    {
-        foreach (var layer in mask.noiseLayers)
-        {
-            float x = (pos.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
-            float z = (pos.z + globalOffset.y + chunkOffset.y) * layer.scale / 10;
-            float value = noiseGenerator.Calculate(x + layer.offset.x, z + layer.offset.y);
-            // Normalize the value from [-1, 1] to [0, 1]
-            value = (value + 1) / 2;
-            value = Mathf.Clamp01(value) * layer.amplitude;
-
-            total += value;
-        }
-
-        return total;
+        return new Vector3(0, final, 0);
     }
 
     public override string ToString()
@@ -285,25 +265,30 @@ public class CalculatePerlinNoise : BaseGenerator
         return output;
     }
 }
-
-[System.Serializable]
-public  struct NoiseMask
+[Serializable]
+public enum noiseBlendingType
 {
-    public bool useMask;
-    [ShowIf("useMask")] public List<NoiseLayer> mask;
-    [MinMaxSlider(0,1)]
-    [ShowIf("useMask")] public Vector2 thresholdRange;
-    [MinMaxSlider(0,1)]
-    [ShowIf("useMask")] public Vector2 clampRange;
-    [ShowIf("useMask")] public float falloff;
-    [Range(0.01f,1)]
-    [ShowIf("useMask")] public float intensity;
-    public List<NoiseLayer> noiseLayers;
+    Add,
+    Subtract,
+    Multiply,
+    Divide
 }
+[System.Serializable]
+public struct NoiseLayerGroup
+{
+    public List<NoiseLayer> layers;
+    public bool noralizeAmplitudes;
+    public noiseBlendingType blendingType;
+}
+
 [System.Serializable]
 public struct NoiseLayer
 {
     public float scale; // The frequency of the noise
     public float amplitude; // The amplitude of the noise
+    [MinMaxSlider(0, 1)]
+    public Vector2 clampRange;
+    public float falloff;
     public Vector2 offset;
+    public noiseBlendingType blendingType;
 }

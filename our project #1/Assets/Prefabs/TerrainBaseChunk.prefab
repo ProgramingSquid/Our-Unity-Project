@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3375594702632067274}
   - component: {fileID: 130000451071732574}
   - component: {fileID: 6403259971219529125}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: TerrainBaseChunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,6 +105,6 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
