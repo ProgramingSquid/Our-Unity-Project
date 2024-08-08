@@ -74,7 +74,9 @@ MonoBehaviour:
           normalizeAmplitudes: 0
           ignoreGlobalAmplitude: 0
           blendingType: 0
-        globalOffset: {x: 0, y: 0}
-        chunkOffset: {x: 300, y: 300}
+        chunkOffset: {x: 0, y: 0}
         seed: 0
+        globalOffset: {x: 0, y: 0}
+        globalScale: 1
         globalAmplitude: 1.9
+        globalFalloff: 1

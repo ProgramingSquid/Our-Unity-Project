@@ -182,10 +182,12 @@ public class CalculatePerlinNoise : GenerationBase.BaseGenerator
 {
     //To Do: Add Support for using NoiseMask struct
     public List<NoiseLayerGroup> noiseBlendingGroups;
-    public Vector2 globalOffset;
     [ReadOnly]public Vector2 chunkOffset;
     public int seed;
+    public Vector2 globalOffset;
+    public float globalScale;
     public float globalAmplitude;
+    public float globalFalloff;
 
     public override void OffsetChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
     {
@@ -211,12 +213,12 @@ public class CalculatePerlinNoise : GenerationBase.BaseGenerator
             {
                 var noiseGenerator = new SimplexNoise(seed);
 
-                float x = (pos.x + layer.offset.x + globalOffset.x + chunkOffset.x) * layer.scale / 10;
-                float y = (pos.z + layer.offset.y + globalOffset.y + chunkOffset.y) * layer.scale / 10;
+                float x = (pos.x + layer.offset.x + globalOffset.x + chunkOffset.x) * (layer.scale * globalScale) / 10;
+                float y = (pos.z + layer.offset.y + globalOffset.y + chunkOffset.y) * (layer.scale * globalScale) / 10;
 
                 float baseValue = Remap(noiseGenerator.Calculate(x, y), -1, 1, 0, 1);
 
-                float falloffValue = Mathf.Pow(baseValue, layer.falloff);
+                float falloffValue = Mathf.Pow(baseValue, layer.falloff * globalFalloff);
 
                 float clampValue = Mathf.Clamp(falloffValue, layer.clampRange.x, layer.clampRange.y);
                 
