@@ -36,22 +36,45 @@ MonoBehaviour:
       data:
         noiseBlendingGroups:
         - layers:
-          - scale: 0.001
-            amplitude: 5
-            thresholdRange: {x: -1, y: 1}
+          - scale: 1
+            amplitude: 0.5
             clampRange: {x: 0, y: 1}
+            noiseRange: {x: 0, y: 0.5}
             falloff: 1
             offset: {x: 0, y: 0}
             blendingType: 0
-          - scale: 0.5
-            amplitude: 10
-            thresholdRange: {x: -1, y: 1}
-            clampRange: {x: -1, y: 1}
+          - scale: 2
+            amplitude: 0.25
+            clampRange: {x: 0, y: 1}
+            noiseRange: {x: 0, y: 0.25}
             falloff: 1
             offset: {x: 0, y: 0}
-            blendingType: 2
+            blendingType: 0
+          - scale: 0.15
+            amplitude: 3
+            clampRange: {x: 0, y: 1}
+            noiseRange: {x: 0, y: 3}
+            falloff: 1.25
+            offset: {x: 0, y: 0}
+            blendingType: 0
+          - scale: 0.1
+            amplitude: 15
+            clampRange: {x: 0, y: 1}
+            noiseRange: {x: 0, y: 15}
+            falloff: 1.25
+            offset: {x: 0, y: 0}
+            blendingType: 0
+          - scale: 0.2
+            amplitude: 5
+            clampRange: {x: 0, y: 1}
+            noiseRange: {x: 0, y: 5}
+            falloff: 1.25
+            offset: {x: 0, y: 0}
+            blendingType: 0
+          normalizeAmplitudes: 0
+          ignoreGlobalAmplitude: 0
           blendingType: 0
         globalOffset: {x: 0, y: 0}
-        chunkOffset: {x: 300, y: -400}
+        chunkOffset: {x: 300, y: 300}
         seed: 0
-        globalAmplitude: 1
+        globalAmplitude: 1.9

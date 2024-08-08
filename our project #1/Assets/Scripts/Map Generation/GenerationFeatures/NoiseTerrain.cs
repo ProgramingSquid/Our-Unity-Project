@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static GenerationBase;
 public class XZPlaneTerrainBase : GenerationBase
 {
     [Serializable]
@@ -179,7 +178,7 @@ public class XZPlaneTerrainBase : GenerationBase
     
 }
 
-public class CalculatePerlinNoise : BaseGenerator
+public class CalculatePerlinNoise : GenerationBase.BaseGenerator
 {
     //To Do: Add Support for using NoiseMask struct
     public List<NoiseLayerGroup> noiseBlendingGroups;
@@ -204,6 +203,10 @@ public class CalculatePerlinNoise : BaseGenerator
         foreach (NoiseLayerGroup group in noiseBlendingGroups)
         {
             float groupValue = 0;
+
+            float totalAmplitude = 0;
+            foreach (NoiseLayer layer in group.layers) { totalAmplitude += layer.amplitude; }
+
             foreach (NoiseLayer layer in group.layers)
             {
                 var noiseGenerator = new SimplexNoise(seed);
@@ -216,8 +219,12 @@ public class CalculatePerlinNoise : BaseGenerator
                 float falloffValue = Mathf.Pow(baseValue, layer.falloff);
 
                 float clampValue = Mathf.Clamp(falloffValue, layer.clampRange.x, layer.clampRange.y);
+                
+                float amplitude = group.normalizeAmplitudes == false ? layer.amplitude : layer.amplitude / totalAmplitude;
 
-                float value = clampValue * layer.amplitude * globalAmplitude;
+                float amplitudeValue = clampValue * amplitude * (group.ignoreGlobalAmplitude ? 1 : globalAmplitude);
+
+                float value = Mathf.Clamp(amplitudeValue, layer.noiseRange.x, layer.noiseRange.y);
 
                 switch (layer.blendingType)
                 {
@@ -277,7 +284,8 @@ public enum noiseBlendingType
 public struct NoiseLayerGroup
 {
     public List<NoiseLayer> layers;
-    public bool noralizeAmplitudes;
+    public bool normalizeAmplitudes;
+    public bool ignoreGlobalAmplitude;
     public noiseBlendingType blendingType;
 }
 
@@ -286,8 +294,10 @@ public struct NoiseLayer
 {
     public float scale; // The frequency of the noise
     public float amplitude; // The amplitude of the noise
-    [MinMaxSlider(0, 1)]
+    [MinMaxSlider(0, 1, true)]
     public Vector2 clampRange;
+    [MinMaxSlider(0,"amplitude", true)]
+    public Vector2 noiseRange;
     public float falloff;
     public Vector2 offset;
     public noiseBlendingType blendingType;
