@@ -110,9 +110,9 @@ public class VolumetricClouds : VolumeComponent, IPostProcessComponent
     public MinFloatParameter altitudeRange = new(2000.0f, 100.0f);
 
     /// <summary>
-    /// Controls the world space baseGenerator applied when evaluating the larger noise passing through the cloud coverage.
+    /// Controls the world space vertexPasses applied when evaluating the larger noise passing through the cloud coverage.
     /// </summary>
-    [Tooltip("Controls the world space baseGenerator applied when evaluating the larger noise passing through the cloud coverage.")]
+    [Tooltip("Controls the world space vertexPasses applied when evaluating the larger noise passing through the cloud coverage.")]
     public Vector3Parameter shapeOffset = new(Vector3.zero);
 
     /// <summary>

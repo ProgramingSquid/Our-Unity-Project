@@ -39,21 +39,21 @@ public class XZPlaneTerrainBase : GenerationBase
     MeshFilter filter;
     MeshRenderer renderer;
 
-    public XZPlaneTerrainBase(Properties properties, BaseGenerator baseGenerator)
+    public XZPlaneTerrainBase(Properties properties, List<VertexPass> vertexPasses)
     {
         this.properties = properties;
-        this.baseGenerator = baseGenerator;
+        this.vertexPasses = vertexPasses;
         this.parent = null;
     }
-    public XZPlaneTerrainBase(Properties properties,BaseGenerator baseGenerator, Transform parent)
+    public XZPlaneTerrainBase(Properties properties, List<VertexPass> vertexPasses, Transform parent)
     {
         this.properties = properties;
-        this.baseGenerator = baseGenerator;
+        this.vertexPasses = vertexPasses;
         this.parent = parent;
     }
 
 
-    public override GameObject Generate(Vector3 GameObjectPos)
+    public override Chunk Generate(Vector3 GameObjectPos)
     {
 
         // Create a new GameObject for this feature
@@ -86,7 +86,14 @@ public class XZPlaneTerrainBase : GenerationBase
             for (int x = 0; x < xCount; x++)
             {
                 var pos = new Vector3(x * ((float)xSize / xCount), 0, z * ((float)zSize / zCount));
-                vertices[i] = pos + baseGenerator.Calculate(new(x,0,z));
+
+                var passOffset = Vector3.zero;
+                foreach (var pass in vertexPasses)
+                {
+                    passOffset += pass.Calculate(new(x, 0, z));
+                }
+
+                vertices[i] = pos + passOffset;
                 i++;
             }
         }
@@ -160,10 +167,10 @@ public class XZPlaneTerrainBase : GenerationBase
 
 #if UNITY_EDITOR
         var debug = featureObject.AddComponent<DataDebugHelper>();
-        debug.stringData = baseGenerator.ToString();
+        debug.stringData = vertexPasses.ToString();
 #endif
 
-        return featureObject;
+        return new Chunk(featureObject, mesh);
     }
     public override Vector3 CalculatePosition(Vector2Int gridPos)
     {
@@ -178,18 +185,18 @@ public class XZPlaneTerrainBase : GenerationBase
     
 }
 
-public class CalculatePerlinNoise : GenerationBase.BaseGenerator
+public class CalculatePerlinNoise : GenerationBase.VertexPass
 {
     //To Do: Add Support for using NoiseMask struct
     public List<NoiseLayerGroup> noiseBlendingGroups;
     [ReadOnly]public Vector2 chunkOffset;
     public int seed;
     public Vector2 globalOffset;
-    public float globalScale;
-    public float globalAmplitude;
-    public float globalFalloff;
+    public float globalScale = 1 ;
+    public float globalAmplitude = 1;
+    public float globalFalloff = 1;
 
-    public override void OffsetChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
+    public override void CalculateChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
     {
         chunkOffset = new Vector2(gridPos.x * chunkSize.x, gridPos.y * chunkSize.y);
     }
@@ -211,7 +218,7 @@ public class CalculatePerlinNoise : GenerationBase.BaseGenerator
 
             foreach (NoiseLayer layer in group.layers)
             {
-                var noiseGenerator = new SimplexNoise(seed);
+                var noiseGenerator = new SimplexNoise(seed + layer.seedOffset);
 
                 float x = (pos.x + layer.offset.x + globalOffset.x + chunkOffset.x) * (layer.scale * globalScale) / 10;
                 float y = (pos.z + layer.offset.y + globalOffset.y + chunkOffset.y) * (layer.scale * globalScale) / 10;
@@ -296,6 +303,7 @@ public struct NoiseLayer
 {
     public float scale; // The frequency of the noise
     public float amplitude; // The amplitude of the noise
+    public int seedOffset;
     [MinMaxSlider(0, 1, true)]
     public Vector2 clampRange;
     [MinMaxSlider(0,"amplitude", true)]

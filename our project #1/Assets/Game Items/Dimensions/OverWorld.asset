@@ -25,58 +25,7 @@ MonoBehaviour:
         parent: {fileID: 0}
         xSize: 100
         zSize: 100
-        baseGenerator:
-          rid: 7403411363523461198
         properties:
           resolution: 1
           shadeSmooth: 1
           prefab: {fileID: 2697280103787456895, guid: 5071a5924c534014f9f159dd316bb526, type: 3}
-    - rid: 7403411363523461198
-      type: {class: CalculatePerlinNoise, ns: , asm: Assembly-CSharp}
-      data:
-        noiseBlendingGroups:
-        - layers:
-          - scale: 1
-            amplitude: 0.5
-            clampRange: {x: 0, y: 1}
-            noiseRange: {x: 0, y: 0.5}
-            falloff: 1
-            offset: {x: 0, y: 0}
-            blendingType: 0
-          - scale: 2
-            amplitude: 0.25
-            clampRange: {x: 0, y: 1}
-            noiseRange: {x: 0, y: 0.25}
-            falloff: 1
-            offset: {x: 0, y: 0}
-            blendingType: 0
-          - scale: 0.15
-            amplitude: 3
-            clampRange: {x: 0, y: 1}
-            noiseRange: {x: 0, y: 3}
-            falloff: 1.25
-            offset: {x: 0, y: 0}
-            blendingType: 0
-          - scale: 0.1
-            amplitude: 15
-            clampRange: {x: 0, y: 1}
-            noiseRange: {x: 0, y: 15}
-            falloff: 1.25
-            offset: {x: 0, y: 0}
-            blendingType: 0
-          - scale: 0.2
-            amplitude: 5
-            clampRange: {x: 0, y: 1}
-            noiseRange: {x: 0, y: 5}
-            falloff: 1.25
-            offset: {x: 0, y: 0}
-            blendingType: 0
-          normalizeAmplitudes: 0
-          ignoreGlobalAmplitude: 0
-          blendingType: 0
-        chunkOffset: {x: 0, y: 0}
-        seed: 0
-        globalOffset: {x: 0, y: 0}
-        globalScale: 1
-        globalAmplitude: 1.9
-        globalFalloff: 1

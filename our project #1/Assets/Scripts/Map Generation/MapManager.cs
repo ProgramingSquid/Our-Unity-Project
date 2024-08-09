@@ -63,11 +63,15 @@ public static class MapManager
         Vector3 pos = dimension.GenerationBase.CalculatePosition(gridPos);
 
         Vector2 chunkSize = new(dimension.GenerationBase.xSize, dimension.GenerationBase.zSize);
-        dimension.GenerationBase.baseGenerator.OffsetChunkValues(pos, gridPos, chunkSize);
 
-        GameObject newChunkObject = dimension.GenerationBase.Generate(pos);
+        foreach (var pass in dimension.GenerationBase.vertexPasses) 
+        {
+            pass.CalculateChunkValues(pos, gridPos, chunkSize);
+        }
+
+        Chunk newChunk = dimension.GenerationBase.Generate(pos);
         
-        chunks.Add(gridPos, new Chunk(newChunkObject, newChunkObject.GetComponent<MeshFilter>().mesh));
+        chunks.Add(gridPos, newChunk);
     }
 
     public static void GenerateMapValues()
@@ -98,9 +102,13 @@ public class Chunk
     }
 }
 
-public abstract class GenerationFeature
+public abstract class GenerationFeature : GenerationPipelinePass
 {
     public abstract void Generate();
+}
+public abstract class GenerationPass : GenerationPipelinePass
+{
+    public abstract void Generate(Mesh chunkMesh);
 }
 
 public abstract class GenerationBase
@@ -110,8 +118,8 @@ public abstract class GenerationBase
     public int zSize;
 
     [SerializeReference]
-    public BaseGenerator baseGenerator;
-    public abstract GameObject Generate(Vector3 GameObjectPos);
+    public List<VertexPass> vertexPasses;
+    public abstract Chunk Generate(Vector3 GameObjectPos);
     /// <summary>
     /// An optional method which can be overridden for additional control over how Generated Chunk GameObjects' 
     /// positions are generated relative to a grid position.
@@ -128,11 +136,14 @@ public abstract class GenerationBase
     /// A class used to define how vertex offsets on a base mesh should be calculated, allowing for control over biome 
     /// blending base terrain generation.
     /// </summary>
-    public abstract class BaseGenerator
+    public abstract class VertexPass : GenerationPipelinePass
     {
-        public virtual void OffsetChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
-        {
-        }
         public abstract Vector3 Calculate(Vector3 pos);
+    }
+}
+public abstract class GenerationPipelinePass
+{
+    public virtual void CalculateChunkValues(Vector3 objectPos, Vector2Int gridPos, Vector2 chunkSize)
+    {
     }
 }
